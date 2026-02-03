@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamento - Studio Fenix</title>
+    <link rel="icon" type="image/png" href="LogoStudioFenix.png">
+    <style>
+        /* MESMO CSS DA HOME PARA MANTER O PADRÃO */
+        :root {
+            --glass-bg: linear-gradient(135deg, rgba(255, 50, 50, 0.15), rgba(100, 0, 0, 0.4));
+            --glass-border: rgba(255, 200, 200, 0.25);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+        
+        body {
+            background: linear-gradient(to bottom, #0a0a0a 0%, #1a1a1a 30%, #990000 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #ffffff;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            padding: 30px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: 100vh;
+        }
+
+        /* BOTÃO VOLTAR */
+        .back-btn {
+            align-self: flex-start;
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        .back-btn:hover { color: #fff; }
+
+        /* CARD LIQUID GLASS */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid rgba(255, 255, 255, 0.4);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            padding: 30px 20px;
+            box-shadow: var(--glass-shadow);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        h2 { font-size: 1.5rem; margin-bottom: 5px; color: #ffcccc; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .status-badge {
+            background: rgba(255, 200, 200, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #ffaaaa;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* CALENDÁRIO VISUAL */
+        .calendar-mockup {
+            width: 100%;
+            max-width: 320px;
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+            /* Levemente transparente para indicar "inativo/em breve" */
+            opacity: 0.9; 
+        }
+
+        .cal-header {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #ff5555;
+            margin-bottom: 5px;
+        }
+
+        .cal-day {
+            aspect-ratio: 1;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Dias com treino (Visual) */
+        .cal-day.active {
+            background: rgba(200, 0, 0, 0.4);
+            border-color: rgba(255, 100, 100, 0.4);
+            color: #fff;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+        }
+
+        /* Emojis flutuando sobre os dias */
+        .cal-day.active::after {
+            content: attr(data-emoji);
+            position: absolute;
+            font-size: 1.2rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
+        .info-text {
+            color: #e0e0e0;
+            font-size: 1rem;
+            line-height: 1.5;
+            max-width: 90%;
+        }
+
+        /* Faixa de bloqueio visual (opcional, para reforçar que não clica ainda) */
+        .coming-soon-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-btn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Voltar
+        </a>
+
+        <div class="glass-card">
+            <h2>Agendamento Online</h2>
+            <div class="status-badge">Em Breve</div>
+
+            <div class="calendar-mockup">
+                <div class="cal-header">D</div>
+                <div class="cal-header">S</div>
+                <div class="cal-header">T</div>
+                <div class="cal-header">Q</div>
+                <div class="cal-header">Q</div>
+                <div class="cal-header">S</div>
+                <div class="cal-header">S</div>
+
+                <div class="cal-day">29</div>
+                <div class="cal-day">30</div>
+                <div class="cal-day">1</div>
+                <div class="cal-day active" data-emoji="💪"></div>
+                <div class="cal-day">3</div>
+                <div class="cal-day active" data-emoji="🏃‍♂️"></div>
+                <div class="cal-day">5</div>
+
+                <div class="cal-day">6</div>
+                <div class="cal-day active" data-emoji="🏋️"></div>
+                <div class="cal-day">8</div>
+                <div class="cal-day active" data-emoji="🔥"></div>
+                <div class="cal-day">10</div>
+                <div class="cal-day active" data-emoji="🥊"></div>
+                <div class="cal-day">12</div>
+                
+                <div class="cal-day">13</div>
+                <div class="cal-day active" data-emoji="🧘"></div>
+                <div class="cal-day">15</div>
+                <div class="cal-day active" data-emoji="🚴"></div>
+                <div class="cal-day">17</div>
+                <div class="cal-day">18</div>
+                <div class="cal-day">19</div>
+            </div>
+
+            <p class="info-text">
+                Estamos desenvolvendo um sistema completo para você marcar seus treinos e acompanhar sua frequência diretamente pelo app.
+            </p>
+            
+            <div class="coming-soon-overlay"></div>
+        </div>
+    </div>
+</body>
+</html>

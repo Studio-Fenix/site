@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planos - Studio Fenix</title>
+    <link rel="icon" type="image/png" href="LogoStudioFenix.png">
+    <style>
+        :root {
+            --glass-bg: linear-gradient(135deg, rgba(255, 50, 50, 0.15), rgba(100, 0, 0, 0.4));
+            --glass-border: rgba(255, 200, 200, 0.25);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        
+        body {
+            background: linear-gradient(to bottom, #0a0a0a 0%, #1a1a1a 30%, #990000 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #ffffff;
+            padding-bottom: 40px;
+        }
+
+        .container { width: 100%; max-width: 480px; padding: 30px 24px; display: flex; flex-direction: column; gap: 20px; }
+        .back-btn { align-self: flex-start; text-decoration: none; color: rgba(255, 255, 255, 0.8); display: flex; align-items: center; gap: 5px; margin-bottom: 10px; }
+        
+        h1 { text-align: center; margin-bottom: 10px; text-transform: uppercase; }
+
+        .plan-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 25px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .plan-title { font-size: 1.4rem; font-weight: 800; color: #fff; margin-bottom: 5px; }
+        .plan-badge { 
+            background: #ff3333; color: white; padding: 4px 10px; 
+            border-radius: 12px; font-size: 0.7rem; font-weight: bold; 
+            display: inline-block; margin-bottom: 15px; 
+        }
+        .price-highlight { font-size: 1.8rem; font-weight: bold; color: #ffcccc; margin-bottom: 10px; }
+        .price-small { font-size: 1rem; color: #fff; }
+        .plan-details { margin-top: 15px; font-size: 0.9rem; color: #ddd; line-height: 1.5; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; }
+        .detail-row { display: flex; justify-content: space-between; margin-bottom: 5px; }
+        
+        /* Destaque para Boleto/Cartão */
+        .payment-info { background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; margin-top: 10px; }
+        .payment-label { color: #ff9999; font-weight: bold; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-btn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Voltar
+        </a>
+
+        <h1>Nossos Planos</h1>
+
+        <div class="plan-card">
+            <div class="plan-title">Plano Mensal</div>
+            <div class="plan-badge">SEM FIDELIDADE</div>
+            <div class="price-highlight">R$ 212,80 <span style="font-size: 1rem;">à vista</span></div>
+            <div class="plan-details">
+                <p>Acesso total por 30 dias.</p>
+                <p>Cancele quando quiser.</p>
+            </div>
+        </div>
+
+        <div class="plan-card">
+            <div class="plan-title">Plano Trimestral</div>
+            <div class="plan-badge">3 MESES</div>
+            <div class="price-highlight">3x R$ 149,99</div>
+            <div class="plan-details">
+                <p>Compromisso de 3 meses.</p>
+                <p>Valor promocional parcelado.</p>
+            </div>
+        </div>
+
+        <div class="plan-card">
+            <div class="plan-title">Plano Semestral</div>
+            <div class="plan-badge">6 MESES</div>
+            <div class="price-highlight">R$ 1.111,14 <span style="font-size: 0.9rem;">(Total)</span></div>
+            
+            <div class="payment-info">
+                <div class="payment-label">CARTÃO DE CRÉDITO</div>
+                <div>6x de <strong>R$ 185,19</strong></div>
+            </div>
+            <div class="payment-info">
+                <div class="payment-label">BOLETO (mediante consulta)</div>
+                <div>4x de <strong>R$ 277,78</strong></div>
+            </div>
+        </div>
+
+        <div class="plan-card" style="border-color: #ffaaaa; background: linear-gradient(135deg, rgba(200, 50, 50, 0.25), rgba(100, 0, 0, 0.6));">
+            <div class="plan-title">Plano Anual</div>
+            <div class="plan-badge" style="background: white; color: #990000;">MELHOR VALOR</div>
+            <div class="price-highlight">R$ 1.715,88 <span style="font-size: 0.9rem;">(Total)</span></div>
+            
+            <div class="payment-info">
+                <div class="payment-label">CARTÃO DE CRÉDITO</div>
+                <div>12x de <strong>R$ 142,99</strong></div>
+            </div>
+            <div class="payment-info">
+                <div class="payment-label">BOLETO BANCÁRIO</div>
+                <div>7x de <strong>R$ 245,12</strong></div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

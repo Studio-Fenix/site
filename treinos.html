@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treinos - Studio Fenix</title>
+    <link rel="icon" type="image/png" href="LogoStudioFenix.png">
+    <style>
+        :root {
+            --glass-bg: linear-gradient(135deg, rgba(255, 50, 50, 0.15), rgba(100, 0, 0, 0.4));
+            --glass-border: rgba(255, 200, 200, 0.25);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+        
+        body {
+            background: linear-gradient(to bottom, #0a0a0a 0%, #1a1a1a 30%, #990000 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #ffffff;
+            padding-bottom: 40px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            padding: 30px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .back-btn {
+            align-self: flex-start;
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        h1 { font-size: 1.4rem; text-transform: uppercase; margin-bottom: 5px; text-align: center; }
+        .sub-h { font-size: 0.9rem; color: #ccc; text-align: center; margin-bottom: 15px; font-weight: 300; }
+
+        .workout-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .workout-img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            opacity: 0.85; /* Levemente mais visível */
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .workout-content { padding: 15px; }
+        .workout-day { color: #ff5555; font-size: 0.8rem; font-weight: bold; text-transform: uppercase; }
+        .workout-title { font-size: 1.2rem; font-weight: 600; margin-top: 5px; margin-bottom: 5px; }
+        .workout-desc { font-size: 0.9rem; color: #ddd; line-height: 1.4; }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-btn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Voltar
+        </a>
+
+        <div>
+            <h1>Sugestões de Treinos</h1>
+            <p class="sub-h">Treino Personalizado | Metodologia Studio Fênix</p>
+        </div>
+
+        <div class="workout-card">
+            <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&q=80&w=600" alt="Treino Peito" class="workout-img">
+            <div class="workout-content">
+                <div class="workout-day">Segunda-Feira (Treino A)</div>
+                <div class="workout-title">Peito e Tríceps</div>
+                <div class="workout-desc">Supino reto com barra, Supino inclinado com halteres, Crucifixo, Tríceps corda e Tríceps testa. Foco em hipertrofia e força.</div>
+            </div>
+        </div>
+
+        <div class="workout-card">
+            <img src="https://images.unsplash.com/photo-1521805103424-d8f8430e8933?auto=format&fit=crop&q=80&w=600" alt="Treino Costas" class="workout-img">
+            <div class="workout-content">
+                <div class="workout-day">Terça-Feira (Treino B)</div>
+                <div class="workout-title">Costas e Bíceps</div>
+                <div class="workout-desc">Puxada alta, Remada curvada, Serrote, Rosca direta e Rosca martelo. Foco em largura e densidade dorsal.</div>
+            </div>
+        </div>
+
+        <div class="workout-card">
+            <img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&q=80&w=600" alt="Treino Pernas" class="workout-img">
+            <div class="workout-content">
+                <div class="workout-day">Quarta-Feira (Treino C)</div>
+                <div class="workout-title">Pernas (Leg Day)</div>
+                <div class="workout-desc">Agachamento livre, Leg Press 45º, Cadeira extensora, Mesa flexora e Panturrilhas. Foco em membros inferiores completos.</div>
+            </div>
+        </div>
+
+        <div class="workout-card">
+            <img src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&q=80&w=600" alt="Treino Ombros" class="workout-img">
+            <div class="workout-content">
+                <div class="workout-day">Quinta-Feira (Treino D)</div>
+                <div class="workout-title">Ombros e Trapézio</div>
+                <div class="workout-desc">Desenvolvimento militar, Elevação lateral, Elevação frontal, Encolhimento de ombros. Foco em deltoides.</div>
+            </div>
+        </div>
+
+        <div class="workout-card">
+            <img src="https://images.unsplash.com/photo-1576678927484-cc907957088c?auto=format&fit=crop&q=80&w=600" alt="Treino Cardio" class="workout-img">
+            <div class="workout-content">
+                <div class="workout-day">Sexta-Feira (Treino E)</div>
+                <div class="workout-title">Cardio e Abdômen</div>
+                <div class="workout-desc">30min Esteira/Bike moderada + Circuito de abdominais (Supra, Infra e Prancha). Foco em resistência e core.</div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
