@@ -2,231 +2,155 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Studio Fênix</title>
-    
     <link rel="icon" type="image/webp" href="icon.webp">
-
-    <meta property="og:title" content="Studio Fênix | Treinamento Personalizado">
-    <meta property="og:description" content="Venha conhecer a metodologia do Treinador Junior Penarrubia. Agende seu horário e confira nossos planos.">
+    <meta property="og:title" content="Studio Fênix">
     <meta property="og:image" content="banner-sf.webp">
-    <meta property="og:image:type" content="image/webp">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="pt_BR">
 
     <style>
-        /* CONFIGURAÇÕES GERAIS */
         :root {
-            /* Variáveis para o Efeito Liquid Glass */
+            /* DARK MODE (Padrão) */
+            --bg-gradient: linear-gradient(to bottom, #0a0a0a 0%, #1a1a1a 30%, #990000 100%);
+            --text-color: #ffffff;
+            --text-sec: #e0e0e0;
+            
+            /* Efeito Liquid Glass */
             --glass-bg: linear-gradient(135deg, rgba(255, 50, 50, 0.15), rgba(100, 0, 0, 0.4));
             --glass-border: rgba(255, 200, 200, 0.3);
-            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-            --glass-shine: rgba(255, 255, 255, 0.1);
+            --glass-highlight: rgba(255, 255, 255, 0.4);
+            --btn-text: #ffffff;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            -webkit-font-smoothing: antialiased;
+        body.light-mode {
+            /* LIGHT MODE */
+            --bg-gradient: linear-gradient(to bottom, #f0f0f0 0%, #dcdcdc 30%, #cc0000 100%);
+            --text-color: #333333;
+            --text-sec: #555555;
+            
+            /* Ajuste Liquid Glass para Light Mode (Mais contraste) */
+            --glass-bg: linear-gradient(135deg, rgba(220, 20, 20, 0.8), rgba(160, 0, 0, 0.9));
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --glass-highlight: rgba(255, 255, 255, 0.6);
+            --btn-text: #ffffff;
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; }
 
         body {
-            /* Background Simples: Degrade Preto/Cinza -> Vermelho */
-            background: linear-gradient(to bottom, #0a0a0a 0%, #1a1a1a 30%, #990000 100%);
+            background: var(--bg-gradient);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            color: #ffffff;
-            overflow-x: hidden;
+            color: var(--text-color);
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+            transition: background 0.5s ease;
         }
 
-        /* CONTEÚDO PRINCIPAL */
         .container {
             width: 100%;
             max-width: 480px;
-            text-align: center;
-            padding: 40px 24px 30px 24px;
+            padding: 20px 24px 80px 24px; /* Espaço extra embaixo para o botão flutuante */
             display: flex;
             flex-direction: column;
             gap: 20px;
+            position: relative;
+            flex-grow: 1;
         }
 
-        /* --- LOGO COM ANIMAÇÃO AJUSTADA (Lenta e Escura) --- */
-        .logo-link {
-            display: inline-block;
-            text-decoration: none;
-            -webkit-tap-highlight-color: transparent; 
+        /* --- BOTÃO FLUTUANTE DE TEMA (Fixed Bottom Right) --- */
+        .theme-toggle {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            
+            /* Efeito Liquid Glass */
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid var(--glass-highlight);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            transition: transform 0.2s, background 0.3s;
+        }
+        .theme-toggle:active { transform: scale(0.9); }
+        .theme-toggle svg { 
+            width: 24px; 
+            height: 24px; 
+            fill: var(--btn-text); /* Ícone sempre branco/claro no botão vermelho */
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
         }
 
-        .logo {
-            width: 190px;
-            height: auto;
-            margin: 0 auto;
-            display: block;
-            /* Animação lenta de 6 segundos */
-            animation: darkPulse 6s infinite ease-in-out;
-        }
-
-        @keyframes darkPulse {
-            0% {
-                /* Estado normal: sombra preta discreta */
-                transform: scale(1);
-                filter: drop-shadow(0 5px 5px rgba(0,0,0,0.6));
-            }
-            50% {
-                /* Estado "aceso": Brilho vermelho escuro (vinho), sutil */
-                transform: scale(1.02); /* Movimento muito leve */
-                filter: drop-shadow(0 0 15px rgba(100, 0, 0, 0.7)); 
-            }
-            100% {
-                /* Volta ao normal */
-                transform: scale(1);
-                filter: drop-shadow(0 5px 5px rgba(0,0,0,0.6));
-            }
+        /* LOGO */
+        .logo-link { display: inline-block; text-decoration: none; margin-top: 20px; margin-bottom: 10px; align-self: center; }
+        .logo { width: 190px; height: auto; display: block; animation: darkPulse 6s infinite ease-in-out; }
+        @keyframes darkPulse { 
+            0% { transform: scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.6)); } 
+            50% { transform: scale(1.02); filter: drop-shadow(0 0 15px rgba(100, 0, 0, 0.7)); } 
+            100% { transform: scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.6)); } 
         }
 
         /* TEXTOS */
-        .header-text {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 10px;
-        }
+        .header-text { display: flex; flex-direction: column; gap: 8px; align-items: center; margin-bottom: 10px; }
+        .subtitle-badge { background: rgba(100, 0, 0, 0.2); border: 1px solid var(--glass-border); backdrop-filter: blur(5px); padding: 8px 18px; border-radius: 50px; font-size: 0.75rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-color); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .trainer-name { font-size: 1.3rem; font-weight: 300; color: var(--text-sec); letter-spacing: 0.5px; }
 
-        .badge-container {
-            display: flex;
-            justify-content: center;
+        /* BOTÕES LIQUID GLASS */
+        .btn-wrapper { display: flex; flex-direction: column; gap: 16px; width: 100%; }
+        
+        .btn { 
+            position: relative; 
+            background: var(--glass-bg); 
+            backdrop-filter: blur(15px); 
+            border: 1px solid var(--glass-border); 
+            border-top: 1px solid var(--glass-highlight);
+            color: var(--btn-text); 
+            padding: 18px 24px; 
+            border-radius: 20px; 
+            text-decoration: none; 
+            font-weight: 600; 
+            font-size: 1.05rem; 
+            display: flex; 
+            align-items: center; 
+            gap: 16px; 
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3); 
+            transition: all 0.3s ease; 
+            overflow: hidden; 
         }
-
-        .subtitle-badge {
-            background: rgba(50, 0, 0, 0.6);
-            border: 1px solid rgba(255, 100, 100, 0.2);
-            backdrop-filter: blur(5px);
-            padding: 8px 18px;
-            border-radius: 50px;
-            font-size: 0.75rem; 
-            font-weight: 800;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: rgba(255, 220, 220, 0.9);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .trainer-name {
-            font-size: 1.3rem;
-            font-weight: 300;
-            color: #e0e0e0;
-            letter-spacing: 0.5px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-        }
-
-        /* --- BOTÕES ESTILO LIQUID GLASS --- */
-        .btn-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-top: 10px;
-        }
-
-        .btn {
-            position: relative;
-            background: var(--glass-bg);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
-            border-top: 1px solid rgba(255, 255, 255, 0.4);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-            color: #ffffff;
-            padding: 18px 24px;
-            border-radius: 20px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.05rem;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            gap: 16px;
-            box-shadow: var(--glass-shadow);
-            transition: all 0.3s ease;
-            overflow: hidden;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-            transition: 0.5s;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px) scale(1.02);
-            background: linear-gradient(135deg, rgba(255, 80, 80, 0.3), rgba(180, 0, 0, 0.6));
-            border-color: rgba(255, 180, 180, 0.6);
-            box-shadow: 0 15px 30px rgba(200, 0, 0, 0.3);
-        }
-
-        .btn:hover::before {
-            left: 100%;
-        }
-
-        .btn svg {
-            width: 26px;
-            height: 26px;
-            fill: #fff;
-            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.4));
-        }
-
+        
+        .btn:active { transform: scale(0.98); }
+        .btn svg { width: 26px; height: 26px; fill: var(--btn-text); }
         .btn span { flex-grow: 1; text-align: left; }
         
-        .btn-arrow::after {
-            content: '›';
-            font-size: 1.6rem;
-            color: rgba(255,255,255,0.5);
-            margin-bottom: 2px;
-        }
+        .btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); transition: 0.5s; }
+        .btn:hover::before { left: 100%; }
+        
+        .btn-arrow::after { content: '›'; font-size: 1.6rem; color: rgba(255,255,255,0.6); margin-bottom: 2px; }
 
-        /* --- MAPA E GPS --- */
-        .map-section {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 10px;
-        }
+        /* MAPA */
+        .map-section { display: flex; flex-direction: column; gap: 15px; margin-top: 10px; width: 100%; }
+        .real-map-container { border-radius: 20px; overflow: hidden; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .real-map-container iframe { width: 100%; height: 250px; border: none; display: block; filter: contrast(1.1) saturate(0.8) sepia(0.2) hue-rotate(-10deg); }
 
-        .real-map-container {
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 100, 100, 0.3);
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .real-map-container iframe {
-            width: 100%;
-            height: 250px;
-            border: none;
-            display: block;
-            filter: contrast(1.1) saturate(0.8) sepia(0.2) hue-rotate(-10deg); 
-        }
-
-        /* COPYRIGHT */
-        .copyright {
-            margin-top: 30px;
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.5);
-            letter-spacing: 0.5px;
-        }
+        /* FOOTER */
+        .copyright { margin-top: auto; font-size: 0.75rem; color: var(--text-color); opacity: 0.7; text-align: center; }
 
     </style>
 </head>
 <body>
+    
+    <div class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+        <svg id="themeIcon" viewBox="0 0 24 24"><path d="" /></svg>
+    </div>
 
     <div class="container">
         
@@ -235,56 +159,24 @@
         </a>
         
         <div class="header-text">
-            <div class="badge-container">
-                <span class="subtitle-badge">Treinamento personalizado</span>
-            </div>
+            <span class="subtitle-badge">Treinamento personalizado</span>
             <div class="trainer-name">Junior Penarrubia</div>
         </div>
 
         <div class="btn-wrapper">
-            
-            <a href="agendamento.html" class="btn btn-arrow">
-                <svg viewBox="0 0 24 24"><path d="M19,4H18V2H16V4H8V2H6V4H5A2,2 0 0,0 3,6V20A2,2 0 0,0 5,22H19A2,2 0 0,0 21,20V6A2,2 0 0,0 19,4M19,20H5V10H19V20M19,8H5V6H19V8M9,14H7V12H9V14M13,14H11V12H13V14M17,14H15V12H17V14M9,18H7V16H9V18M13,18H11V16H13V18M17,18H15V16H17V18Z" /></svg>
-                <span>Agendamento</span>
-            </a>
-            
-            <a href="https://wa.me/5517992323066" target="_blank" class="btn btn-arrow">
-                <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67M8.53 7.33C8.37 7.33 8.1 7.39 7.87 7.64C7.65 7.9 7.03 8.48 7.03 9.65C7.03 10.82 7.88 11.95 8 12.11C8.12 12.27 9.63 14.59 11.91 15.58C13.8 16.4 14.19 16.24 14.61 16.24C15.03 16.24 15.96 15.73 16.15 15.19C16.34 14.66 16.34 14.2 16.28 14.11C16.22 14.02 16.07 13.97 15.85 13.86C15.63 13.75 14.56 13.22 14.36 13.12C14.16 13.02 14 12.97 13.87 13.17C13.73 13.37 13.34 13.86 13.21 14C13.09 14.16 12.97 14.17 12.75 14.06C12.53 13.95 11.83 13.72 11 12.98C10.36 12.41 9.93 11.71 9.81 11.5C9.69 11.29 9.8 11.18 9.91 11.07C10 10.97 10.15 10.81 10.26 10.68C10.37 10.55 10.42 10.45 10.5 10.29C10.57 10.13 10.53 10 10.47 9.87C10.41 9.75 10.03 8.81 9.87 8.43C9.71 8.04 9.55 8.1 9.43 8.1C9.32 8.1 9.19 8.09 9.06 8.09C8.92 8.09 8.7 8.04 8.53 7.33Z" /></svg>
-                <span>WhatsApp</span>
-            </a>
-            
-            <a href="https://instagram.com/studio.fenix2024" target="_blank" class="btn btn-arrow">
-                <svg viewBox="0 0 24 24"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z" /></svg>
-                <span>Instagram</span>
-            </a>
-
-            <a href="treinos.html" class="btn btn-arrow">
-                <svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43L20.57 12L17 15.57L8.43 7L12 3.43L10.57 2L9.14 3.43L7.71 2L5.57 4.14L4.14 2.71L2.71 4.14L4.14 5.57L2 7.71L3.43 9.14L2 10.57L3.43 12L7 8.43L15.57 17L12 20.57L13.43 22L14.86 20.57L16.29 22L18.43 19.86L19.86 21.29L21.29 19.86L19.86 18.43L22 16.29L20.57 14.86Z" /></svg>
-                <span>Treinos</span>
-            </a>
-
-            <a href="planos.html" class="btn btn-arrow">
-                <svg viewBox="0 0 24 24"><path d="M20,6H16V4H14V6H10V4H8V6H4A2,2 0 0,0 2,8V20A2,2 0 0,0 4,22H20A2,2 0 0,0 20,6M20,20H4V14H20V20M20,12H4V8H20V12Z" /></svg>
-                <span>Planos</span>
-            </a>
-
-            <a href="horarios.html" class="btn btn-arrow">
-                <svg viewBox="0 0 24 24"><path d="M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z" /></svg>
-                <span>Horários</span>
-            </a>
-
-            <a href="sobre.html" class="btn btn-arrow">
-                <svg viewBox="0 0 24 24"><path d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z" /></svg>
-                <span>Sobre</span>
-            </a>
-
+            <a href="agendamento.html" class="btn btn-arrow"><svg viewBox="0 0 24 24"><path d="M19,4H18V2H16V4H8V2H6V4H5A2,2 0 0,0 3,6V20A2,2 0 0,0 5,22H19A2,2 0 0,0 21,20V6A2,2 0 0,0 19,4M19,20H5V10H19V20M19,8H5V6H19V8M9,14H7V12H9V14M13,14H11V12H13V14M17,14H15V12H17V14M9,18H7V16H9V18M13,18H11V16H13V18M17,18H15V16H17V18Z" /></svg><span>Agendamento</span></a>
+            <a href="https://wa.me/5517992323066" target="_blank" class="btn btn-arrow"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67M8.53 7.33C8.37 7.33 8.1 7.39 7.87 7.64C7.65 7.9 7.03 8.48 7.03 9.65C7.03 10.82 7.88 11.95 8 12.11C8.12 12.27 9.63 14.59 11.91 15.58C13.8 16.4 14.19 16.24 14.61 16.24C15.03 16.24 15.96 15.73 16.15 15.19C16.34 14.66 16.34 14.2 16.28 14.11C16.22 14.02 16.07 13.97 15.85 13.86C15.63 13.75 14.56 13.22 14.36 13.12C14.16 13.02 14 12.97 13.87 13.17C13.73 13.37 13.34 13.86 13.21 14C13.09 14.16 12.97 14.17 12.75 14.06C12.53 13.95 11.83 13.72 11 12.98C10.36 12.41 9.93 11.71 9.81 11.5C9.69 11.29 9.8 11.18 9.91 11.07C10 10.97 10.15 10.81 10.26 10.68C10.37 10.55 10.42 10.45 10.5 10.29C10.57 10.13 10.53 10 10.47 9.87C10.41 9.75 10.03 8.81 9.87 8.43C9.71 8.04 9.55 8.1 9.43 8.1C9.32 8.1 9.19 8.09 9.06 8.09C8.92 8.09 8.7 8.04 8.53 7.33Z" /></svg><span>WhatsApp</span></a>
+            <a href="https://instagram.com/studio.fenix2024" target="_blank" class="btn btn-arrow"><svg viewBox="0 0 24 24"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z" /></svg><span>Instagram</span></a>
+            <a href="treinos.html" class="btn btn-arrow"><svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43L20.57 12L17 15.57L8.43 7L12 3.43L10.57 2L9.14 3.43L7.71 2L5.57 4.14L4.14 2.71L2.71 4.14L4.14 5.57L2 7.71L3.43 9.14L2 10.57L3.43 12L7 8.43L15.57 17L12 20.57L13.43 22L14.86 20.57L16.29 22L18.43 19.86L19.86 21.29L21.29 19.86L19.86 18.43L22 16.29L20.57 14.86Z" /></svg><span>Treinos</span></a>
+            <a href="planos.html" class="btn btn-arrow"><svg viewBox="0 0 24 24"><path d="M20,6H16V4H14V6H10V4H8V6H4A2,2 0 0,0 2,8V20A2,2 0 0,0 4,22H20A2,2 0 0,0 22,20V8A2,2 0 0,0 20,6M20,20H4V14H20V20M20,12H4V8H20V12Z" /></svg><span>Planos</span></a>
+            <a href="horarios.html" class="btn btn-arrow"><svg viewBox="0 0 24 24"><path d="M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z" /></svg><span>Horários</span></a>
+            <a href="sobre.html" class="btn btn-arrow"><svg viewBox="0 0 24 24"><path d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z" /></svg><span>Sobre</span></a>
         </div>
 
         <div class="map-section">
             <div class="real-map-container">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3729.087784264642!2d-49.3523689259354!3d-20.82819346583423!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94bc2a26610c03c3%3A0x697d90762331078!2sR.%20Jo%C3%A3o%20Lucianeli%20de%20Oliveira%2C%20Orindi%C3%B9va%20-%20SP%2C%2015480-000!5e0!3m2!1spt-BR!2sbr!4v1706633000000!5m2!1spt-BR!2sbr" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
-            
             <a href="https://www.google.com/maps/search/?api=1&query=R.+João+Lucianeli+de+Oliveira,+Orindiúva+-+SP" target="_blank" class="btn" style="justify-content: center;">
                 <svg viewBox="0 0 24 24"><path d="M12,2C15.31,2 18,4.66 18,7.95C18,12.41 12,19 12,19C12,19 6,12.41 6,7.95C6,4.66 8.69,2 12,2M12,6A2,2 0 0,0 10,8A2,2 0 0,0 12,10A2,2 0 0,0 14,8A2,2 0 0,0 12,6M20,19C20,21.21 16.42,23 12,23C7.58,23 4,21.21 4,19C4,17.71 5.22,16.56 7.11,15.83L7.75,16.74C6.67,17.19 6,17.81 6,18.5C6,19.88 8.69,21 12,21C15.31,21 18,19.88 18,18.5C18,17.81 17.33,17.19 16.25,16.74L16.89,15.83C18.78,16.56 20,17.71 20,19Z" /></svg>
                 <span>ABRIR GPS</span>
@@ -294,8 +186,34 @@
         <div class="copyright">
             © Studio Fênix | Treinador Personal | Junior Penarrubia
         </div>
-
     </div>
 
+    <script>
+        const toggleBtn = document.getElementById('themeToggle'); 
+        const icon = document.getElementById('themeIcon'); 
+        const body = document.body;
+
+        // Ícones SVG Limpos e Corretos (Material Design)
+        const moonIcon = "M17.75,4.09L15.22,6.03L16.13,9.09L13.5,7.28L10.87,9.09L11.78,6.03L9.25,4.09L12.44,4L13.5,1L14.56,4L17.75,4.09M21.25,11L19.61,12.25L20.2,14.23L18.5,13.06L16.8,14.23L17.39,12.25L15.75,11L17.81,10.95L18.5,9L19.19,10.95L21.25,11M18.97,15.95C19.8,15.87 20.69,17.05 20.16,17.8C19.84,18.25 19.5,18.67 19.08,19.07C15.17,23 8.84,23 4.94,19.07C1.03,15.17 1.03,8.83 4.94,4.93C5.34,4.53 5.76,4.17 6.21,3.85C6.96,3.32 8.14,4.21 8.06,5.04C7.79,7.9 8.75,10.87 10.95,13.06C13.14,15.26 16.1,16.22 18.97,15.95M17.33,17.97C14.5,17.81 11.7,16.64 9.53,14.5C7.38,12.35 6.21,9.55 6.05,6.72C3.96,8.35 2.5,11.23 2.87,14.39C3.41,19 8.21,21.92 12.57,20.27C14.77,19.44 16.53,17.84 17.33,15.97H17.33Z";
+        const sunIcon = "M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,2L14.39,5.42C13.65,5.15 12.84,5 12,5C11.16,5 10.35,5.15 9.61,5.42L12,2M3.34,7L7.5,5.29C7.24,5.84 6.63,6.96 6.13,8.23L3.34,7M3.34,17L6.13,15.77C6.63,17.04 7.24,18.16 7.5,18.71L3.34,17M20.66,17L16.5,18.71C16.76,18.16 17.37,17.04 17.87,15.77L20.66,17M20.66,7L17.87,8.23C17.37,6.96 16.76,5.84 16.5,5.29L20.66,7M12,22L9.61,18.58C10.35,18.85 11.16,19 12,19C12.84,19 13.65,18.85 14.39,18.58L12,22Z";
+
+        if(localStorage.getItem('theme') === 'light') { 
+            body.classList.add('light-mode'); 
+            icon.innerHTML = `<path d="${sunIcon}" />`; 
+        } else { 
+            icon.innerHTML = `<path d="${moonIcon}" />`; 
+        }
+
+        function toggleTheme() { 
+            body.classList.toggle('light-mode'); 
+            if(body.classList.contains('light-mode')) { 
+                localStorage.setItem('theme', 'light'); 
+                icon.innerHTML = `<path d="${sunIcon}" />`; 
+            } else { 
+                localStorage.setItem('theme', 'dark'); 
+                icon.innerHTML = `<path d="${moonIcon}" />`; 
+            } 
+        }
+    </script>
 </body>
 </html>

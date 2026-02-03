@@ -2,61 +2,93 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Agendamento - Studio Fenix</title>
-    <link rel="icon" type="image/png" href="LogoStudioFenix.png">
+    <link rel="icon" type="image/webp" href="icon.webp">
     <style>
-        /* MESMO CSS DA HOME PARA MANTER O PADRÃO */
         :root {
+            /* DARK MODE */
+            --bg-gradient: linear-gradient(to bottom, #0a0a0a 0%, #1a1a1a 30%, #990000 100%);
+            --text-color: #ffffff;
+            
+            /* Liquid Glass */
             --glass-bg: linear-gradient(135deg, rgba(255, 50, 50, 0.15), rgba(100, 0, 0, 0.4));
-            --glass-border: rgba(255, 200, 200, 0.25);
-            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            --glass-border: rgba(255, 200, 200, 0.3);
+            --glass-highlight: rgba(255, 255, 255, 0.4);
+            --btn-text: #ffffff;
         }
+        body.light-mode {
+            /* LIGHT MODE */
+            --bg-gradient: linear-gradient(to bottom, #f0f0f0 0%, #dcdcdc 30%, #cc0000 100%);
+            --text-color: #333333;
+            
+            --glass-bg: linear-gradient(135deg, rgba(220, 20, 20, 0.8), rgba(160, 0, 0, 0.9));
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --glass-highlight: rgba(255, 255, 255, 0.6);
+            --btn-text: #ffffff;
+        }
+        
+        body.light-mode .glass-card, body.light-mode .glass-card p, body.light-mode .glass-card h2, body.light-mode .cal-day { color: #ffffff; }
+
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
         
         body {
-            background: linear-gradient(to bottom, #0a0a0a 0%, #1a1a1a 30%, #990000 100%);
+            background: var(--bg-gradient);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            color: #ffffff;
+            color: var(--text-color);
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+            transition: background 0.5s ease;
         }
 
         .container {
             width: 100%;
             max-width: 480px;
-            padding: 30px 24px;
+            padding: 20px 24px 80px 24px;
             display: flex;
             flex-direction: column;
             gap: 20px;
-            height: 100vh;
+            position: relative;
+            flex-grow: 1;
         }
 
-        /* BOTÃO VOLTAR */
+        .logo-link { display: inline-block; text-decoration: none; margin-top: 20px; margin-bottom: 10px; align-self: center; }
+        .logo { width: 190px; height: auto; display: block; animation: darkPulse 6s infinite ease-in-out; }
+        @keyframes darkPulse { 0% { transform: scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.6)); } 50% { transform: scale(1.02); filter: drop-shadow(0 0 15px rgba(100, 0, 0, 0.7)); } 100% { transform: scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.6)); } }
+
+        /* Botão Voltar Liquid Glass */
         .back-btn {
             align-self: flex-start;
             text-decoration: none;
-            color: rgba(255, 255, 255, 0.8);
+            color: var(--btn-text);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid var(--glass-highlight);
+            backdrop-filter: blur(15px);
+            padding: 10px 18px;
+            border-radius: 15px;
             display: flex;
             align-items: center;
             gap: 5px;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 0.9rem;
             margin-bottom: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
         }
-        .back-btn:hover { color: #fff; }
+        .back-btn:active { transform: scale(0.95); }
 
-        /* CARD LIQUID GLASS */
         .glass-card {
             background: var(--glass-bg);
             backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
-            border-top: 1px solid rgba(255, 255, 255, 0.4);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+            border-top: 1px solid var(--glass-highlight);
             border-radius: 20px;
             padding: 30px 20px;
-            box-shadow: var(--glass-shadow);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -65,95 +97,49 @@
             overflow: hidden;
         }
 
-        h2 { font-size: 1.5rem; margin-bottom: 5px; color: #ffcccc; text-transform: uppercase; letter-spacing: 1px; }
-        
-        .status-badge {
-            background: rgba(255, 200, 200, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            color: #ffaaaa;
-            margin-bottom: 25px;
-            text-transform: uppercase;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
+        h2 { font-size: 1.5rem; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; color: #ffcccc; }
+        .status-badge { background: rgba(255, 200, 200, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; color: #ffaaaa; margin-bottom: 25px; text-transform: uppercase; font-weight: bold; }
 
-        /* CALENDÁRIO VISUAL */
-        .calendar-mockup {
-            width: 100%;
-            max-width: 320px;
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 8px;
-            margin-bottom: 20px;
-            /* Levemente transparente para indicar "inativo/em breve" */
-            opacity: 0.9; 
-        }
+        .calendar-mockup { width: 100%; max-width: 320px; display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-bottom: 20px; opacity: 0.9; }
+        .cal-header { font-size: 0.8rem; font-weight: bold; color: #ff5555; margin-bottom: 5px; }
+        .cal-day { aspect-ratio: 1; background: rgba(0, 0, 0, 0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; color: rgba(255, 255, 255, 0.5); position: relative; border: 1px solid rgba(255, 255, 255, 0.05); }
+        .cal-day.active { background: rgba(200, 0, 0, 0.4); border-color: rgba(255, 100, 100, 0.4); color: #fff; }
+        .cal-day.active::after { content: attr(data-emoji); position: absolute; font-size: 1.2rem; animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
 
-        .cal-header {
-            font-size: 0.8rem;
-            font-weight: bold;
-            color: #ff5555;
-            margin-bottom: 5px;
-        }
+        .info-text { font-size: 1rem; line-height: 1.5; max-width: 90%; color: #e0e0e0; }
+        .coming-soon-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 100%); pointer-events: none; z-index: 0; }
 
-        .cal-day {
-            aspect-ratio: 1;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.5);
-            position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
+        .copyright { margin-top: auto; font-size: 0.75rem; color: var(--text-color); opacity: 0.7; text-align: center; }
 
-        /* Dias com treino (Visual) */
-        .cal-day.active {
-            background: rgba(200, 0, 0, 0.4);
-            border-color: rgba(255, 100, 100, 0.4);
-            color: #fff;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+        /* Botão Flutuante */
+        .theme-toggle {
+            position: fixed; bottom: 25px; right: 25px;
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 1000;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid var(--glass-highlight);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            transition: transform 0.2s, background 0.3s;
         }
-
-        /* Emojis flutuando sobre os dias */
-        .cal-day.active::after {
-            content: attr(data-emoji);
-            position: absolute;
-            font-size: 1.2rem;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-3px); }
-        }
-
-        .info-text {
-            color: #e0e0e0;
-            font-size: 1rem;
-            line-height: 1.5;
-            max-width: 90%;
-        }
-
-        /* Faixa de bloqueio visual (opcional, para reforçar que não clica ainda) */
-        .coming-soon-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 100%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
+        .theme-toggle:active { transform: scale(0.9); }
+        .theme-toggle svg { width: 24px; height: 24px; fill: var(--btn-text); filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3)); }
     </style>
 </head>
 <body>
+    <div class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+        <svg id="themeIcon" viewBox="0 0 24 24"><path d="" /></svg>
+    </div>
+
     <div class="container">
+        <a href="index.html" class="logo-link">
+            <img src="LogoStudioFenix.png" alt="Logo Studio Fenix" class="logo">
+        </a>
+
         <a href="index.html" class="back-btn">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
             Voltar
@@ -162,47 +148,24 @@
         <div class="glass-card">
             <h2>Agendamento Online</h2>
             <div class="status-badge">Em Breve</div>
-
             <div class="calendar-mockup">
-                <div class="cal-header">D</div>
-                <div class="cal-header">S</div>
-                <div class="cal-header">T</div>
-                <div class="cal-header">Q</div>
-                <div class="cal-header">Q</div>
-                <div class="cal-header">S</div>
-                <div class="cal-header">S</div>
-
-                <div class="cal-day">29</div>
-                <div class="cal-day">30</div>
-                <div class="cal-day">1</div>
-                <div class="cal-day active" data-emoji="💪"></div>
-                <div class="cal-day">3</div>
-                <div class="cal-day active" data-emoji="🏃‍♂️"></div>
-                <div class="cal-day">5</div>
-
-                <div class="cal-day">6</div>
-                <div class="cal-day active" data-emoji="🏋️"></div>
-                <div class="cal-day">8</div>
-                <div class="cal-day active" data-emoji="🔥"></div>
-                <div class="cal-day">10</div>
-                <div class="cal-day active" data-emoji="🥊"></div>
-                <div class="cal-day">12</div>
-                
-                <div class="cal-day">13</div>
-                <div class="cal-day active" data-emoji="🧘"></div>
-                <div class="cal-day">15</div>
-                <div class="cal-day active" data-emoji="🚴"></div>
-                <div class="cal-day">17</div>
-                <div class="cal-day">18</div>
-                <div class="cal-day">19</div>
+                <div class="cal-header">D</div><div class="cal-header">S</div><div class="cal-header">T</div><div class="cal-header">Q</div><div class="cal-header">Q</div><div class="cal-header">S</div><div class="cal-header">S</div>
+                <div class="cal-day">29</div><div class="cal-day">30</div><div class="cal-day">1</div><div class="cal-day active" data-emoji="💪"></div><div class="cal-day">3</div><div class="cal-day active" data-emoji="🏃‍♂️"></div><div class="cal-day">5</div>
+                <div class="cal-day">6</div><div class="cal-day active" data-emoji="🏋️"></div><div class="cal-day">8</div><div class="cal-day active" data-emoji="🔥"></div><div class="cal-day">10</div><div class="cal-day active" data-emoji="🥊"></div><div class="cal-day">12</div>
             </div>
-
-            <p class="info-text">
-                Estamos desenvolvendo um sistema completo para você marcar seus treinos e acompanhar sua frequência diretamente pelo app.
-            </p>
-            
+            <p class="info-text">Estamos desenvolvendo um sistema completo para você marcar seus treinos e acompanhar sua frequência diretamente pelo app.</p>
             <div class="coming-soon-overlay"></div>
         </div>
+
+        <div class="copyright">© Studio Fênix | Treinador Personal | Junior Penarrubia</div>
     </div>
+
+    <script>
+        const toggleBtn = document.getElementById('themeToggle'); const icon = document.getElementById('themeIcon'); const body = document.body;
+        const moonIcon = "M17.75,4.09L15.22,6.03L16.13,9.09L13.5,7.28L10.87,9.09L11.78,6.03L9.25,4.09L12.44,4L13.5,1L14.56,4L17.75,4.09M21.25,11L19.61,12.25L20.2,14.23L18.5,13.06L16.8,14.23L17.39,12.25L15.75,11L17.81,10.95L18.5,9L19.19,10.95L21.25,11M18.97,15.95C19.8,15.87 20.69,17.05 20.16,17.8C19.84,18.25 19.5,18.67 19.08,19.07C15.17,23 8.84,23 4.94,19.07C1.03,15.17 1.03,8.83 4.94,4.93C5.34,4.53 5.76,4.17 6.21,3.85C6.96,3.32 8.14,4.21 8.06,5.04C7.79,7.9 8.75,10.87 10.95,13.06C13.14,15.26 16.1,16.22 18.97,15.95M17.33,17.97C14.5,17.81 11.7,16.64 9.53,14.5C7.38,12.35 6.21,9.55 6.05,6.72C3.96,8.35 2.5,11.23 2.87,14.39C3.41,19 8.21,21.92 12.57,20.27C14.77,19.44 16.53,17.84 17.33,15.97H17.33Z";
+        const sunIcon = "M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,2L14.39,5.42C13.65,5.15 12.84,5 12,5C11.16,5 10.35,5.15 9.61,5.42L12,2M3.34,7L7.5,5.29C7.24,5.84 6.63,6.96 6.13,8.23L3.34,7M3.34,17L6.13,15.77C6.63,17.04 7.24,18.16 7.5,18.71L3.34,17M20.66,17L16.5,18.71C16.76,18.16 17.37,17.04 17.87,15.77L20.66,17M20.66,7L17.87,8.23C17.37,6.96 16.76,5.84 16.5,5.29L20.66,7M12,22L9.61,18.58C10.35,18.85 11.16,19 12,19C12.84,19 13.65,18.85 14.39,18.58L12,22Z";
+        if(localStorage.getItem('theme') === 'light') { body.classList.add('light-mode'); icon.innerHTML = `<path d="${sunIcon}" />`; } else { icon.innerHTML = `<path d="${moonIcon}" />`; }
+        function toggleTheme() { body.classList.toggle('light-mode'); if(body.classList.contains('light-mode')) { localStorage.setItem('theme', 'light'); icon.innerHTML = `<path d="${sunIcon}" />`; } else { localStorage.setItem('theme', 'dark'); icon.innerHTML = `<path d="${moonIcon}" />`; } }
+    </script>
 </body>
 </html>
