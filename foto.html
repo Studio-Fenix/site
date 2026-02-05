@@ -8,7 +8,7 @@
     <style>
         :root {
             /* DARK MODE */
-            --bg-gradient: linear-gradient(to bottom, #0a0a0a 0%, #1a1a1a 40%, #800000 100%);
+            --bg-gradient: linear-gradient(to bottom, #0a0a0a 0%, #1a1a1a 30%, #990000 100%);
             --text-color: #ffffff;
             --glass-bg: linear-gradient(135deg, rgba(255, 50, 50, 0.15), rgba(100, 0, 0, 0.4));
             --glass-border: rgba(255, 200, 200, 0.25);
@@ -60,7 +60,6 @@
         }
         .back-btn:active { transform: scale(0.95); }
 
-        /* CARD PRINCIPAL */
         .photo-card {
             background: var(--glass-bg); backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border); border-top: 1px solid var(--glass-highlight);
@@ -69,13 +68,9 @@
         }
 
         .canvas-container {
-            position: relative;
-            width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            background: #000;
-            overflow: hidden;
-            display: none; /* Oculto até carregar foto */
+            position: relative; width: 100%; border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5); background: #000;
+            overflow: hidden; display: none;
         }
 
         .canvas-preview { width: 100%; display: block; touch-action: none; }
@@ -88,7 +83,6 @@
             background: rgba(0,0,0,0.2);
         }
 
-        /* CONTROLES DE EDIÇÃO */
         .edit-controls {
             width: 100%; display: none; flex-direction: column; gap: 10px;
             background: rgba(0,0,0,0.2); padding: 10px; border-radius: 15px;
@@ -97,10 +91,8 @@
         .control-group label { min-width: 50px; font-weight: bold; }
         input[type=range] { flex-grow: 1; accent-color: #ff3333; }
 
-        /* BOTÕES DE AÇÃO */
         .action-btn {
-            width: 100%;
-            background: #fff; color: #990000;
+            width: 100%; background: #fff; color: #990000;
             border: none; padding: 15px; border-radius: 50px;
             font-weight: 800; font-size: 1rem; text-transform: uppercase;
             cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
@@ -110,17 +102,13 @@
         
         .share-btn {
             background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); 
-            color: #fff; 
-            display: none;
+            color: #fff; display: none;
         }
 
         input[type="file"] { display: none; }
         .info-text { font-size: 0.9rem; text-align: center; color: var(--text-color); opacity: 0.8; line-height: 1.4; }
         
-        /* RODAPÉ E TEMA PADRONIZADO */
-        .theme-container {
-            display: flex; justify-content: center; margin-top: auto; margin-bottom: 15px;
-        }
+        .theme-container { display: flex; justify-content: center; margin-top: auto; margin-bottom: 15px; }
         .theme-toggle {
             width: 44px; height: 44px; border-radius: 50%; 
             display: flex; align-items: center; justify-content: center; 
@@ -195,14 +183,12 @@
     <img src="logosf-moldura.png" id="sourceLogo" style="display:none;" crossorigin="anonymous">
 
     <script>
-        // --- TEMA ---
         const toggleBtn = document.getElementById('themeToggle'); const icon = document.getElementById('themeIcon'); const body = document.body;
         const moonIcon = "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z";
         const sunIcon = "M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42M12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10z";
         if(localStorage.getItem('theme') === 'light') { body.classList.add('light-mode'); icon.innerHTML = `<path d="${sunIcon}" />`; } else { icon.innerHTML = `<path d="${moonIcon}" />`; }
         function toggleTheme() { body.classList.toggle('light-mode'); if(body.classList.contains('light-mode')) { localStorage.setItem('theme', 'light'); icon.innerHTML = `<path d="${sunIcon}" />`; } else { localStorage.setItem('theme', 'dark'); icon.innerHTML = `<path d="${moonIcon}" />`; } }
 
-        // --- LÓGICA DA FOTO ---
         const cameraInput = document.getElementById('cameraInput');
         const canvas = document.getElementById('finalCanvas');
         const ctx = canvas.getContext('2d');
@@ -218,6 +204,10 @@
         let currentTemp = "--";
         let imgState = { x: 0, y: 0, scale: 1, rotation: 0 };
         let isDragging = false; let startX, startY;
+
+        // Ícone Instagram SVG em Base64
+        const instaIconImg = new Image();
+        instaIconImg.src = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxyZWN0IHg9IjIiIHk9IjIiIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgcng9IjUiIHJ5PSI1Ii8+PHBhdGggZD0iTTE2IDExLjM3QTRSA0IDAgMSAxIDEyLjYzIDggNCA0IDAgMCAxIDE2IDExLjM3eiIvPjxsaW5lIHgxPSIxNy41IiB5MT0iNi41IiB4Mj0iMTcuNTEiIHkyPSI2LjUiLz48L3N2Zz4=";
 
         async function fetchWeather() {
             try {
@@ -274,9 +264,11 @@
             gradientBottom.addColorStop(0, "transparent"); gradientBottom.addColorStop(1, "rgba(0, 0, 0, 0.9)");
             ctx.fillStyle = gradientBottom; ctx.fillRect(0, 1400, canvas.width, 520);
 
-            // LOGO
-            const logoWidth = 400; 
-            let logoHeight = 200; 
+            // ===============================================
+            // 1. LOGO (Direita) - Menor
+            // ===============================================
+            const logoWidth = 280; 
+            let logoHeight = 140; 
             if (sourceLogo.width > 0) { logoHeight = (sourceLogo.height / sourceLogo.width) * logoWidth; }
             
             const paddingRight = 50;
@@ -288,25 +280,38 @@
             ctx.drawImage(sourceLogo, logoX, logoY, logoWidth, logoHeight);
             ctx.shadowBlur = 0;
 
-            // INSTAGRAM
-            ctx.fillStyle = "white";
-            ctx.font = "bold 30px sans-serif";
-            ctx.textAlign = "right"; 
-            ctx.shadowColor = "black"; ctx.shadowBlur = 4;
-            ctx.fillText("@studio.fenix2026", canvas.width - paddingRight, logoY - 20);
-
-            // HORA E TEMP
+            // ===============================================
+            // 2. CANTO INFERIOR ESQUERDO (Hora, Temp, Insta)
+            // ===============================================
             const now = new Date();
-            const timeString = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-            const paddingLeft = 50;
-            const timeY = 1600;
-            const tempY = 1670;
+            // Formato 24h
+            const timeString = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', hour12: false });
             
+            const paddingLeft = 50;
+            const baseBottom = 1880; // Linha base para alinhar para cima
+
+            // HORA (Topo da pilha)
             ctx.textAlign = "left";
-            ctx.font = "bold 70px sans-serif";
-            ctx.fillText(timeString, paddingLeft, timeY);
+            ctx.fillStyle = "white";
+            ctx.shadowColor = "black"; ctx.shadowBlur = 4;
+            
+            ctx.font = "bold 80px sans-serif";
+            ctx.fillText(timeString, paddingLeft, baseBottom - 160); // Posição mais alta
+
+            // TEMPERATURA (Meio)
             ctx.font = "50px sans-serif";
-            ctx.fillText(`${currentTemp}°C`, paddingLeft, tempY);
+            ctx.fillText(`${currentTemp}°C`, paddingLeft, baseBottom - 90);
+
+            // INSTAGRAM (Baixo) - Ícone + Texto
+            const iconSize = 40;
+            const instaY = baseBottom - 35; // Posição do ícone e texto
+            
+            // Desenha Ícone
+            ctx.drawImage(instaIconImg, paddingLeft, instaY - 30, iconSize, iconSize);
+            
+            // Texto @
+            ctx.font = "bold 30px sans-serif";
+            ctx.fillText("@studio.fenix2026", paddingLeft + iconSize + 15, instaY);
         }
 
         zoomRange.addEventListener('input', (e) => { imgState.scale = parseFloat(e.target.value); draw(); });
