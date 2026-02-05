@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Foto Studio Fênix</title>
+    <link rel="icon" type="image/webp" href="icon.webp">
+    <style>
+        :root {
+            /* DARK MODE */
+            --bg-gradient: linear-gradient(to bottom, #0a0a0a 0%, #1a1a1a 40%, #800000 100%);
+            --text-color: #ffffff;
+            --glass-bg: linear-gradient(135deg, rgba(255, 50, 50, 0.15), rgba(100, 0, 0, 0.4));
+            --glass-border: rgba(255, 200, 200, 0.25);
+            --glass-highlight: rgba(255, 255, 255, 0.3);
+            --glass-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            --btn-text: #ffffff;
+            --toggle-bg: rgba(255, 255, 255, 0.1);
+            --toggle-icon: #ffffff;
+        }
+        body.light-mode {
+            /* LIGHT MODE */
+            --bg-gradient: linear-gradient(to bottom, #f4f4f4 0%, #e0e0e0 50%, #ff9999 100%);
+            --text-color: #333333;
+            --glass-bg: linear-gradient(135deg, rgba(220, 50, 50, 0.6), rgba(180, 0, 0, 0.7));
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --glass-highlight: rgba(255, 255, 255, 0.8);
+            --glass-shadow: 0 8px 32px rgba(150, 0, 0, 0.2);
+            --btn-text: #ffffff;
+            --toggle-bg: rgba(0, 0, 0, 0.1);
+            --toggle-icon: #333333;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+        
+        body {
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-color);
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+            transition: background 0.5s ease;
+        }
+
+        .container { width: 100%; max-width: 480px; padding: 20px 24px; display: flex; flex-direction: column; gap: 20px; position: relative; flex-grow: 1; }
+
+        .logo-link { display: inline-block; text-decoration: none; margin-top: 20px; margin-bottom: 5px; align-self: center; }
+        .logo { width: 190px; height: auto; display: block; animation: redPulseShadow 4s infinite ease-in-out; }
+        @keyframes redPulseShadow { 0%, 100% { filter: drop-shadow(0 0 0 rgba(255, 0, 0, 0)); } 50% { filter: drop-shadow(0 0 20px rgba(255, 50, 50, 0.8)); } }
+
+        .back-btn {
+            align-self: flex-start; text-decoration: none; color: var(--btn-text);
+            background: var(--glass-bg); border: 1px solid var(--glass-border); border-top: 1px solid var(--glass-highlight);
+            backdrop-filter: blur(15px); padding: 10px 18px; border-radius: 15px;
+            display: flex; align-items: center; gap: 5px; font-weight: 600; font-size: 0.9rem;
+            margin-bottom: 10px; box-shadow: var(--glass-shadow); transition: transform 0.2s;
+        }
+        .back-btn:active { transform: scale(0.95); }
+
+        /* CARD PRINCIPAL */
+        .photo-card {
+            background: var(--glass-bg); backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border); border-top: 1px solid var(--glass-highlight);
+            border-radius: 20px; padding: 20px; box-shadow: var(--glass-shadow);
+            display: flex; flex-direction: column; align-items: center; gap: 15px;
+        }
+
+        .canvas-container {
+            position: relative;
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            background: #000;
+            overflow: hidden;
+            display: none; /* Oculto até carregar foto */
+        }
+
+        .canvas-preview { width: 100%; display: block; touch-action: none; }
+
+        .placeholder-box {
+            width: 100%; aspect-ratio: 9/16;
+            border: 2px dashed rgba(255,255,255,0.3); border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            flex-direction: column; gap: 10px; color: rgba(255,255,255,0.5);
+            background: rgba(0,0,0,0.2);
+        }
+
+        /* CONTROLES DE EDIÇÃO */
+        .edit-controls {
+            width: 100%; display: none; flex-direction: column; gap: 10px;
+            background: rgba(0,0,0,0.2); padding: 10px; border-radius: 15px;
+        }
+        .control-group { display: flex; align-items: center; gap: 10px; color: var(--btn-text); font-size: 0.8rem; }
+        .control-group label { min-width: 50px; font-weight: bold; }
+        input[type=range] { flex-grow: 1; accent-color: #ff3333; }
+
+        /* BOTÕES DE AÇÃO */
+        .action-btn {
+            width: 100%;
+            background: #fff; color: #990000;
+            border: none; padding: 15px; border-radius: 50px;
+            font-weight: 800; font-size: 1rem; text-transform: uppercase;
+            cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .action-btn:active { transform: scale(0.95); }
+        
+        .share-btn {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); 
+            color: #fff; 
+            display: none;
+        }
+
+        input[type="file"] { display: none; }
+        .info-text { font-size: 0.9rem; text-align: center; color: var(--text-color); opacity: 0.8; line-height: 1.4; }
+        
+        /* RODAPÉ E TEMA PADRONIZADO */
+        .theme-container {
+            display: flex; justify-content: center; margin-top: auto; margin-bottom: 15px;
+        }
+        .theme-toggle {
+            width: 44px; height: 44px; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; 
+            cursor: pointer; background: var(--toggle-bg);
+            border: 1px solid var(--glass-border); backdrop-filter: blur(5px);
+            transition: transform 0.2s, background 0.3s;
+        }
+        .theme-toggle:active { transform: scale(0.95); }
+        .theme-toggle svg { width: 22px; height: 22px; stroke: var(--toggle-icon); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.3s; }
+
+        .copyright { font-size: 0.75rem; color: var(--text-color); opacity: 0.7; text-align: center; }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <a href="index.html" class="logo-link">
+            <img src="LogoStudioFenix.png" alt="Logo Studio Fenix" class="logo">
+        </a>
+
+        <a href="index.html" class="back-btn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Voltar
+        </a>
+
+        <div class="photo-card">
+            <p class="info-text">Compartilhe sua foto!</p>
+            
+            <input type="file" id="cameraInput" accept="image/*">
+
+            <div class="placeholder-box" id="placeholder" onclick="document.getElementById('cameraInput').click()">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/></svg>
+                <span>Toque para Carregar Foto</span>
+            </div>
+
+            <div class="canvas-container" id="canvasContainer">
+                <canvas id="finalCanvas" class="canvas-preview"></canvas>
+            </div>
+
+            <div class="edit-controls" id="editControls">
+                <p style="text-align:center; font-size:0.8rem; margin-bottom:5px; opacity:0.8;">Arraste a foto para mover</p>
+                <div class="control-group">
+                    <label>Zoom</label>
+                    <input type="range" id="zoomRange" min="0.5" max="3" step="0.1" value="1">
+                </div>
+                <div class="control-group">
+                    <label>Girar</label>
+                    <input type="range" id="rotateRange" min="-180" max="180" step="1" value="0">
+                </div>
+            </div>
+
+            <button class="action-btn" onclick="document.getElementById('cameraInput').click()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4h-3.17L15 2H9L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-5 11.5V13H9v2.5L5.5 12 9 8.5V11h6V8.5l3.5 3.5-3.5 3.5z"/></svg>
+                Tirar / Nova Foto
+            </button>
+
+            <button id="shareBtn" class="action-btn share-btn" onclick="shareImage()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                Compartilhar
+            </button>
+        </div>
+
+        <div class="theme-container">
+            <div class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+                <svg id="themeIcon" viewBox="0 0 24 24"><path d="" /></svg>
+            </div>
+        </div>
+
+        <div class="copyright">© Studio Fênix | Treinador Personal | Junior Penarrubia</div>
+    </div>
+
+    <img src="logosf-moldura.png" id="sourceLogo" style="display:none;" crossorigin="anonymous">
+
+    <script>
+        // --- TEMA ---
+        const toggleBtn = document.getElementById('themeToggle'); const icon = document.getElementById('themeIcon'); const body = document.body;
+        const moonIcon = "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z";
+        const sunIcon = "M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42M12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10z";
+        if(localStorage.getItem('theme') === 'light') { body.classList.add('light-mode'); icon.innerHTML = `<path d="${sunIcon}" />`; } else { icon.innerHTML = `<path d="${moonIcon}" />`; }
+        function toggleTheme() { body.classList.toggle('light-mode'); if(body.classList.contains('light-mode')) { localStorage.setItem('theme', 'light'); icon.innerHTML = `<path d="${sunIcon}" />`; } else { localStorage.setItem('theme', 'dark'); icon.innerHTML = `<path d="${moonIcon}" />`; } }
+
+        // --- LÓGICA DA FOTO ---
+        const cameraInput = document.getElementById('cameraInput');
+        const canvas = document.getElementById('finalCanvas');
+        const ctx = canvas.getContext('2d');
+        const placeholder = document.getElementById('placeholder');
+        const shareBtn = document.getElementById('shareBtn');
+        const sourceLogo = document.getElementById('sourceLogo');
+        const canvasContainer = document.getElementById('canvasContainer');
+        const editControls = document.getElementById('editControls');
+        const zoomRange = document.getElementById('zoomRange');
+        const rotateRange = document.getElementById('rotateRange');
+
+        let userImg = new Image();
+        let currentTemp = "--";
+        let imgState = { x: 0, y: 0, scale: 1, rotation: 0 };
+        let isDragging = false; let startX, startY;
+
+        async function fetchWeather() {
+            try {
+                const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-20.1836&longitude=-49.3514&current=temperature_2m&timezone=America%2FSao_Paulo');
+                const data = await response.json();
+                currentTemp = Math.round(data.current.temperature_2m);
+            } catch (e) { console.log("Erro clima"); }
+        }
+        fetchWeather();
+
+        cameraInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                userImg = new Image();
+                userImg.onload = function() { initEditor(); };
+                userImg.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        function initEditor() {
+            canvas.width = 1080; canvas.height = 1920;
+            imgState.rotation = 0; rotateRange.value = 0;
+            const ratio = Math.max(canvas.width / userImg.width, canvas.height / userImg.height);
+            imgState.scale = ratio; zoomRange.value = ratio; zoomRange.min = ratio * 0.5; zoomRange.max = ratio * 3;
+            imgState.x = canvas.width / 2; imgState.y = canvas.height / 2;
+            placeholder.style.display = 'none'; canvasContainer.style.display = 'block';
+            editControls.style.display = 'flex'; shareBtn.style.display = 'flex';
+            draw();
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#000"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(imgState.x, imgState.y);
+            ctx.rotate(imgState.rotation * Math.PI / 180);
+            ctx.scale(imgState.scale, imgState.scale);
+            ctx.drawImage(userImg, -userImg.width / 2, -userImg.height / 2);
+            ctx.restore();
+            drawOverlay();
+        }
+
+        function drawOverlay() {
+            // Sombra Topo
+            const gradientTop = ctx.createLinearGradient(0, 0, 0, 300);
+            gradientTop.addColorStop(0, "rgba(200, 0, 0, 0.6)"); gradientTop.addColorStop(1, "transparent");
+            ctx.fillStyle = gradientTop; ctx.fillRect(0, 0, canvas.width, 300);
+
+            // Sombra Fundo
+            const gradientBottom = ctx.createLinearGradient(0, 1400, 0, 1920);
+            gradientBottom.addColorStop(0, "transparent"); gradientBottom.addColorStop(1, "rgba(0, 0, 0, 0.9)");
+            ctx.fillStyle = gradientBottom; ctx.fillRect(0, 1400, canvas.width, 520);
+
+            // LOGO
+            const logoWidth = 400; 
+            let logoHeight = 200; 
+            if (sourceLogo.width > 0) { logoHeight = (sourceLogo.height / sourceLogo.width) * logoWidth; }
+            
+            const paddingRight = 50;
+            const paddingBottom = 50;
+            const logoX = canvas.width - logoWidth - paddingRight;
+            const logoY = canvas.height - logoHeight - paddingBottom;
+            
+            ctx.shadowColor = "black"; ctx.shadowBlur = 10;
+            ctx.drawImage(sourceLogo, logoX, logoY, logoWidth, logoHeight);
+            ctx.shadowBlur = 0;
+
+            // INSTAGRAM
+            ctx.fillStyle = "white";
+            ctx.font = "bold 30px sans-serif";
+            ctx.textAlign = "right"; 
+            ctx.shadowColor = "black"; ctx.shadowBlur = 4;
+            ctx.fillText("@studio.fenix2026", canvas.width - paddingRight, logoY - 20);
+
+            // HORA E TEMP
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+            const paddingLeft = 50;
+            const timeY = 1600;
+            const tempY = 1670;
+            
+            ctx.textAlign = "left";
+            ctx.font = "bold 70px sans-serif";
+            ctx.fillText(timeString, paddingLeft, timeY);
+            ctx.font = "50px sans-serif";
+            ctx.fillText(`${currentTemp}°C`, paddingLeft, tempY);
+        }
+
+        zoomRange.addEventListener('input', (e) => { imgState.scale = parseFloat(e.target.value); draw(); });
+        rotateRange.addEventListener('input', (e) => { imgState.rotation = parseFloat(e.target.value); draw(); });
+        function handleStart(x, y) { isDragging = true; startX = x; startY = y; }
+        function handleMove(x, y) { if (!isDragging) return; imgState.x += (x - startX) * 2; imgState.y += (y - startY) * 2; startX = x; startY = y; draw(); }
+        function handleEnd() { isDragging = false; }
+        canvas.addEventListener('mousedown', e => handleStart(e.clientX, e.clientY)); window.addEventListener('mousemove', e => handleMove(e.clientX, e.clientY)); window.addEventListener('mouseup', handleEnd);
+        canvas.addEventListener('touchstart', e => { e.preventDefault(); handleStart(e.touches[0].clientX, e.touches[0].clientY); }, {passive: false});
+        canvas.addEventListener('touchmove', e => { e.preventDefault(); handleMove(e.touches[0].clientX, e.touches[0].clientY); }, {passive: false});
+        canvas.addEventListener('touchend', handleEnd);
+
+        async function shareImage() {
+            canvas.toBlob(async (blob) => {
+                const file = new File([blob], "story_fenix.png", { type: "image/png" });
+                if (navigator.share) {
+                    try { await navigator.share({ files: [file], title: 'Treino Studio Fênix', text: 'Treino pago! @studio.fenix2026' }); } catch (err) { console.log("Erro share:", err); }
+                } else {
+                    const link = document.createElement('a'); link.download = 'story_fenix.png'; link.href = canvas.toDataURL(); link.click();
+                }
+            }, 'image/png');
+        }
+    </script>
+</body>
+</html>
