@@ -3,46 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Planos - Studio Fenix</title>
+    <title>Planos - Studio Fênix</title>
     <link rel="icon" type="image/webp" href="icon.webp">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            /* DARK MODE */
+            /* DARK MODE PADRÃO */
             --bg-gradient: linear-gradient(to bottom, #0a0a0a 0%, #1a1a1a 40%, #800000 100%);
             --text-color: #ffffff;
-            --text-sec: #e0e0e0;
-            
-            /* Liquid Glass */
             --glass-bg: linear-gradient(135deg, rgba(255, 50, 50, 0.15), rgba(100, 0, 0, 0.4));
             --glass-border: rgba(255, 200, 200, 0.25);
             --glass-highlight: rgba(255, 255, 255, 0.3);
             --glass-shadow: 0 8px 32px rgba(0,0,0,0.5);
             --btn-text: #ffffff;
-            
-            /* Toggle */
+            --accent-green: #00ff88;
             --toggle-bg: rgba(255, 255, 255, 0.1);
             --toggle-icon: #ffffff;
         }
-
+        
         body.light-mode {
             /* LIGHT MODE */
             --bg-gradient: linear-gradient(to bottom, #f4f4f4 0%, #e0e0e0 50%, #ff9999 100%);
             --text-color: #333333;
-            --text-sec: #555555;
-            
             --glass-bg: linear-gradient(135deg, rgba(220, 50, 50, 0.6), rgba(180, 0, 0, 0.7));
             --glass-border: rgba(255, 255, 255, 0.6);
             --glass-highlight: rgba(255, 255, 255, 0.8);
             --glass-shadow: 0 8px 32px rgba(150, 0, 0, 0.2);
             --btn-text: #ffffff;
-            
             --toggle-bg: rgba(0, 0, 0, 0.1);
             --toggle-icon: #333333;
         }
-        
-        body.light-mode .plan-card * { color: #fff; }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
         
         body {
             background: var(--bg-gradient);
@@ -51,19 +44,19 @@
             flex-direction: column;
             align-items: center;
             color: var(--text-color);
-            padding-top: env(safe-area-inset-top);
-            padding-bottom: env(safe-area-inset-bottom);
+            padding: 20px;
+            padding-bottom: 40px;
             transition: background 0.5s ease;
         }
 
-        .container { width: 100%; max-width: 480px; padding: 20px 24px; display: flex; flex-direction: column; gap: 20px; position: relative; flex-grow: 1; }
-        
-        /* LOGO */
-        .logo-link { display: inline-block; text-decoration: none; margin-top: 20px; margin-bottom: 5px; align-self: center; }
-        .logo { width: 190px; height: auto; display: block; animation: redPulseShadow 4s infinite ease-in-out; }
-        @keyframes redPulseShadow { 0%, 100% { filter: drop-shadow(0 0 0 rgba(255, 0, 0, 0)); } 50% { filter: drop-shadow(0 0 20px rgba(255, 50, 50, 0.8)); } }
+        .container { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 20px; flex-grow: 1; }
 
-        /* Botão Voltar */
+        /* HEADER */
+        .header-nav { width: 100%; display: flex; justify-content: center; margin-bottom: 10px; }
+        .logo-link { display: block; transition: transform 0.2s; }
+        .logo-link:active { transform: scale(0.95); }
+        .logo { width: 160px; display: block; filter: drop-shadow(0 0 15px rgba(255,0,0,0.4)); }
+
         .back-btn {
             align-self: flex-start; text-decoration: none; color: var(--btn-text);
             background: var(--glass-bg); border: 1px solid var(--glass-border); border-top: 1px solid var(--glass-highlight);
@@ -73,125 +66,139 @@
         }
         .back-btn:active { transform: scale(0.95); }
 
-        h1 { text-align: center; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        h1 { text-align: center; font-size: 1.8rem; font-weight: 800; text-transform: uppercase; margin-bottom: 5px; text-shadow: 0 0 20px rgba(255,0,0,0.6); }
+        .subtitle { text-align: center; font-size: 0.9rem; opacity: 0.8; margin-bottom: 25px; font-weight: 300; }
 
-        /* CARDS DE PLANOS */
+        /* CARDS DE PLANO */
         .plan-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
-            border-top: 1px solid var(--glass-highlight);
-            border-radius: 20px;
-            padding: 25px;
-            position: relative;
-            box-shadow: var(--glass-shadow);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            background: var(--glass-bg); backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border); border-top: 1px solid var(--glass-highlight);
+            border-radius: 20px; padding: 25px; box-shadow: var(--glass-shadow);
+            position: relative; overflow: hidden; transition: transform 0.3s;
+            display: flex; flex-direction: column; gap: 15px;
         }
+        .plan-card:hover { transform: translateY(-5px); }
 
-        .plan-header { border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 15px; margin-bottom: 5px; }
-        .plan-title { font-size: 1.4rem; font-weight: 800; color: #fff; text-transform: uppercase; }
-        .plan-badge { background: #ff3333; color: white; padding: 4px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: bold; display: inline-block; margin-top: 5px; text-transform: uppercase; }
+        .plan-header h2 { font-size: 1.2rem; font-weight: 800; margin-bottom: 5px; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
+        .plan-header h2 span { display: block; font-size: 0.8rem; font-weight: 400; opacity: 0.8; margin-top: 2px; }
         
-        .price-highlight { font-size: 1.6rem; font-weight: bold; color: #ffcccc; margin-top: 10px; }
-        .price-sub { font-size: 0.9rem; font-weight: 400; color: #ddd; }
+        .price { font-size: 1.8rem; font-weight: 800; color: #fff; display: flex; align-items: baseline; gap: 5px; }
+        .price span { font-size: 1rem; opacity: 0.8; font-weight: 400; }
+        
+        .plan-desc { font-size: 0.9rem; line-height: 1.5; opacity: 0.9; color: #eee; font-style: italic; }
 
-        .plan-list { list-style: none; text-align: left; }
-        .plan-list li { 
-            position: relative; 
-            padding-left: 20px; 
-            margin-bottom: 8px; 
-            font-size: 0.95rem; 
-            color: #eee; 
-            line-height: 1.4;
+        .benefits-list { list-style: none; text-align: left; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 12px; }
+        .benefits-list li { 
+            display: flex; align-items: flex-start; gap: 10px; 
+            font-size: 0.85rem; margin-bottom: 10px; color: #ddd; line-height: 1.4;
         }
-        .plan-list li::before {
-            content: '•'; position: absolute; left: 0; color: #ff9999; font-weight: bold;
-        }
+        .benefits-list li:last-child { margin-bottom: 0; }
+        .benefits-list li::before { content: '•'; color: var(--accent-green); font-weight: bold; font-size: 1.2rem; line-height: 1rem; }
 
-        /* Destaque para o plano Premium */
-        .premium-card {
-            background: linear-gradient(135deg, rgba(200, 20, 20, 0.4), rgba(100, 0, 0, 0.8));
-            border: 1px solid rgba(255, 200, 200, 0.5);
-            transform: scale(1.02);
+        /* BOTÃO DE AÇÃO */
+        .btn-subscribe {
+            width: 100%; padding: 15px; border-radius: 12px; border: none;
+            background: #fff; color: #990000; font-weight: 800; font-size: 1rem; 
+            cursor: pointer; text-transform: uppercase; text-decoration: none; display: block; text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: transform 0.2s;
         }
-        .premium-badge { background: #fff; color: #990000; }
+        .btn-subscribe:active { transform: scale(0.95); }
+        
+        /* Cores específicas de botões para diferenciar */
+        .btn-essencial { background: #eee; color: #333; }
+        .btn-fenix-pro { background: linear-gradient(90deg, #ff4444, #990000); color: #fff; box-shadow: 0 0 15px rgba(255, 0, 0, 0.4); }
+        .btn-evolucao { background: linear-gradient(90deg, #ff9900, #ff5500); color: #fff; }
+        .btn-premium { background: linear-gradient(90deg, #DAA520, #8B4513); color: #fff; border: 1px solid #ffd700; }
 
-        /* RODAPÉ E TEMA PADRONIZADO */
-        .theme-container {
-            display: flex; justify-content: center; margin-top: auto; margin-bottom: 15px;
-        }
-        .theme-toggle {
-            width: 44px; height: 44px; border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; 
-            cursor: pointer; background: var(--toggle-bg);
-            border: 1px solid var(--glass-border); backdrop-filter: blur(5px);
-            transition: transform 0.2s, background 0.3s;
-        }
+        /* TEMA */
+        .theme-container { display: flex; justify-content: center; margin-top: auto; margin-bottom: 15px; }
+        .theme-toggle { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; background: var(--toggle-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(5px); transition: transform 0.2s, background 0.3s; }
         .theme-toggle:active { transform: scale(0.95); }
         .theme-toggle svg { width: 22px; height: 22px; stroke: var(--toggle-icon); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.3s; }
-
         .copyright { font-size: 0.75rem; color: var(--text-color); opacity: 0.7; text-align: center; }
+
     </style>
 </head>
 <body>
+
     <div class="container">
-        <a href="index.html" class="logo-link">
-            <img src="LogoStudioFenix.png" alt="Logo Studio Fenix" class="logo">
-        </a>
+        
+        <div class="header-nav">
+            <a href="index.html" class="logo-link">
+                <img src="LogoStudioFenix.png" class="logo">
+            </a>
+        </div>
 
         <a href="index.html" class="back-btn">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
             Voltar
         </a>
 
-        <h1>Nossos Planos</h1>
+        <div>
+            <h1>Nossos Planos</h1>
+            <p class="subtitle">Escolha a melhor opção para sua evolução</p>
+        </div>
 
         <div class="plan-card">
             <div class="plan-header">
-                <div class="plan-title">Plano Essência</div>
-                <div class="plan-badge">Mensal</div>
-                <div class="price-highlight">R$ 212,80 <span class="price-sub">/ mês</span></div>
+                <h2>Plano Essencial <span>Mensal</span></h2>
+                <div class="price">R$ 212,80</div>
             </div>
-            <ul class="plan-list">
-                <li>Focado em quem está começando ou busca flexibilidade.</li>
+            <p class="plan-desc">Focado em quem está começando ou busca flexibilidade.</p>
+            <ul class="benefits-list">
                 <li>Acesso ilimitado à área de treinamento funcional e musculação.</li>
                 <li>Participação em aulas de grupo básicas.</li>
-                <li>Consulta inicial com instrutor para montar treino personalizado.</li>
+                <li>Consulta inicial com um instrutor para montar um treinamento personalizado.</li>
                 <li>Acompanhamento de progresso mensal.</li>
             </ul>
+            <a href="https://wa.me/5517992323066?text=Ola,%20quero%20assinar%20o%20Plano%20Essencial" class="btn-subscribe btn-essencial">Assinar Mensal</a>
+        </div>
+
+        <div class="plan-card" style="border: 2px solid #ff4444;">
+            <div class="plan-header">
+                <h2>Plano Fênix Pro <span>Trimestral</span></h2>
+                <div class="price">3x R$ 149,99</div>
+            </div>
+            <p class="plan-desc">Treine com constância, tenha acompanhamento profissional e alcance resultados reais em 3 meses.</p>
+            <ul class="benefits-list">
+                <li>Resultados consistentes.</li>
+                <li>Mais disciplina e constância nos treinos.</li>
+                <li>Economia em relação ao plano mensal.</li>
+                <li>Acompanhamento profissional contínuo.</li>
+                <li>Mudança real de hábitos e qualidade de vida.</li>
+            </ul>
+            <a href="https://wa.me/5517992323066?text=Ola,%20quero%20assinar%20o%20Plano%20Fenix%20Pro" class="btn-subscribe btn-fenix-pro">Assinar Fênix Pro</a>
         </div>
 
         <div class="plan-card">
             <div class="plan-header">
-                <div class="plan-title">Plano Evolução</div>
-                <div class="plan-badge">Semestral</div>
-                <div class="price-highlight">6x R$ 185,19</div>
+                <h2>Plano Evolução <span>Semestral</span></h2>
+                <div class="price">6x R$ 185,19</div>
             </div>
-            <ul class="plan-list">
-                <li>Ideal para quem deseja consistência e resultados visíveis.</li>
+            <p class="plan-desc">Ideal para quem deseja consistência e resultados visíveis com acompanhamento regular.</p>
+            <ul class="benefits-list">
                 <li>Acesso ilimitado à área de treinamento funcional e musculação.</li>
                 <li>Participação ilimitada em todas as aulas de grupo (básicas + avançadas).</li>
-                <li>Avaliação física trimestral com acompanhamento.</li>
-                <li>5% de desconto nos produtos do Studio Fênix.</li>
+                <li>Avaliação física trimestral com acompanhamento de resultados.</li>
+                <li>Desconto de 5% nos produtos do Studio Fênix.</li>
             </ul>
+            <a href="https://wa.me/5517992323066?text=Ola,%20quero%20assinar%20o%20Plano%20Evolução" class="btn-subscribe btn-evolucao">Assinar Evolução</a>
         </div>
 
-        <div class="plan-card premium-card">
+        <div class="plan-card" style="background: linear-gradient(135deg, rgba(50, 50, 50, 0.4), rgba(0, 0, 0, 0.6)); border-color: #DAA520;">
             <div class="plan-header">
-                <div class="plan-title">Plano Fênix Premium</div>
-                <div class="plan-badge premium-badge">Anual - Melhor Valor</div>
-                <div class="price-highlight">12x R$ 142,99</div>
+                <h2 style="color: #DAA520;">Plano Fênix Premium <span>Anual</span></h2>
+                <div class="price" style="color: #DAA520;">12x R$ 142,99</div>
             </div>
-            <ul class="plan-list">
-                <li>Para quem busca compromisso, evolução contínua e custo-benefício.</li>
-                <li>Acesso ilimitado à área de treinamento e musculação.</li>
-                <li>Participação ilimitada em todas as aulas.</li>
+            <p class="plan-desc">Para quem busca compromisso, evolução contínua e o melhor custo-benefício.</p>
+            <ul class="benefits-list">
+                <li>Acesso ilimitado à área de treinamento funcional e musculação.</li>
+                <li>Participação ilimitada em todas as aulas de grupo.</li>
                 <li>Acesso a treinamento funcional (2x por semana).</li>
-                <li>Avaliação física trimestral completa.</li>
-                <li><strong>Flexibilidade: 60 dias de Férias Garantidas.</strong></li>
+                <li>Avaliação física trimestral com acompanhamento.</li>
+                <li>Flexível 60 dias (Férias Garantidas).</li>
             </ul>
+            <a href="https://wa.me/5517992323066?text=Ola,%20quero%20assinar%20o%20Plano%20Premium" class="btn-subscribe btn-premium">Assinar Premium</a>
         </div>
 
         <div class="theme-container">
@@ -204,11 +211,31 @@
     </div>
 
     <script>
-        const toggleBtn = document.getElementById('themeToggle'); const icon = document.getElementById('themeIcon'); const body = document.body;
+        // --- TEMA ---
+        const toggleBtn = document.getElementById('themeToggle'); 
+        const icon = document.getElementById('themeIcon'); 
+        const body = document.body;
+        
         const moonIcon = "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z";
         const sunIcon = "M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42M12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10z";
-        if(localStorage.getItem('theme') === 'light') { body.classList.add('light-mode'); icon.innerHTML = `<path d="${sunIcon}" />`; } else { icon.innerHTML = `<path d="${moonIcon}" />`; }
-        function toggleTheme() { body.classList.toggle('light-mode'); if(body.classList.contains('light-mode')) { localStorage.setItem('theme', 'light'); icon.innerHTML = `<path d="${sunIcon}" />`; } else { localStorage.setItem('theme', 'dark'); icon.innerHTML = `<path d="${moonIcon}" />`; } }
+
+        if(localStorage.getItem('theme') === 'light') { 
+            body.classList.add('light-mode'); 
+            icon.innerHTML = `<path d="${sunIcon}" />`; 
+        } else { 
+            icon.innerHTML = `<path d="${moonIcon}" />`; 
+        }
+
+        function toggleTheme() { 
+            body.classList.toggle('light-mode'); 
+            if(body.classList.contains('light-mode')) { 
+                localStorage.setItem('theme', 'light'); 
+                icon.innerHTML = `<path d="${sunIcon}" />`; 
+            } else { 
+                localStorage.setItem('theme', 'dark'); 
+                icon.innerHTML = `<path d="${moonIcon}" />`; 
+            } 
+        }
     </script>
 </body>
 </html>
