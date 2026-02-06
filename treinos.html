@@ -5,38 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Treinos - Studio Fenix</title>
     <link rel="icon" type="image/webp" href="icon.webp">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            /* DARK MODE */
             --bg-gradient: linear-gradient(to bottom, #0a0a0a 0%, #1a1a1a 40%, #800000 100%);
             --text-color: #ffffff;
-            
-            /* Liquid Glass */
             --glass-bg: linear-gradient(135deg, rgba(255, 50, 50, 0.15), rgba(100, 0, 0, 0.4));
             --glass-border: rgba(255, 200, 200, 0.25);
             --glass-highlight: rgba(255, 255, 255, 0.3);
             --glass-shadow: 0 8px 32px rgba(0,0,0,0.5);
             --btn-text: #ffffff;
-            
-            --toggle-bg: rgba(255, 255, 255, 0.1);
-            --toggle-icon: #ffffff;
-        }
-        body.light-mode {
-            /* LIGHT MODE */
-            --bg-gradient: linear-gradient(to bottom, #f4f4f4 0%, #e0e0e0 50%, #ff9999 100%);
-            --text-color: #333333;
-            
-            --glass-bg: linear-gradient(135deg, rgba(220, 50, 50, 0.6), rgba(180, 0, 0, 0.7));
-            --glass-border: rgba(255, 255, 255, 0.6);
-            --glass-highlight: rgba(255, 255, 255, 0.8);
-            --glass-shadow: 0 8px 32px rgba(150, 0, 0, 0.2);
-            --btn-text: #ffffff;
-            
-            --toggle-bg: rgba(0, 0, 0, 0.1);
-            --toggle-icon: #333333;
+            --green-highlight: #00ff88;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
         
         body {
             background: var(--bg-gradient);
@@ -45,159 +28,668 @@
             flex-direction: column;
             align-items: center;
             color: var(--text-color);
-            padding-top: env(safe-area-inset-top);
-            padding-bottom: env(safe-area-inset-bottom);
-            transition: background 0.5s ease;
+            padding: 20px;
+            padding-bottom: 90px; /* Espaço extra para botão flutuante */
         }
 
-        .container { width: 100%; max-width: 480px; padding: 20px 24px; display: flex; flex-direction: column; gap: 20px; position: relative; flex-grow: 1; }
-
-        .logo-link { display: inline-block; text-decoration: none; margin-top: 20px; margin-bottom: 5px; align-self: center; }
-        .logo { width: 190px; height: auto; display: block; animation: redPulseShadow 4s infinite ease-in-out; }
-        @keyframes redPulseShadow { 0%, 100% { filter: drop-shadow(0 0 0 rgba(255, 0, 0, 0)); } 50% { filter: drop-shadow(0 0 20px rgba(255, 50, 50, 0.8)); } }
-
-        .back-btn {
-            align-self: flex-start; text-decoration: none; color: var(--btn-text);
-            background: var(--glass-bg); border: 1px solid var(--glass-border); border-top: 1px solid var(--glass-highlight);
-            backdrop-filter: blur(15px); padding: 10px 18px; border-radius: 15px;
-            display: flex; align-items: center; gap: 5px; font-weight: 600; font-size: 0.9rem;
-            margin-bottom: 10px; box-shadow: var(--glass-shadow); transition: transform 0.2s;
-        }
-        .back-btn:active { transform: scale(0.95); }
-
-        /* TÍTULO DINÂMICO COM BRILHO */
-        .dynamic-header {
-            text-align: center; margin-bottom: 20px;
-        }
-        .glowing-text {
-            font-size: 1.5rem; font-weight: 800; text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.5);
-            animation: pulseText 2s infinite alternate;
-        }
-        @keyframes pulseText { 0% { text-shadow: 0 0 10px rgba(255, 0, 0, 0.5); } 100% { text-shadow: 0 0 25px rgba(255, 0, 0, 1); } }
+        .container { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 20px; }
         
-        .sub-text { font-size: 0.9rem; opacity: 0.8; margin-top: 5px; font-weight: 300; }
-
-        /* LISTA DE BOTÕES */
-        .days-wrapper { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+        /* LOGO */
+        .header-nav { width: 100%; display: flex; justify-content: center; margin-bottom: 20px; }
+        .logo-link { display: block; transition: transform 0.2s; }
+        .logo-link:active { transform: scale(0.95); }
+        .logo { width: 160px; display: block; filter: drop-shadow(0 0 15px rgba(255,0,0,0.4)); }
         
-        .day-btn {
-            position: relative;
+        .glass-card {
             background: var(--glass-bg); backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border); border-top: 1px solid var(--glass-highlight);
-            color: var(--btn-text); padding: 20px; border-radius: 20px;
-            text-decoration: none; font-weight: 600; font-size: 1.1rem;
-            display: flex; justify-content: space-between; align-items: center;
-            box-shadow: var(--glass-shadow); transition: all 0.3s ease;
-            opacity: 0.7; /* Botões inativos um pouco apagados */
+            border-radius: 20px; padding: 25px; box-shadow: var(--glass-shadow);
+            text-align: center; animation: fadeIn 0.5s ease; position: relative;
+        }
+
+        /* INPUTS */
+        .input-group { margin-bottom: 15px; text-align: left; }
+        label { display: block; margin-bottom: 5px; font-size: 0.9rem; color: #ccc; }
+        input { 
+            width: 100%; padding: 15px; border-radius: 12px; border: none; 
+            background: rgba(0,0,0,0.3); color: white; font-size: 1rem; outline: none;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* BOTÕES */
+        .btn {
+            width: 100%; padding: 15px; border-radius: 12px; border: none;
+            color: white; font-weight: 700; font-size: 1rem; cursor: pointer; text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: transform 0.2s; margin-top: 10px;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .btn:active { transform: scale(0.95); }
+        .btn-outline { background: transparent; border: 2px solid rgba(255,255,255,0.2); color: #ddd; }
+
+        /* CORES BOTÕES */
+        .btn-personalizado { background: linear-gradient(90deg, #FFD700, #FFA500); color: #333; animation: glowGold 2s infinite; }
+        .btn-saude { background: linear-gradient(90deg, #00b09b, #96c93d); animation: glowGreen 3s infinite; }
+        .btn-peso { background: linear-gradient(90deg, #ff416c, #ff4b2b); animation: glowRed 3s infinite; }
+        .btn-massa { background: linear-gradient(90deg, #2193b0, #6dd5ed); animation: glowBlue 3s infinite; }
+        .btn-rapido { background: linear-gradient(90deg, #f2994a, #f2c94c); color: #333; }
+        .btn-fofo { background: linear-gradient(90deg, #ec008c, #fc6767); }
+        .btn-fenix { background: linear-gradient(90deg, #800000, #ff0000); border: 1px solid #ffaaaa; animation: glowPulse 1.5s infinite; }
+
+        @keyframes glowGold { 0%, 100% { box-shadow: 0 0 5px #FFD700; } 50% { box-shadow: 0 0 20px #FFD700; } }
+        @keyframes glowGreen { 0%, 100% { box-shadow: 0 0 5px #96c93d; } 50% { box-shadow: 0 0 20px #96c93d; } }
+        @keyframes glowRed { 0%, 100% { box-shadow: 0 0 5px #ff4b2b; } 50% { box-shadow: 0 0 20px #ff4b2b; } }
+        @keyframes glowBlue { 0%, 100% { box-shadow: 0 0 5px #2193b0; } 50% { box-shadow: 0 0 20px #2193b0; } }
+        @keyframes glowPulse { 0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); } }
+
+        /* LISTA DE SELEÇÃO (NOVO DESIGN) */
+        .selection-list { padding-bottom: 60px; }
+        
+        .select-card {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px; overflow: hidden; margin-bottom: 15px;
+            transition: all 0.2s ease; cursor: pointer; text-align: left;
+            position: relative;
         }
         
-        .day-btn:active { transform: scale(0.98); }
-        .day-btn::after { content: '›'; font-size: 1.5rem; opacity: 0.5; }
-
-        /* ESTILO DO DIA ATUAL (EM EVIDÊNCIA) */
-        .day-btn.active-day {
-            opacity: 1;
-            background: linear-gradient(135deg, rgba(220, 0, 0, 0.6), rgba(150, 0, 0, 0.8));
-            border: 2px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
-            transform: scale(1.02);
+        .select-card img { width: 100%; height: 140px; object-fit: cover; opacity: 0.7; transition: 0.3s; }
+        .select-card-body { padding: 15px; }
+        .select-card h4 { margin: 0 0 5px 0; font-size: 1rem; color: #fff; }
+        .select-card p { margin: 0; font-size: 0.75rem; color: #aaa; line-height: 1.4; }
+        
+        /* Checkbox Visual */
+        .check-circle {
+            position: absolute; top: 10px; right: 10px;
+            width: 30px; height: 30px; border-radius: 50%;
+            background: rgba(0,0,0,0.6); border: 2px solid #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; color: transparent; transition: 0.2s; z-index: 2;
         }
-        .day-btn.active-day .status-text { display: block; font-size: 0.7rem; text-transform: uppercase; color: #ffcccc; letter-spacing: 1px; }
-        .status-text { display: none; }
 
-        /* RODAPÉ E TEMA PADRONIZADO */
-        .theme-container {
-            display: flex; justify-content: center; margin-top: auto; margin-bottom: 15px;
+        /* ESTADO SELECIONADO */
+        .select-card.active {
+            border-color: var(--green-highlight);
+            background: rgba(0, 255, 136, 0.1);
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
         }
-        .theme-toggle {
-            width: 44px; height: 44px; border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; 
-            cursor: pointer; background: var(--toggle-bg);
-            border: 1px solid var(--glass-border); backdrop-filter: blur(5px);
-            transition: transform 0.2s, background 0.3s;
+        .select-card.active img { opacity: 1; }
+        .select-card.active .check-circle {
+            background: var(--green-highlight); border-color: var(--green-highlight); color: #000;
         }
-        .theme-toggle:active { transform: scale(0.95); }
-        .theme-toggle svg { width: 22px; height: 22px; stroke: var(--toggle-icon); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.3s; }
+        .select-card.active .check-circle::after { content: '✓'; font-weight: bold; }
 
-        .copyright { font-size: 0.75rem; color: var(--text-color); opacity: 0.7; text-align: center; }
+        /* BARRA FLUTUANTE (FAB) */
+        .floating-action {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 440px; z-index: 100;
+            display: flex; gap: 10px;
+            animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp { from { transform: translate(-50%, 100%); } to { transform: translate(-50%, 0); } }
+
+        /* LISTA DE REVISÃO */
+        .review-item {
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255,255,255,0.1); padding: 12px; margin-bottom: 8px;
+            border-radius: 10px; text-align: left;
+        }
+        .btn-remove { 
+            background: #ff4444; width: 30px; height: 30px; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; font-weight: bold; padding: 0;
+        }
+
+        /* TREINO PLAYER */
+        .exercise-card { margin-bottom: 20px; text-align: left; padding: 0; overflow: hidden; }
+        .ex-img { width: 100%; height: 220px; object-fit: cover; background: #000; }
+        .ex-body { padding: 20px; }
+        .ex-title { font-size: 1.3rem; font-weight: 800; color: #fff; margin-bottom: 5px; text-transform: uppercase; }
+        .ex-meta { display: flex; gap: 10px; margin-bottom: 15px; font-size: 0.8rem; color: #ffaaaa; }
+        .ex-desc { font-size: 0.9rem; color: #e0e0e0; line-height: 1.6; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; border-left: 4px solid #ff4444; }
+
+        /* CONTROLES */
+        .train-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 15px; }
+        .timer-display { grid-column: span 2; font-size: 2.5rem; font-weight: 800; color: white; margin-bottom: 5px; font-variant-numeric: tabular-nums; }
+        .btn-start-timer { background: #00aa00; color: white; grid-column: span 2; animation: pulseGreen 1.5s infinite; }
+        .btn-stop { background: #cc0000; color: white; display: none; }
+        .btn-series { background: #333; color: white; display: none; align-items: center; justify-content: center; }
+        .nav-buttons { display: flex; gap: 10px; margin-top: 20px; }
+
+        @keyframes pulseGreen { 0% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(0, 255, 136, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .done-icon { font-size: 4rem; display: block; animation: bounce 1s infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        /* Grid Simples */
+        .grid-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .grid-list { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+        .option-btn { padding: 15px; background: rgba(0,0,0,0.4); border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); color: #ddd; cursor: pointer; text-align: left; transition: all 0.2s; display: flex; align-items: center; justify-content: space-between; }
+        .btn-today { background: linear-gradient(90deg, #006400, #00ff88); border: 2px solid #fff; animation: pulseToday 2s infinite; color: #003300; font-weight: 800; }
+        @keyframes pulseToday { 0% { transform: scale(1); } 50% { transform: scale(1.02); box-shadow: 0 0 15px rgba(0,255,136,0.6); } 100% { transform: scale(1); } }
+
     </style>
 </head>
 <body>
-    <div class="container">
-        <a href="index.html" class="logo-link">
-            <img src="LogoStudioFenix.png" alt="Logo Studio Fenix" class="logo">
-        </a>
 
-        <a href="index.html" class="back-btn">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-            Voltar
-        </a>
-
-        <div class="dynamic-header">
-            <h1 id="mainTitle" class="glowing-text">Carregando...</h1>
-            <p class="sub-text">Selecione o dia para ver os detalhes</p>
-        </div>
-
-        <div class="days-wrapper">
-            <a href="treino-segunda.html" class="day-btn" id="btn-1">
-                <div>Segunda-Feira <div class="status-text">Treino de Hoje</div></div>
-            </a>
-            <a href="treino-terca.html" class="day-btn" id="btn-2">
-                <div>Terça-Feira <div class="status-text">Treino de Hoje</div></div>
-            </a>
-            <a href="treino-quarta.html" class="day-btn" id="btn-3">
-                <div>Quarta-Feira <div class="status-text">Treino de Hoje</div></div>
-            </a>
-            <a href="treino-quinta.html" class="day-btn" id="btn-4">
-                <div>Quinta-Feira <div class="status-text">Treino de Hoje</div></div>
-            </a>
-            <a href="treino-sexta.html" class="day-btn" id="btn-5">
-                <div>Sexta-Feira <div class="status-text">Treino de Hoje</div></div>
-            </a>
-            <a href="treino-sabado.html" class="day-btn" id="btn-6">
-                <div>Sábado <div class="status-text">Treino de Hoje</div></div>
-            </a>
-        </div>
-
-        <div class="theme-container">
-            <div class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
-                <svg id="themeIcon" viewBox="0 0 24 24"><path d="" /></svg>
-            </div>
-        </div>
-
-        <div class="copyright">© Studio Fênix | Treinador Personal | Junior Penarrubia</div>
-    </div>
+    <div class="container" id="app"></div>
 
     <script>
-        // --- LOGICA DE DATA E DESTAQUE ---
-        const days = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
-        const today = new Date();
-        const dayIndex = today.getDay(); // 0 = Domingo, 1 = Segunda, etc.
+        // --- BANCO DE DADOS DE EXERCÍCIOS (ROBUSTO) ---
+        const dbExercicios = {
+            cardio: [
+                { id: 'c1', nome: "Polichinelos", img: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800", desc: "Mantenha um ritmo constante. Abra bem braços e pernas." },
+                { id: 'c2', nome: "Burpees", img: "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=800", desc: "Movimento completo: agacha, prancha, flexão e salto." },
+                { id: 'c3', nome: "Corrida Estacionária", img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800", desc: "Eleve os joelhos na altura do quadril rapidamente." },
+                { id: 'c4', nome: "Pular Corda", img: "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=800", desc: "Use a ponta dos pés. Gire com os punhos." }
+            ],
+            peito: [
+                { id: 'p1', nome: "Supino Reto", img: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800", desc: "Desça a barra no meio do peito. Cotovelos levemente fechados." },
+                { id: 'p2', nome: "Supino Inclinado", img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800", desc: "Foco na parte superior. Banco a 45 graus." },
+                { id: 'p3', nome: "Crucifixo", img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800", desc: "Abra os braços alongando bem. Feche no centro esmagando." },
+                { id: 'p4', nome: "Flexão de Braço", img: "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=800", desc: "Corpo reto. Desça até quase encostar no chão." }
+            ],
+            costas: [
+                { id: 'co1', nome: "Puxada Alta", img: "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=800", desc: "Traga a barra no peito superior. Feche as escápulas." },
+                { id: 'co2', nome: "Remada Baixa", img: "https://images.unsplash.com/photo-1517963879466-e9b5ce382d5d?w=800", desc: "Coluna reta. Puxe em direção ao umbigo." },
+                { id: 'co3', nome: "Remada Serrote", img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800", desc: "Unilateral. Puxe o halter em direção ao quadril." }
+            ],
+            pernas: [
+                { id: 'pe1', nome: "Agachamento Livre", img: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=800", desc: "Agache profundo. Mantenha os calcanhares no chão." },
+                { id: 'pe2', nome: "Leg Press 45º", img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800", desc: "Não tire a lombar do banco. Empurre com o calcanhar." },
+                { id: 'pe3', nome: "Cadeira Extensora", img: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=800", desc: "Segure 1 segundo no topo contraindo o quadríceps." },
+                { id: 'pe4', nome: "Mesa Flexora", img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800", desc: "Não levante o quadril. Foco total no posterior." }
+            ],
+            ombros: [
+                { id: 'o1', nome: "Desenvolvimento", img: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800", desc: "Empurre para cima da cabeça sem arquear as costas." },
+                { id: 'o2', nome: "Elevação Lateral", img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800", desc: "Suba até a altura do ombro apenas. Sem balanço." },
+                { id: 'o3', nome: "Elevação Frontal", img: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800", desc: "Controle a descida. Mantenha o abdômen firme." }
+            ],
+            bracos: [
+                { id: 'b1', nome: "Rosca Direta", img: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800", desc: "Bíceps isolado. Não balance o tronco." },
+                { id: 'b2', nome: "Tríceps Corda", img: "https://images.unsplash.com/photo-1534367507873-d2d7e24c797f?w=800", desc: "Cotovelos colados no corpo. Abra a corda no final." },
+                { id: 'b3', nome: "Rosca Martelo", img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800", desc: "Pegada neutra. Foca no antebraço e braquial." },
+                { id: 'b4', nome: "Tríceps Banco", img: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800", desc: "Desça até 90 graus. Mantenha as costas perto do banco." }
+            ],
+            abdomen: [
+                { id: 'a1', nome: "Prancha", img: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800", desc: "Corpo reto. Contraia abdômen e glúteo." },
+                { id: 'a2', nome: "Abdominal Supra", img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800", desc: "Tire apenas as escápulas do chão. Solte o ar." }
+            ]
+        };
 
-        const mainTitle = document.getElementById('mainTitle');
-        
-        // Define o texto dinâmico
-        if (dayIndex === 0) {
-            mainTitle.innerHTML = "Descanso de Domingo";
-        } else {
-            mainTitle.innerHTML = `Sugestão para ${days[dayIndex]}`;
+        // --- ESTADO ---
+        const state = {
+            screen: 'login',
+            user: { name: '', sex: '', ageGroup: '', goal: '' },
+            currentWorkout: [],
+            customSelection: [], 
+            currentExerciseIndex: 0,
+            startTime: null,
+            endTime: null,
+            timerInterval: null,
+            seconds: 0,
+            seriesCount: 0
+        };
+
+        const app = document.getElementById('app');
+
+        // --- RENDERIZAÇÃO CENTRAL ---
+        function render() {
+            app.innerHTML = '';
+            
+            // Header (Sempre presente exceto login)
+            const header = document.createElement('div');
+            header.className = 'header-nav';
+            header.innerHTML = `
+                <a href="index.html" class="logo-link"><img src="LogoStudioFenix.png" class="logo"></a>
+            `;
+            app.appendChild(header);
+
+            if (state.screen === 'login') renderLogin();
+            else if (state.screen === 'sex') renderSexSelector();
+            else if (state.screen === 'age') renderAgeSelector();
+            else if (state.screen === 'goal') renderGoalSelector();
+            else if (state.screen === 'day_select') renderDaySelector();
+            else if (state.screen === 'build_custom') renderBuildCustom();
+            else if (state.screen === 'custom_confirm') renderCustomConfirm();
+            else if (state.screen === 'dashboard') renderDashboard();
+            else if (state.screen === 'workout') renderWorkoutScreen();
+            else if (state.screen === 'summary') renderSummary();
         }
 
-        // Destaca o botão do dia atual
-        if (dayIndex >= 1 && dayIndex <= 6) {
-            const activeBtn = document.getElementById(`btn-${dayIndex}`);
-            if (activeBtn) {
-                activeBtn.classList.add('active-day');
+        // TELA 1: LOGIN
+        function renderLogin() {
+            const div = document.createElement('div');
+            div.className = 'glass-card';
+            div.innerHTML = `
+                <h2 style="color:#fff; margin-bottom:20px;">Área do Aluno</h2>
+                <div class="input-group"><label>Usuário</label><input type="text" id="username"></div>
+                <div class="input-group"><label>Senha</label><input type="password" id="password"></div>
+                <button class="btn" style="background:#cc0000;" onclick="handleLogin()">Entrar</button>
+                <a href="index.html" class="btn btn-outline" style="text-decoration:none;">Voltar para Início</a>
+            `;
+            app.appendChild(div);
+        }
+
+        // TELA 2: SEXO
+        function renderSexSelector() {
+            const div = document.createElement('div');
+            div.className = 'glass-card';
+            div.innerHTML = `
+                <h2>Olá, Aluno!</h2><p style="color:#ccc;">Selecione seu sexo:</p>
+                <div class="grid-options">
+                    <div class="option-btn" onclick="nextStep('sex', 'Masculino')" style="justify-content:center;">🧔 Masculino</div>
+                    <div class="option-btn" onclick="nextStep('sex', 'Feminino')" style="justify-content:center;">👩 Feminino</div>
+                </div>
+                <button class="btn btn-outline" onclick="goToScreen('login')">Voltar</button>
+            `;
+            app.appendChild(div);
+        }
+
+        // TELA 3: IDADE
+        function renderAgeSelector() {
+            const div = document.createElement('div');
+            div.className = 'glass-card';
+            div.innerHTML = `
+                <h2>Faixa Etária</h2>
+                <div class="grid-list">
+                    <div class="option-btn" onclick="nextStep('ageGroup', 'Criança')">👶 Criança (até 12 anos)</div>
+                    <div class="option-btn" onclick="nextStep('ageGroup', 'Jovem')">👦 Jovem (13 a 18 anos)</div>
+                    <div class="option-btn" onclick="nextStep('ageGroup', 'Adulto')">👨 Adulto (19 a 59 anos)</div>
+                    <div class="option-btn" onclick="nextStep('ageGroup', 'Idoso')">👴 Idoso (60+ anos)</div>
+                </div>
+                <button class="btn btn-outline" onclick="goToScreen('sex')">Voltar</button>
+            `;
+            app.appendChild(div);
+        }
+
+        // TELA 4: OBJETIVO (CORES E GLOW)
+        function renderGoalSelector() {
+            const div = document.createElement('div');
+            div.className = 'glass-card';
+            div.innerHTML = `
+                <h2>Seu Objetivo</h2>
+                <div class="grid-list">
+                    <div class="btn btn-personalizado" onclick="goToDaySelect()">📅 TREINO PERSONALIZADO</div>
+                    <div class="btn btn-saude" onclick="setGoalAndGenerate('Saúde')">❤️ Treino Saúde</div>
+                    <div class="btn btn-peso" onclick="setGoalAndGenerate('Perda de Peso')">🔥 Perda de Peso</div>
+                    <div class="btn btn-massa" onclick="setGoalAndGenerate('Massa Muscular')">💪 Massa Muscular</div>
+                    <div class="btn btn-rapido" onclick="setGoalAndGenerate('Rápido')">⚡ Treino Rápido</div>
+                    <div class="btn btn-fofo" onclick="setGoalAndGenerate('Fofo')">🧸 Treino Fofo</div>
+                    <div class="btn btn-fenix" onclick="setGoalAndGenerate('Modo Fênix')">🦅 MODO FÊNIX</div>
+                </div>
+                <button class="btn btn-outline" onclick="goToScreen('age')">Voltar</button>
+            `;
+            app.appendChild(div);
+        }
+
+        // TELA 5: SELEÇÃO DE DIA OU MONTAR
+        function renderDaySelector() {
+            const dayOfWeek = new Date().getDay(); 
+            const div = document.createElement('div');
+            div.className = 'glass-card';
+            div.innerHTML = `
+                <h2>Personalizado</h2>
+                <p style="font-size:0.8rem; color:#aaa;">Escolha o dia ou monte o seu.</p>
+                <div class="btn btn-personalizado" style="margin-bottom:20px;" onclick="goToBuildCustom()">
+                    🛠️ <strong>MONTAR MEU TREINO</strong>
+                </div>
+                <div class="grid-list">
+                    <div class="option-btn ${dayOfWeek === 1 ? 'btn-today' : ''}" onclick="setSpecificWorkout(['peito','bracos'], 'Segunda')">
+                        <div>Segunda <small>Peito e Braços</small></div> ${dayOfWeek === 1 ? '📍' : ''}
+                    </div>
+                    <div class="option-btn ${dayOfWeek === 2 ? 'btn-today' : ''}" onclick="setSpecificWorkout(['costas','abdomen'], 'Terça')">
+                        <div>Terça <small>Costas e Abdômen</small></div> ${dayOfWeek === 2 ? '📍' : ''}
+                    </div>
+                    <div class="option-btn ${dayOfWeek === 3 ? 'btn-today' : ''}" onclick="setSpecificWorkout(['pernas'], 'Quarta')">
+                        <div>Quarta <small>Pernas Completas</small></div> ${dayOfWeek === 3 ? '📍' : ''}
+                    </div>
+                    <div class="option-btn ${dayOfWeek === 4 ? 'btn-today' : ''}" onclick="setSpecificWorkout(['ombros','cardio'], 'Quinta')">
+                        <div>Quinta <small>Ombros e Cardio</small></div> ${dayOfWeek === 4 ? '📍' : ''}
+                    </div>
+                    <div class="option-btn ${dayOfWeek === 5 ? 'btn-today' : ''}" onclick="setSpecificWorkout(['peito','costas'], 'Sexta')">
+                        <div>Sexta <small>Superior Geral</small></div> ${dayOfWeek === 5 ? '📍' : ''}
+                    </div>
+                    <div class="option-btn ${dayOfWeek === 6 ? 'btn-today' : ''}" onclick="setSpecificWorkout(['pernas','abdomen'], 'Sábado')">
+                        <div>Sábado <small>Inferior e Abdômen</small></div> ${dayOfWeek === 6 ? '📍' : ''}
+                    </div>
+                </div>
+                <button class="btn btn-outline" onclick="goToScreen('goal')">Voltar</button>
+            `;
+            app.appendChild(div);
+        }
+
+        // TELA 6: MONTAR TREINO (LISTA COM CARDS E CHECKBOX)
+        function renderBuildCustom() {
+            const div = document.createElement('div');
+            // Remove glass-card padrao para usar largura total melhor
+            div.innerHTML = `
+                <div class="glass-card" style="margin-bottom:10px;">
+                    <h2>Selecionar Exercícios</h2>
+                    <p style="font-size:0.8rem; color:#aaa;">Toque nos cards para marcar.</p>
+                </div>
+                <div class="selection-list" id="selectionList"></div>
+            `;
+            
+            // Botão Flutuante
+            const fab = document.createElement('div');
+            fab.className = 'floating-action';
+            fab.innerHTML = `
+                <button class="btn btn-outline" style="flex:1; background:rgba(0,0,0,0.8);" onclick="goToScreen('day_select')">Voltar</button>
+                <button class="btn btn-start-timer" style="flex:2; margin-top:0;" onclick="goToCustomConfirm()">
+                    REVISAR (${state.customSelection.length})
+                </button>
+            `;
+            
+            app.appendChild(div);
+            app.appendChild(fab);
+
+            // Popula a lista
+            const listContainer = document.getElementById('selectionList');
+            
+            for (const [key, exercises] of Object.entries(dbExercicios)) {
+                // Titulo Categoria
+                const catTitle = document.createElement('h3');
+                catTitle.style.cssText = "color:#ffaaaa; font-size:0.9rem; margin:15px 0 5px 10px; text-transform:uppercase;";
+                catTitle.innerText = key.toUpperCase();
+                listContainer.appendChild(catTitle);
+
+                exercises.forEach(ex => {
+                    const isSelected = state.customSelection.some(item => item.id === ex.id);
+                    
+                    const card = document.createElement('div');
+                    card.className = `select-card ${isSelected ? 'active' : ''}`;
+                    card.onclick = () => toggleExerciseSelection(key, ex.id);
+                    card.innerHTML = `
+                        <div class="check-circle"></div>
+                        <img src="${ex.img}">
+                        <div class="select-card-body">
+                            <h4>${ex.nome}</h4>
+                            <p><strong>Modo:</strong> ${ex.desc}</p>
+                        </div>
+                    `;
+                    listContainer.appendChild(card);
+                });
             }
         }
 
-        // --- TEMA ---
-        const toggleBtn = document.getElementById('themeToggle'); const icon = document.getElementById('themeIcon'); const body = document.body;
-        const moonIcon = "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z";
-        const sunIcon = "M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42M12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10z";
-        if(localStorage.getItem('theme') === 'light') { body.classList.add('light-mode'); icon.innerHTML = `<path d="${sunIcon}" />`; } else { icon.innerHTML = `<path d="${moonIcon}" />`; }
-        function toggleTheme() { body.classList.toggle('light-mode'); if(body.classList.contains('light-mode')) { localStorage.setItem('theme', 'light'); icon.innerHTML = `<path d="${sunIcon}" />`; } else { localStorage.setItem('theme', 'dark'); icon.innerHTML = `<path d="${moonIcon}" />`; } }
+        // TELA 7: CONFIRMAÇÃO DA SELEÇÃO
+        function renderCustomConfirm() {
+            const div = document.createElement('div');
+            div.className = 'glass-card';
+            
+            let listHtml = '';
+            if(state.customSelection.length === 0) {
+                listHtml = '<p style="color:#aaa; padding:20px;">Nenhum exercício selecionado.</p>';
+            } else {
+                state.customSelection.forEach((ex, i) => {
+                    listHtml += `
+                        <div class="review-item">
+                            <div>
+                                <strong style="color:#fff; display:block;">${i+1}. ${ex.nome}</strong>
+                                <span style="font-size:0.7rem; color:#aaa;">${ex.desc.substring(0,30)}...</span>
+                            </div>
+                            <button class="btn-remove" onclick="removeExercise('${ex.id}')">X</button>
+                        </div>
+                    `;
+                });
+            }
+
+            div.innerHTML = `
+                <h2>Seu Treino</h2>
+                <p style="color:#aaa; font-size:0.8rem; margin-bottom:15px;">Confira a ordem dos exercícios.</p>
+                
+                <div style="max-height:350px; overflow-y:auto; margin-bottom:20px;">
+                    ${listHtml}
+                </div>
+
+                <button class="btn btn-start-timer" onclick="startCustomWorkout()">INICIAR TREINO AGORA</button>
+                <button class="btn btn-outline" onclick="goToScreen('build_custom')">Adicionar Mais</button>
+            `;
+            app.appendChild(div);
+        }
+
+        // TELA 8: DASHBOARD (PREVIEW GERAL)
+        function renderDashboard() {
+            const div = document.createElement('div');
+            div.className = 'glass-card';
+            div.innerHTML = `
+                <h3 style="color:#aaa; font-size:0.9rem;">Prévia Automática</h3>
+                <h1 style="color:#fff; text-transform:uppercase; margin:10px 0;">${state.user.goal}</h1>
+                
+                <div style="text-align:left; background:rgba(0,0,0,0.3); padding:15px; border-radius:15px; margin-bottom:20px; max-height:300px; overflow-y:auto;">
+                    <p style="color:#fff; font-weight:bold;">Exercícios gerados:</p>
+                    <ul style="padding-left:20px; color:#ccc; font-size:0.9rem; margin-top:5px;">
+                        ${state.currentWorkout.map(ex => `<li>${ex.nome}</li>`).join('')}
+                    </ul>
+                </div>
+
+                <button class="btn btn-start-timer" onclick="startWorkout()">COMEÇAR TREINO</button>
+                <button class="btn btn-outline" onclick="goToScreen('goal')">Trocar Objetivo</button>
+            `;
+            app.appendChild(div);
+        }
+
+        // TELA 9: EXERCÍCIO ATIVO (PLAYER)
+        function renderWorkoutScreen() {
+            const ex = state.currentWorkout[state.currentExerciseIndex];
+            
+            let series = "3 Séries";
+            let reps = "12 Reps";
+            
+            if(state.user.goal === "Modo Fênix") { series = "4 Séries"; reps = "Até a falha"; }
+            else if(state.user.goal === "Fofo") { series = "2 Séries"; reps = "10 Leves"; }
+
+            const div = document.createElement('div');
+            div.className = 'glass-card exercise-card';
+            div.innerHTML = `
+                <img src="${ex.img}" class="ex-img">
+                <div class="ex-body">
+                    <div class="ex-meta">Exercício ${state.currentExerciseIndex + 1} de ${state.currentWorkout.length}</div>
+                    <div class="ex-title">${ex.nome}</div>
+                    <div class="ex-meta">
+                        <span>📝 ${series}</span>
+                        <span>🔄 ${reps}</span>
+                    </div>
+                    <div class="ex-desc">
+                        <strong>Execução:</strong><br>${ex.desc}
+                    </div>
+
+                    <div class="train-controls">
+                        <div class="timer-display" id="timerDisplay">00:00</div>
+                        
+                        <button class="btn btn-start-timer" id="btnStart" onclick="toggleTimer(true)">COMEÇAR SÉRIE</button>
+                        <button class="btn btn-stop" id="btnStop" onclick="toggleTimer(false)">PAUSAR</button>
+                        <button class="btn btn-series" id="btnSeries" onclick="addSeries()">
+                            ✅ Feita: <span id="seriesVal">0</span>
+                        </button>
+                    </div>
+
+                    <div class="nav-buttons">
+                        ${state.currentExerciseIndex > 0 ? `<button class="btn btn-outline" style="flex:1; margin-top:0;" onclick="prevExercise()">⬅ Anterior</button>` : ''}
+                        <button class="btn" style="flex:1; margin-top:0;" onclick="nextExercise()">
+                            ${state.currentExerciseIndex < state.currentWorkout.length - 1 ? 'Próximo ➡' : 'Finalizar 🔥'}
+                        </button>
+                    </div>
+                </div>
+            `;
+            app.appendChild(div);
+        }
+
+        // TELA 10: RESUMO FINAL
+        function renderSummary() {
+            const duration = Math.floor((state.endTime - state.startTime) / 1000 / 60);
+            const div = document.createElement('div');
+            div.className = 'glass-card';
+            div.innerHTML = `
+                <span class="done-icon">🎉</span>
+                <h1 style="color:#00ff88; margin-bottom:10px;">TREINO CONCLUÍDO!</h1>
+                <p style="color:#fff; margin-bottom:20px;">Você finalizou o treino ${state.user.goal}.</p>
+                <div style="background:rgba(255,255,255,0.1); padding:20px; border-radius:15px; margin-bottom:20px;">
+                    <h2 style="color:#fff;">${duration < 1 ? 'Menos de 1' : duration} Minutos</h2>
+                    <p style="font-size:0.8rem; color:#aaa;">Tempo Total</p>
+                </div>
+                <a href="foto.html" class="btn" style="text-decoration:none;">📷 Compartilhar</a>
+                <button class="btn btn-outline" onclick="location.reload()">Sair</button>
+            `;
+            app.appendChild(div);
+        }
+
+        // --- LÓGICA DO APP ---
+
+        function handleLogin() {
+            const u = document.getElementById('username').value;
+            const p = document.getElementById('password').value;
+            if(u.toLowerCase() === 'aluno' && p === 'fenix26') {
+                state.screen = 'sex';
+                render();
+            } else {
+                alert('Login incorreto.');
+            }
+        }
+
+        function goToScreen(screenName) {
+            state.screen = screenName;
+            render();
+        }
+
+        function nextStep(field, value) {
+            state.user[field] = value;
+            if(field === 'sex') state.screen = 'age';
+            if(field === 'ageGroup') state.screen = 'goal';
+            render();
+        }
+
+        function goToDaySelect() {
+            state.screen = 'day_select';
+            render();
+        }
+
+        function goToBuildCustom() {
+            state.screen = 'build_custom';
+            render();
+        }
+
+        function goToCustomConfirm() {
+            if (state.customSelection.length === 0) {
+                alert("Selecione ao menos um exercício.");
+                return;
+            }
+            state.screen = 'custom_confirm';
+            render();
+        }
+
+        // SELEÇÃO MANUAL
+        function toggleExerciseSelection(category, id) {
+            const exerciseObj = dbExercicios[category].find(e => e.id === id);
+            const exists = state.customSelection.some(e => e.id === id);
+
+            if (exists) {
+                state.customSelection = state.customSelection.filter(e => e.id !== id);
+            } else {
+                state.customSelection.push(exerciseObj);
+            }
+            renderBuildCustom(); // Re-renderiza para mostrar verde
+        }
+
+        function removeExercise(id) {
+            state.customSelection = state.customSelection.filter(e => e.id !== id);
+            renderCustomConfirm();
+        }
+
+        function startCustomWorkout() {
+            state.user.goal = "Personalizado";
+            state.currentWorkout = state.customSelection;
+            startWorkout();
+        }
+
+        // TREINOS PRONTOS
+        function setSpecificWorkout(categories, dayName) {
+            state.user.goal = `Treino de ${dayName}`;
+            let pool = [];
+            categories.forEach(cat => {
+                if(dbExercicios[cat]) pool = [...pool, ...dbExercicios[cat]];
+            });
+            state.currentWorkout = pool.slice(0, 6); // Limita a 6
+            state.screen = 'dashboard';
+            render();
+        }
+
+        function setGoalAndGenerate(goal) {
+            state.user.goal = goal;
+            let pool = [];
+            
+            if (goal === 'Modo Fênix' || goal === 'Massa Muscular') {
+                pool = [...dbExercicios.peito, ...dbExercicios.costas, ...dbExercicios.pernas, ...dbExercicios.ombros];
+            } else if (goal === 'Saúde' || goal === 'Fofo') {
+                pool = [...dbExercicios.cardio, ...dbExercicios.abdomen, ...dbExercicios.mobilidade];
+            } else { 
+                pool = [...dbExercicios.cardio, ...dbExercicios.pernas, ...dbExercicios.peito];
+            }
+
+            state.currentWorkout = pool.sort(() => 0.5 - Math.random()).slice(0, 5);
+            state.screen = 'dashboard';
+            render();
+        }
+
+        function startWorkout() {
+            state.startTime = Date.now();
+            state.currentExerciseIndex = 0;
+            state.screen = 'workout';
+            render();
+        }
+
+        // TIMER & CONTROLES
+        function toggleTimer(start) {
+            const btnStart = document.getElementById('btnStart');
+            const btnStop = document.getElementById('btnStop');
+            const btnSeries = document.getElementById('btnSeries');
+
+            if(start) {
+                btnStart.style.display = 'none';
+                btnStop.style.display = 'inline-block';
+                btnSeries.style.display = 'flex';
+                state.timerInterval = setInterval(() => {
+                    state.seconds++;
+                    const m = Math.floor(state.seconds / 60).toString().padStart(2, '0');
+                    const s = (state.seconds % 60).toString().padStart(2, '0');
+                    document.getElementById('timerDisplay').innerText = `${m}:${s}`;
+                }, 1000);
+            } else {
+                clearInterval(state.timerInterval);
+                btnStart.innerText = "CONTINUAR";
+                btnStart.style.display = 'inline-block';
+                btnStop.style.display = 'none';
+            }
+        }
+
+        function addSeries() {
+            state.seriesCount++;
+            document.getElementById('seriesVal').innerText = state.seriesCount;
+        }
+
+        function nextExercise() {
+            clearInterval(state.timerInterval);
+            state.seconds = 0;
+            state.seriesCount = 0;
+            if(state.currentExerciseIndex < state.currentWorkout.length - 1) {
+                state.currentExerciseIndex++;
+                render();
+            } else {
+                state.endTime = Date.now();
+                state.screen = 'summary';
+                render();
+            }
+        }
+
+        function prevExercise() {
+            clearInterval(state.timerInterval);
+            state.seconds = 0;
+            if(state.currentExerciseIndex > 0) {
+                state.currentExerciseIndex--;
+                render();
+            }
+        }
+
+        // Start
+        render();
     </script>
 </body>
 </html>
