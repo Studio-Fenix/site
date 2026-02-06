@@ -5,11 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Foto Studio Fênix</title>
     <link rel="icon" type="image/webp" href="icon.webp">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
     <style>
         :root {
             /* DARK MODE */
             --bg-gradient: linear-gradient(to bottom, #0a0a0a 0%, #1a1a1a 30%, #990000 100%);
             --text-color: #ffffff;
+            
+            /* Liquid Glass */
             --glass-bg: linear-gradient(135deg, rgba(255, 50, 50, 0.15), rgba(100, 0, 0, 0.4));
             --glass-border: rgba(255, 200, 200, 0.25);
             --glass-highlight: rgba(255, 255, 255, 0.3);
@@ -31,7 +38,7 @@
             --toggle-icon: #333333;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
         
         body {
             background: var(--bg-gradient);
@@ -45,7 +52,7 @@
             transition: background 0.5s ease;
         }
 
-        .container { width: 100%; max-width: 480px; padding: 20px 24px; display: flex; flex-direction: column; gap: 20px; position: relative; flex-grow: 1; }
+        .container { width: 100%; max-width: 480px; padding: 20px 24px 40px 24px; display: flex; flex-direction: column; gap: 20px; position: relative; flex-grow: 1; }
 
         .logo-link { display: inline-block; text-decoration: none; margin-top: 20px; margin-bottom: 5px; align-self: center; }
         .logo { width: 190px; height: auto; display: block; animation: redPulseShadow 4s infinite ease-in-out; }
@@ -60,6 +67,7 @@
         }
         .back-btn:active { transform: scale(0.95); }
 
+        /* CARD PRINCIPAL */
         .photo-card {
             background: var(--glass-bg); backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border); border-top: 1px solid var(--glass-highlight);
@@ -68,9 +76,13 @@
         }
 
         .canvas-container {
-            position: relative; width: 100%; border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5); background: #000;
-            overflow: hidden; display: none;
+            position: relative;
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            background: #000;
+            overflow: hidden;
+            display: none;
         }
 
         .canvas-preview { width: 100%; display: block; touch-action: none; }
@@ -83,6 +95,7 @@
             background: rgba(0,0,0,0.2);
         }
 
+        /* CONTROLES DE EDIÇÃO */
         .edit-controls {
             width: 100%; display: none; flex-direction: column; gap: 10px;
             background: rgba(0,0,0,0.2); padding: 10px; border-radius: 15px;
@@ -91,8 +104,10 @@
         .control-group label { min-width: 50px; font-weight: bold; }
         input[type=range] { flex-grow: 1; accent-color: #ff3333; }
 
+        /* BOTÕES DE AÇÃO */
         .action-btn {
-            width: 100%; background: #fff; color: #990000;
+            width: 100%;
+            background: #fff; color: #990000;
             border: none; padding: 15px; border-radius: 50px;
             font-weight: 800; font-size: 1rem; text-transform: uppercase;
             cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
@@ -102,24 +117,28 @@
         
         .share-btn {
             background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); 
-            color: #fff; display: none;
+            color: #fff; 
+            display: none;
         }
 
         input[type="file"] { display: none; }
         .info-text { font-size: 0.9rem; text-align: center; color: var(--text-color); opacity: 0.8; line-height: 1.4; }
+        .copyright { margin-top: auto; font-size: 0.75rem; color: var(--text-color); opacity: 0.7; text-align: center; }
         
-        .theme-container { display: flex; justify-content: center; margin-top: auto; margin-bottom: 15px; }
+        /* TEMA */
+        .theme-toggle-container {
+            width: 100%; display: flex; justify-content: center; margin-top: 10px;
+        }
         .theme-toggle {
-            width: 44px; height: 44px; border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; 
+            width: 50px; height: 50px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
             cursor: pointer; background: var(--toggle-bg);
-            border: 1px solid var(--glass-border); backdrop-filter: blur(5px);
-            transition: transform 0.2s, background 0.3s;
+            border: 1px solid var(--glass-border); border-top: 1px solid var(--glass-highlight);
+            backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            transition: background 0.3s;
         }
         .theme-toggle:active { transform: scale(0.95); }
-        .theme-toggle svg { width: 22px; height: 22px; stroke: var(--toggle-icon); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.3s; }
-
-        .copyright { font-size: 0.75rem; color: var(--text-color); opacity: 0.7; text-align: center; }
+        .theme-toggle svg { width: 24px; height: 24px; fill: none; stroke: var(--toggle-icon); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     </style>
 </head>
 <body>
@@ -169,11 +188,11 @@
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
                 Compartilhar
             </button>
-        </div>
 
-        <div class="theme-container">
-            <div class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
-                <svg id="themeIcon" viewBox="0 0 24 24"><path d="" /></svg>
+            <div class="theme-toggle-container">
+                <div class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+                    <svg id="themeIcon" viewBox="0 0 24 24"><path d="" /></svg>
+                </div>
             </div>
         </div>
 
@@ -183,12 +202,14 @@
     <img src="logosf-moldura.png" id="sourceLogo" style="display:none;" crossorigin="anonymous">
 
     <script>
+        // --- TEMA ---
         const toggleBtn = document.getElementById('themeToggle'); const icon = document.getElementById('themeIcon'); const body = document.body;
         const moonIcon = "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z";
         const sunIcon = "M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42M12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10z";
         if(localStorage.getItem('theme') === 'light') { body.classList.add('light-mode'); icon.innerHTML = `<path d="${sunIcon}" />`; } else { icon.innerHTML = `<path d="${moonIcon}" />`; }
         function toggleTheme() { body.classList.toggle('light-mode'); if(body.classList.contains('light-mode')) { localStorage.setItem('theme', 'light'); icon.innerHTML = `<path d="${sunIcon}" />`; } else { localStorage.setItem('theme', 'dark'); icon.innerHTML = `<path d="${moonIcon}" />`; } }
 
+        // --- LÓGICA DA FOTO ---
         const cameraInput = document.getElementById('cameraInput');
         const canvas = document.getElementById('finalCanvas');
         const ctx = canvas.getContext('2d');
@@ -204,10 +225,6 @@
         let currentTemp = "--";
         let imgState = { x: 0, y: 0, scale: 1, rotation: 0 };
         let isDragging = false; let startX, startY;
-
-        // Ícone Instagram SVG em Base64
-        const instaIconImg = new Image();
-        instaIconImg.src = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxyZWN0IHg9IjIiIHk9IjIiIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgcng9IjUiIHJ5PSI1Ii8+PHBhdGggZD0iTTE2IDExLjM3QTRSA0IDAgMSAxIDEyLjYzIDggNCA0IDAgMCAxIDE2IDExLjM3eiIvPjxsaW5lIHgxPSIxNy41IiB5MT0iNi41IiB4Mj0iMTcuNTEiIHkyPSI2LjUiLz48L3N2Zz4=";
 
         async function fetchWeather() {
             try {
@@ -264,56 +281,61 @@
             gradientBottom.addColorStop(0, "transparent"); gradientBottom.addColorStop(1, "rgba(0, 0, 0, 0.9)");
             ctx.fillStyle = gradientBottom; ctx.fillRect(0, 1400, canvas.width, 520);
 
+            const paddingSide = 50;
+            const paddingBottom = 50;
+
             // ===============================================
-            // 1. LOGO (Direita) - Menor
+            // 1. TEXTO ALINHADO A ESQUERDA (Hora, Temp, @) - MOVIDO PARA ESQUERDA
             // ===============================================
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', hour12: false });
+            const leftEdge = paddingSide;
+            
+            // Configuração da Fonte Poppins + Sombra Leve
+            ctx.fillStyle = "white";
+            ctx.textAlign = "left"; // ALINHADO A ESQUERDA
+            ctx.shadowColor = "rgba(0,0,0,0.7)"; 
+            ctx.shadowBlur = 4;
+            ctx.shadowOffsetX = 2;
+            ctx.shadowOffsetY = 2;
+
+            // Posição Base (ajustada "pra cima")
+            const baseY = 1800; 
+
+            // HORA (Topo)
+            ctx.font = "800 90px 'Poppins'"; // Extra Bold
+            ctx.fillText(timeString, leftEdge, baseY - 160);
+
+            // TEMPERATURA (Meio)
+            ctx.font = "600 60px 'Poppins'"; // Semi Bold
+            ctx.fillText(`${currentTemp}°C`, leftEdge, baseY - 80);
+
+            // INSTAGRAM (Baixo)
+            ctx.font = "400 35px 'Poppins'"; // Regular
+            ctx.fillText("@studio.fenix2026", leftEdge, baseY);
+
+            // ===============================================
+            // 2. LOGO NO CANTO INFERIOR DIREITO - MOVIDO PARA DIREITA
+            // ===============================================
+            ctx.shadowBlur = 0; // Reset sombra do texto antes da logo
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+
             const logoWidth = 280; 
             let logoHeight = 140; 
             if (sourceLogo.width > 0) { logoHeight = (sourceLogo.height / sourceLogo.width) * logoWidth; }
             
-            const paddingRight = 50;
-            const paddingBottom = 50;
-            const logoX = canvas.width - logoWidth - paddingRight;
+            // Calculo X para alinhar a direita
+            const logoX = canvas.width - logoWidth - paddingSide;
             const logoY = canvas.height - logoHeight - paddingBottom;
             
+            // Sombra específica da logo
             ctx.shadowColor = "black"; ctx.shadowBlur = 10;
             ctx.drawImage(sourceLogo, logoX, logoY, logoWidth, logoHeight);
             ctx.shadowBlur = 0;
-
-            // ===============================================
-            // 2. CANTO INFERIOR ESQUERDO (Hora, Temp, Insta)
-            // ===============================================
-            const now = new Date();
-            // Formato 24h
-            const timeString = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', hour12: false });
-            
-            const paddingLeft = 50;
-            const baseBottom = 1880; // Linha base para alinhar para cima
-
-            // HORA (Topo da pilha)
-            ctx.textAlign = "left";
-            ctx.fillStyle = "white";
-            ctx.shadowColor = "black"; ctx.shadowBlur = 4;
-            
-            ctx.font = "bold 80px sans-serif";
-            ctx.fillText(timeString, paddingLeft, baseBottom - 160); // Posição mais alta
-
-            // TEMPERATURA (Meio)
-            ctx.font = "50px sans-serif";
-            ctx.fillText(`${currentTemp}°C`, paddingLeft, baseBottom - 90);
-
-            // INSTAGRAM (Baixo) - Ícone + Texto
-            const iconSize = 40;
-            const instaY = baseBottom - 35; // Posição do ícone e texto
-            
-            // Desenha Ícone
-            ctx.drawImage(instaIconImg, paddingLeft, instaY - 30, iconSize, iconSize);
-            
-            // Texto @
-            ctx.font = "bold 30px sans-serif";
-            ctx.fillText("@studio.fenix2026", paddingLeft + iconSize + 15, instaY);
         }
 
+        // Eventos
         zoomRange.addEventListener('input', (e) => { imgState.scale = parseFloat(e.target.value); draw(); });
         rotateRange.addEventListener('input', (e) => { imgState.rotation = parseFloat(e.target.value); draw(); });
         function handleStart(x, y) { isDragging = true; startX = x; startY = y; }
