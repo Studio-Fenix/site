@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Segunda - Studio Fenix</title>
+    <link rel="icon" type="image/webp" href="icon.webp">
+    <style>
+        /* ESTILOS PADRÃO (Mesmo do site todo) */
+        :root { --bg-gradient: linear-gradient(to bottom, #0a0a0a 0%, #1a1a1a 40%, #800000 100%); --text-color: #ffffff; --glass-bg: linear-gradient(135deg, rgba(255, 50, 50, 0.15), rgba(100, 0, 0, 0.4)); --glass-border: rgba(255, 200, 200, 0.25); --glass-highlight: rgba(255, 255, 255, 0.3); --glass-shadow: 0 8px 32px rgba(0,0,0,0.5); --btn-text: #ffffff; --toggle-bg: rgba(255, 255, 255, 0.1); --toggle-icon: #ffffff; }
+        body.light-mode { --bg-gradient: linear-gradient(to bottom, #f4f4f4 0%, #e0e0e0 50%, #ff9999 100%); --text-color: #333333; --glass-bg: linear-gradient(135deg, rgba(220, 50, 50, 0.6), rgba(180, 0, 0, 0.7)); --glass-border: rgba(255, 255, 255, 0.6); --glass-highlight: rgba(255, 255, 255, 0.8); --glass-shadow: 0 8px 32px rgba(150, 0, 0, 0.2); --btn-text: #ffffff; --toggle-bg: rgba(0, 0, 0, 0.1); --toggle-icon: #333333; }
+        body.light-mode .exercise-card, body.light-mode .instruction-text, body.light-mode .ex-name { color: #fff; } /* Força texto branco no card vermelho */
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+        body { background: var(--bg-gradient); min-height: 100vh; display: flex; flex-direction: column; align-items: center; color: var(--text-color); padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); transition: background 0.5s ease; }
+        .container { width: 100%; max-width: 480px; padding: 20px 24px; display: flex; flex-direction: column; gap: 20px; position: relative; flex-grow: 1; }
+        .logo-link { display: inline-block; text-decoration: none; margin-top: 20px; margin-bottom: 5px; align-self: center; }
+        .logo { width: 190px; height: auto; display: block; animation: redPulseShadow 4s infinite ease-in-out; }
+        @keyframes redPulseShadow { 0%, 100% { filter: drop-shadow(0 0 0 rgba(255, 0, 0, 0)); } 50% { filter: drop-shadow(0 0 20px rgba(255, 50, 50, 0.8)); } }
+        .back-btn { align-self: flex-start; text-decoration: none; color: var(--btn-text); background: var(--glass-bg); border: 1px solid var(--glass-border); border-top: 1px solid var(--glass-highlight); backdrop-filter: blur(15px); padding: 10px 18px; border-radius: 15px; display: flex; align-items: center; gap: 5px; font-weight: 600; font-size: 0.9rem; margin-bottom: 10px; box-shadow: var(--glass-shadow); transition: transform 0.2s; }
+        .back-btn:active { transform: scale(0.95); }
+        h1 { text-align: center; margin-bottom: 5px; text-transform: uppercase; font-size: 1.3rem; color: #ffcccc; text-shadow: 0 0 10px rgba(255,0,0,0.5); }
+        .week-badge { text-align: center; font-size: 0.8rem; opacity: 0.7; margin-bottom: 20px; font-style: italic; }
+
+        /* CARD EXERCÍCIO */
+        .exercise-card { background: var(--glass-bg); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 16px; overflow: hidden; margin-bottom: 20px; box-shadow: var(--glass-shadow); }
+        .ex-img-container { width: 100%; height: 220px; background: #000; position: relative; }
+        .ex-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; }
+        .ex-content { padding: 20px; }
+        .ex-name { font-size: 1.2rem; font-weight: 800; margin-bottom: 10px; text-transform: uppercase; color: #fff; }
+        .ex-stats { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
+        .badge { background: rgba(255, 255, 255, 0.15); padding: 5px 10px; border-radius: 8px; font-size: 0.8rem; font-weight: bold; border: 1px solid rgba(255, 255, 255, 0.2); color: #ffcccc; }
+        .instruction-box { background: rgba(0, 0, 0, 0.3); padding: 15px; border-radius: 10px; border-left: 3px solid #ff3333; }
+        .instruction-title { font-size: 0.8rem; text-transform: uppercase; color: #ff8888; font-weight: bold; margin-bottom: 5px; }
+        .instruction-text { font-size: 0.9rem; line-height: 1.5; color: #eee; }
+
+        /* TEMA */
+        .theme-container { display: flex; justify-content: center; margin-top: auto; margin-bottom: 15px; }
+        .theme-toggle { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; background: var(--toggle-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(5px); transition: transform 0.2s, background 0.3s; }
+        .theme-toggle:active { transform: scale(0.95); }
+        .theme-toggle svg { width: 22px; height: 22px; stroke: var(--toggle-icon); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.3s; }
+        .copyright { font-size: 0.75rem; color: var(--text-color); opacity: 0.7; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="logo-link"><img src="LogoStudioFenix.png" alt="Logo" class="logo"></a>
+        <a href="treinos.html" class="back-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Voltar</a>
+
+        <h1 id="page-title">Carregando...</h1>
+        <div class="week-badge" id="week-info">Verificando ciclo...</div>
+
+        <div id="exercises-container"></div>
+
+        <div class="theme-container"><div class="theme-toggle" id="themeToggle" onclick="toggleTheme()"><svg id="themeIcon" viewBox="0 0 24 24"><path d="" /></svg></div></div>
+        <div class="copyright">© Studio Fênix | Treinador Personal | Junior Penarrubia</div>
+    </div>
+
+    <script src="treinos-db.js"></script>
+
+    <script>
+        // --- CHAMA O TREINO DE SEGUNDA ---
+        // Para os outros arquivos, mude 'segunda' para 'terca', 'quarta', etc.
+        renderTreino('sexta');
+
+        // TEMA
+        const toggleBtn = document.getElementById('themeToggle'); const icon = document.getElementById('themeIcon'); const body = document.body;
+        const moonIcon = "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"; const sunIcon = "M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42M12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10z";
+        if(localStorage.getItem('theme') === 'light') { body.classList.add('light-mode'); icon.innerHTML = `<path d="${sunIcon}" />`; } else { icon.innerHTML = `<path d="${moonIcon}" />`; }
+        function toggleTheme() { body.classList.toggle('light-mode'); if(body.classList.contains('light-mode')) { localStorage.setItem('theme', 'light'); icon.innerHTML = `<path d="${sunIcon}" />`; } else { localStorage.setItem('theme', 'dark'); icon.innerHTML = `<path d="${moonIcon}" />`; } }
+    </script>
+</body>
+</html>

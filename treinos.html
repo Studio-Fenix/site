@@ -7,10 +7,11 @@
     <link rel="icon" type="image/webp" href="icon.webp">
     <style>
         :root {
+            /* DARK MODE */
             --bg-gradient: linear-gradient(to bottom, #0a0a0a 0%, #1a1a1a 40%, #800000 100%);
             --text-color: #ffffff;
-            --text-desc: #ddd;
             
+            /* Liquid Glass */
             --glass-bg: linear-gradient(135deg, rgba(255, 50, 50, 0.15), rgba(100, 0, 0, 0.4));
             --glass-border: rgba(255, 200, 200, 0.25);
             --glass-highlight: rgba(255, 255, 255, 0.3);
@@ -21,9 +22,9 @@
             --toggle-icon: #ffffff;
         }
         body.light-mode {
+            /* LIGHT MODE */
             --bg-gradient: linear-gradient(to bottom, #f4f4f4 0%, #e0e0e0 50%, #ff9999 100%);
             --text-color: #333333;
-            --text-desc: #ffffff;
             
             --glass-bg: linear-gradient(135deg, rgba(220, 50, 50, 0.6), rgba(180, 0, 0, 0.7));
             --glass-border: rgba(255, 255, 255, 0.6);
@@ -34,7 +35,6 @@
             --toggle-bg: rgba(0, 0, 0, 0.1);
             --toggle-icon: #333333;
         }
-        body.light-mode .workout-title, body.light-mode .workout-desc { color: #fff; }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
         
@@ -65,21 +65,46 @@
         }
         .back-btn:active { transform: scale(0.95); }
 
-        h1 { font-size: 1.4rem; text-transform: uppercase; margin-bottom: 5px; text-align: center; }
-        .sub-h { font-size: 0.9rem; opacity: 0.8; text-align: center; margin-bottom: 15px; font-weight: 300; }
-
-        .workout-card {
-            background: var(--glass-bg); backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border); border-radius: 16px;
-            overflow: hidden; margin-bottom: 15px; box-shadow: var(--glass-shadow);
+        /* TÍTULO DINÂMICO COM BRILHO */
+        .dynamic-header {
+            text-align: center; margin-bottom: 20px;
         }
+        .glowing-text {
+            font-size: 1.5rem; font-weight: 800; text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.5);
+            animation: pulseText 2s infinite alternate;
+        }
+        @keyframes pulseText { 0% { text-shadow: 0 0 10px rgba(255, 0, 0, 0.5); } 100% { text-shadow: 0 0 25px rgba(255, 0, 0, 1); } }
+        
+        .sub-text { font-size: 0.9rem; opacity: 0.8; margin-top: 5px; font-weight: 300; }
 
-        .workout-img { width: 100%; height: 150px; object-fit: cover; opacity: 0.85; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .workout-content { padding: 15px; }
-        .workout-day { color: #ff9999; font-size: 0.8rem; font-weight: bold; text-transform: uppercase; }
-        body.light-mode .workout-day { color: #ffcccc; }
-        .workout-title { font-size: 1.2rem; font-weight: 600; margin-top: 5px; margin-bottom: 5px; }
-        .workout-desc { font-size: 0.9rem; color: var(--text-desc); line-height: 1.4; }
+        /* LISTA DE BOTÕES */
+        .days-wrapper { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+        
+        .day-btn {
+            position: relative;
+            background: var(--glass-bg); backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border); border-top: 1px solid var(--glass-highlight);
+            color: var(--btn-text); padding: 20px; border-radius: 20px;
+            text-decoration: none; font-weight: 600; font-size: 1.1rem;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: var(--glass-shadow); transition: all 0.3s ease;
+            opacity: 0.7; /* Botões inativos um pouco apagados */
+        }
+        
+        .day-btn:active { transform: scale(0.98); }
+        .day-btn::after { content: '›'; font-size: 1.5rem; opacity: 0.5; }
+
+        /* ESTILO DO DIA ATUAL (EM EVIDÊNCIA) */
+        .day-btn.active-day {
+            opacity: 1;
+            background: linear-gradient(135deg, rgba(220, 0, 0, 0.6), rgba(150, 0, 0, 0.8));
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+            transform: scale(1.02);
+        }
+        .day-btn.active-day .status-text { display: block; font-size: 0.7rem; text-transform: uppercase; color: #ffcccc; letter-spacing: 1px; }
+        .status-text { display: none; }
 
         /* RODAPÉ E TEMA PADRONIZADO */
         .theme-container {
@@ -109,27 +134,30 @@
             Voltar
         </a>
 
-        <div><h1>Sugestões de Treinos</h1><p class="sub-h">Treino Personalizado | Metodologia Studio Fênix</p></div>
+        <div class="dynamic-header">
+            <h1 id="mainTitle" class="glowing-text">Carregando...</h1>
+            <p class="sub-text">Selecione o dia para ver os detalhes</p>
+        </div>
 
-        <div class="workout-card">
-            <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&q=80&w=600" class="workout-img">
-            <div class="workout-content"><div class="workout-day">Segunda-Feira (Treino A)</div><div class="workout-title">Peito e Tríceps</div><div class="workout-desc">Supino reto com barra, Supino inclinado com halteres, Crucifixo, Tríceps corda e Tríceps testa.</div></div>
-        </div>
-        <div class="workout-card">
-            <img src="https://images.unsplash.com/photo-1521805103424-d8f8430e8933?auto=format&fit=crop&q=80&w=600" class="workout-img">
-            <div class="workout-content"><div class="workout-day">Terça-Feira (Treino B)</div><div class="workout-title">Costas e Bíceps</div><div class="workout-desc">Puxada alta, Remada curvada, Serrote, Rosca direta e Rosca martelo.</div></div>
-        </div>
-        <div class="workout-card">
-            <img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&q=80&w=600" class="workout-img">
-            <div class="workout-content"><div class="workout-day">Quarta-Feira (Treino C)</div><div class="workout-title">Pernas (Leg Day)</div><div class="workout-desc">Agachamento livre, Leg Press 45º, Cadeira extensora, Mesa flexora e Panturrilhas.</div></div>
-        </div>
-        <div class="workout-card">
-            <img src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&q=80&w=600" class="workout-img">
-            <div class="workout-content"><div class="workout-day">Quinta-Feira (Treino D)</div><div class="workout-title">Ombros e Trapézio</div><div class="workout-desc">Desenvolvimento militar, Elevação lateral, Elevação frontal, Encolhimento de ombros.</div></div>
-        </div>
-        <div class="workout-card">
-            <img src="https://images.unsplash.com/photo-1576678927484-cc907957088c?auto=format&fit=crop&q=80&w=600" class="workout-img">
-            <div class="workout-content"><div class="workout-day">Sexta-Feira (Treino E)</div><div class="workout-title">Cardio e Abdômen</div><div class="workout-desc">30min Esteira/Bike moderada + Circuito de abdominais (Supra, Infra e Prancha).</div></div>
+        <div class="days-wrapper">
+            <a href="treino-segunda.html" class="day-btn" id="btn-1">
+                <div>Segunda-Feira <div class="status-text">Treino de Hoje</div></div>
+            </a>
+            <a href="treino-terca.html" class="day-btn" id="btn-2">
+                <div>Terça-Feira <div class="status-text">Treino de Hoje</div></div>
+            </a>
+            <a href="treino-quarta.html" class="day-btn" id="btn-3">
+                <div>Quarta-Feira <div class="status-text">Treino de Hoje</div></div>
+            </a>
+            <a href="treino-quinta.html" class="day-btn" id="btn-4">
+                <div>Quinta-Feira <div class="status-text">Treino de Hoje</div></div>
+            </a>
+            <a href="treino-sexta.html" class="day-btn" id="btn-5">
+                <div>Sexta-Feira <div class="status-text">Treino de Hoje</div></div>
+            </a>
+            <a href="treino-sabado.html" class="day-btn" id="btn-6">
+                <div>Sábado <div class="status-text">Treino de Hoje</div></div>
+            </a>
         </div>
 
         <div class="theme-container">
@@ -142,6 +170,29 @@
     </div>
 
     <script>
+        // --- LOGICA DE DATA E DESTAQUE ---
+        const days = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
+        const today = new Date();
+        const dayIndex = today.getDay(); // 0 = Domingo, 1 = Segunda, etc.
+
+        const mainTitle = document.getElementById('mainTitle');
+        
+        // Define o texto dinâmico
+        if (dayIndex === 0) {
+            mainTitle.innerHTML = "Descanso de Domingo";
+        } else {
+            mainTitle.innerHTML = `Sugestão para ${days[dayIndex]}`;
+        }
+
+        // Destaca o botão do dia atual
+        if (dayIndex >= 1 && dayIndex <= 6) {
+            const activeBtn = document.getElementById(`btn-${dayIndex}`);
+            if (activeBtn) {
+                activeBtn.classList.add('active-day');
+            }
+        }
+
+        // --- TEMA ---
         const toggleBtn = document.getElementById('themeToggle'); const icon = document.getElementById('themeIcon'); const body = document.body;
         const moonIcon = "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z";
         const sunIcon = "M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42M12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10z";
