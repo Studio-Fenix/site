@@ -1,2 +1,2 @@
 # site
-Site do Estudio Fênix
+Site do Studio Fênix 
