@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Studio Fênix</title>
-    <link rel="icon" type="image/webp" href="icon.webp">
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+    
     <meta property="og:title" content="Studio Fênix">
     <meta property="og:image" content="banner-sf.webp">
 
@@ -83,17 +86,12 @@
             width: 190px; 
             height: auto; 
             display: block; 
-            /* Aplica a animação de pulso vermelho */
             animation: redPulseShadow 4s infinite ease-in-out;
         }
 
         @keyframes redPulseShadow {
-            0%, 100% { 
-                filter: drop-shadow(0 0 0 rgba(255, 0, 0, 0)); /* Sem sombra */
-            }
-            50% { 
-                filter: drop-shadow(0 0 20px rgba(255, 50, 50, 0.8)); /* Brilho vermelho intenso */
-            }
+            0%, 100% { filter: drop-shadow(0 0 0 rgba(255, 0, 0, 0)); }
+            50% { filter: drop-shadow(0 0 20px rgba(255, 50, 50, 0.8)); }
         }
 
         /* TEXTOS */
@@ -231,7 +229,7 @@
 
         <div class="map-section">
             <div class="real-map-container">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3745.532790991655!2d-49.3535913247666!3d-20.18360008126666!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94bd503333333333%3A0x3333333333333333!2sR.%20Jo%C3%A3o%20Lucianeli%20de%20Oliveira%2C%20Orindi%C3%BAva%20-%20SP%2C%2015480-000!5e1!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <iframe src="https://www.google.com/maps?q=R.+Jo%C3%A3o+Lucianeli+de+Oliveira,+Orindi%C3%BAva+-+SP&t=k&z=19&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
             
             <a href="https://www.google.com/maps/search/?api=1&query=R.+João+Lucianeli+de+Oliveira,+Orindiúva+-+SP" target="_blank" class="btn" style="justify-content: center;">
