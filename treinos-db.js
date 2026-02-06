@@ -1,5 +1,5 @@
 /* BANCO DE DADOS DE TREINOS - STUDIO FÊNIX 
-   Contém lógica de rotação semanal e instruções precisas.
+   Imagens corrigidas e padronizadas.
 */
 
 // --- LÓGICA DE SEMANA (A / B) ---
@@ -24,7 +24,7 @@ const exercicios = {
             },
             { 
                 nome: "Supino Inclinado com Halteres", 
-                img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=800&q=80", 
+                img: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=800&q=80", 
                 series: "3 Séries", reps: "12", descanso: "60s",
                 desc: "1. Ajuste o banco a 45 graus.<br>2. Inicie com os braços esticados.<br>3. Desça os halteres abrindo os cotovelos até a altura do peito.<br>4. Suba unindo os pesos no topo sem batê-los." 
             },
@@ -109,7 +109,7 @@ const exercicios = {
             },
             { 
                 nome: "Rosca Martelo (Halteres)", 
-                img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80", 
+                img: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=800&q=80", 
                 series: "3 Séries", reps: "12 a 15", descanso: "45s",
                 desc: "1. Pegada neutra (palmas voltadas para dentro).<br>2. Alterne os braços ou faça simultâneo.<br>3. Foco no braquial e antebraço.<br>4. Movimento completo." 
             }
