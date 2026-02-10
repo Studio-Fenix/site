@@ -71,24 +71,98 @@
         .logo-small { width: 120px; height: auto; margin-bottom: 20px; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5)); }
         h2 { font-size: 1.8rem; margin-bottom: 5px; color: #ffcccc; font-weight: 700; }
         h3 { font-size: 1.1rem; color: #ff4444; margin-bottom: 20px; font-weight: 400; text-transform: uppercase; letter-spacing: 1px; }
-        .text-content { font-size: 1rem; line-height: 1.6; color: #e0e0e0; text-align: justify; }
-        .divider { width: 50%; height: 2px; background: rgba(255,255,255,0.2); margin: 20px auto; }
-        .coming-soon { font-style: italic; color: rgba(255,255,255,0.6); margin-top: 20px; font-size: 0.9rem; }
+        
+        .text-content { font-size: 0.95rem; line-height: 1.6; color: #e0e0e0; text-align: justify; margin-bottom: 25px; }
+        .text-content p { margin-bottom: 15px; }
 
-        /* RODAPÉ E TEMA PADRONIZADO */
-        .theme-container {
-            display: flex; justify-content: center; margin-top: auto; margin-bottom: 15px;
+        .divider { width: 50%; height: 2px; background: rgba(255,255,255,0.2); margin: 30px auto; }
+
+        /* NOVA SEÇÃO DE VISITA */
+        .visit-section h3 { margin-bottom: 15px; color: #00ff88; font-weight: 700; }
+        .visit-section p { font-size: 0.95rem; color: #eee; line-height: 1.5; margin-bottom: 15px; }
+        
+        .contact-btn {
+            display: inline-block; width: 100%; padding: 15px; border-radius: 12px;
+            background: #fff; color: #990000; font-weight: 800; font-size: 1rem;
+            text-transform: uppercase; text-decoration: none; margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: transform 0.2s;
         }
-        .theme-toggle {
-            width: 44px; height: 44px; border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; 
-            cursor: pointer; background: var(--toggle-bg);
-            border: 1px solid var(--glass-border); backdrop-filter: blur(5px);
-            transition: transform 0.2s, background 0.3s;
+        .contact-btn:active { transform: scale(0.95); }
+
+        /* SLIDER */
+        .slider-container {
+            width: 100%;
+            height: 250px;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            margin: 20px 0;
+            border: 1px solid rgba(255,255,255,0.2);
         }
+
+        .slider-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 100%;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Botões de Navegação */
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 10;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.3s;
+        }
+        .slider-btn:hover { background: rgba(200, 0, 0, 0.8); }
+        .prev-btn { left: 10px; }
+        .next-btn { right: 10px; }
+
+        /* Indicadores */
+        .slider-indicators {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 5px;
+            z-index: 10;
+        }
+        .indicator {
+            width: 8px; height: 8px;
+            background: rgba(255,255,255,0.4);
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+        .indicator.active { background: #fff; transform: scale(1.2); }
+
+        /* TEMA */
+        .theme-container { display: flex; justify-content: center; margin-top: auto; margin-bottom: 15px; }
+        .theme-toggle { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; background: var(--toggle-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(5px); transition: transform 0.2s, background 0.3s; }
         .theme-toggle:active { transform: scale(0.95); }
         .theme-toggle svg { width: 22px; height: 22px; stroke: var(--toggle-icon); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.3s; }
-
         .copyright { font-size: 0.75rem; color: var(--text-color); opacity: 0.7; text-align: center; }
     </style>
 </head>
@@ -107,11 +181,43 @@
             <img src="LogoStudioFenix.png" alt="Logo" class="logo-small">
             <h2>Studio Fênix</h2>
             <h3>Treinador Junior Penarrubia</h3>
+            
             <div class="text-content">
                 <p>Bem-vindo ao Studio Fênix. Nosso objetivo é proporcionar um treinamento personalizado de alta qualidade, focado nos seus resultados e na sua saúde.</p>
+                <p>No Studio Fênix, criamos um ambiente acolhedor e motivador, equipado com aparelhos modernos e áreas dedicadas para todos os tipos de treino. Nosso espaço foi projetado pensando no seu conforto e no alcance dos seus resultados.</p>
+                <p>Cada detalhe foi pensado para proporcionar a melhor experiência de treino. Desde equipamentos de última geração até áreas específicas para treino funcional, musculação e cardio, temos tudo que você precisa para sua jornada fitness.</p>
             </div>
+
+            <div class="slider-container">
+                <button class="slider-btn prev-btn" onclick="prevSlide()">&#10094;</button>
+                <button class="slider-btn next-btn" onclick="manualNext()">&#10095;</button>
+
+                <div class="slider-track" id="sliderTrack">
+                    <div class="slide"><img src="Fotos Academia Studio Fênix/studio-fenix-faixada.jpg" alt="Fachada 1"></div>
+                    <div class="slide"><img src="Fotos Academia Studio Fênix/studio-fenix-faixada2.jpg" alt="Fachada 2"></div>
+                    <div class="slide"><img src="Fotos Academia Studio Fênix/studio-fenix-equipamentos 1.jpg" alt="Equipamento 1"></div>
+                    <div class="slide"><img src="Fotos Academia Studio Fênix/studio-fenix-equipamentos 2.jpg" alt="Equipamento 2"></div>
+                    <div class="slide"><img src="Fotos Academia Studio Fênix/studio-fenix-equipamentos 3.jpg" alt="Equipamento 3"></div>
+                    <div class="slide"><img src="Fotos Academia Studio Fênix/studio-fenix-equipamentos 4.jpg" alt="Equipamento 4"></div>
+                    <div class="slide"><img src="Fotos Academia Studio Fênix/studio-fenix-equipamentos 5.jpg" alt="Equipamento 5"></div>
+                    <div class="slide"><img src="Fotos Academia Studio Fênix/studio-fenix-equipamentos 6.jpg" alt="Equipamento 6"></div>
+                    <div class="slide"><img src="Fotos Academia Studio Fênix/studio-fenix-equipamentos 7.jpg" alt="Equipamento 7"></div>
+                </div>
+                
+                <div class="slider-indicators" id="sliderIndicators"></div>
+            </div>
+
             <div class="divider"></div>
-            <p class="coming-soon">Em breve mais texto...</p>
+
+            <div class="visit-section">
+                <h3>Agende sua Visita</h3>
+                <p>Conheça nossa estrutura e receba orientações personalizadas da nossa equipe. Estamos ansiosos para recebê-lo!</p>
+                <p>Entre em contato agora mesmo e dê o primeiro passo rumo à transformação que você merece.</p>
+                
+                <a href="https://wa.me/5517992323066" class="contact-btn">
+                    Chamar no WhatsApp
+                </a>
+            </div>
         </div>
 
         <div class="theme-container">
@@ -124,6 +230,55 @@
     </div>
 
     <script>
+        // --- SLIDER LÓGICA ---
+        const track = document.getElementById('sliderTrack');
+        const slides = document.querySelectorAll('.slide');
+        const indicatorsContainer = document.getElementById('sliderIndicators');
+        let currentIndex = 0;
+        const totalSlides = slides.length;
+        let sliderInterval;
+
+        // Criar bolinhas
+        slides.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.classList.add('indicator');
+            if (index === 0) dot.classList.add('active');
+            indicatorsContainer.appendChild(dot);
+        });
+
+        const dots = document.querySelectorAll('.indicator');
+
+        function updateSlider() {
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+            dots.forEach(d => d.classList.remove('active'));
+            dots[currentIndex].classList.add('active');
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            updateSlider();
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex === 0) ? totalSlides - 1 : currentIndex - 1;
+            updateSlider();
+            resetTimer(); // Reseta o tempo automático ao interagir
+        }
+
+        function manualNext() {
+            nextSlide();
+            resetTimer(); // Reseta o tempo automático ao interagir
+        }
+
+        function resetTimer() {
+            clearInterval(sliderInterval);
+            sliderInterval = setInterval(nextSlide, 4000); // 4 segundos
+        }
+
+        // Inicia automático
+        resetTimer();
+
+        // --- TEMA ---
         const toggleBtn = document.getElementById('themeToggle'); const icon = document.getElementById('themeIcon'); const body = document.body;
         const moonIcon = "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z";
         const sunIcon = "M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42M12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10z";
