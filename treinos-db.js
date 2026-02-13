@@ -1,462 +1,321 @@
-/* BANCO DE DADOS DE TREINOS - STUDIO FÊNIX 
-   Imagens corrigidas e padronizadas.
-*/
+/* BANCO DE DADOS DE EXERCÍCIOS - STUDIO FÊNIX */
+/* Imagens atualizadas em Alta Resolução (Pexels) com padrão visual premium */
 
-// --- LÓGICA DE SEMANA (A / B) ---
-function getWeekNumber() {
-    const date = new Date();
-    const startDate = new Date(date.getFullYear(), 0, 1);
-    const days = Math.floor((date - startDate) / (24 * 60 * 60 * 1000));
-    return Math.ceil(days / 7);
-}
-const isWeekA = getWeekNumber() % 2 !== 0; // Ímpar = A, Par = B
+const exerciseDB = [
+    // ==========================================
+    // PEITO
+    // ==========================================
+    { 
+        id: 'p1', musculo: 'peito', nome: 'Supino Reto', eq: 'Banco Supino Reto + Anilhas', 
+        img: 'https://images.pexels.com/photos/1431282/pexels-photo-1431282.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Deite-se no banco reto. Desça a barra na linha do peito e empurre controlando o movimento.' 
+    },
+    { 
+        id: 'p2', musculo: 'peito', nome: 'Supino Inclinado', eq: 'Banco Supino Inclinado + Anilhas', 
+        img: 'https://images.pexels.com/photos/3289711/pexels-photo-3289711.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'No banco inclinado, desça a barra até a parte superior do peitoral.' 
+    },
+    { 
+        id: 'p3', musculo: 'peito', nome: 'Crossover Polia Alta', eq: 'Crossover c/ Estribos', 
+        img: 'https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'No crossover, puxe os estribos de cima para baixo cruzando à frente do abdómen, focando na parte inferior do peito.' 
+    },
+    { 
+        id: 'p4', musculo: 'peito', nome: 'Crossover Polia Média', eq: 'Crossover c/ Estribos', 
+        img: 'https://images.pexels.com/photos/416809/pexels-photo-416809.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Polias na altura dos ombros. Feche os braços à frente do peito esmagando a musculatura.' 
+    },
+    { 
+        id: 'p5', musculo: 'peito', nome: 'Crossover Polia Baixa', eq: 'Crossover c/ Estribos', 
+        img: 'https://images.pexels.com/photos/1229356/pexels-photo-1229356.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Puxe os estribos de baixo para cima, focando na parte superior (clavicular) do peitoral.' 
+    },
+    { 
+        id: 'p6', musculo: 'peito', nome: 'Crucifixo Reto', eq: 'Banqueta Regulável 0 a 90° + Halteres', 
+        img: 'https://images.pexels.com/photos/1552249/pexels-photo-1552249.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Deitado na banqueta reta. Abra os braços com os halteres alongando o peitoral e feche no centro.' 
+    },
+    { 
+        id: 'p7', musculo: 'peito', nome: 'Crucifixo Inclinado', eq: 'Banqueta Regulável 0 a 90° + Halteres', 
+        img: 'https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Banqueta inclinada. Foco no alongamento e contração da parte superior do peito.' 
+    },
+    { 
+        id: 'p8', musculo: 'peito', nome: 'Pull-over', eq: 'Banqueta Regulável + Halter', 
+        img: 'https://images.pexels.com/photos/2294361/pexels-photo-2294361.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Deitado na banqueta, desça um halter para trás da cabeça com braços semi-esticados e puxe de volta.' 
+    },
+    { 
+        id: 'p9', musculo: 'peito', nome: 'Flexão de Braço', eq: 'Colchonete / Peso do Corpo', 
+        img: 'https://images.pexels.com/photos/176782/pexels-photo-176782.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Corpo reto apoiado nas mãos e pés (ou joelhos). Desça até o peito quase tocar o colchonete.' 
+    },
 
-// --- DADOS DOS EXERCÍCIOS ---
-const exercicios = {
-    segunda: {
-        titulo: "Segunda: Peito e Tríceps",
-        A: [
-            { 
-                nome: "Supino Reto com Barra", 
-                img: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=800&q=80", 
-                series: "4 Séries", reps: "10 a 12", descanso: "60s",
-                desc: "1. Deite-se no banco com os pés firmes no chão.<br>2. Segure a barra um pouco além da largura dos ombros.<br>3. Desça a barra controladamente até tocar o meio do peito.<br>4. Empurre para cima soltando o ar, sem travar totalmente os cotovelos." 
-            },
-            { 
-                nome: "Supino Inclinado com Halteres", 
-                img: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "12", descanso: "60s",
-                desc: "1. Ajuste o banco a 45 graus.<br>2. Inicie com os braços esticados.<br>3. Desça os halteres abrindo os cotovelos até a altura do peito.<br>4. Suba unindo os pesos no topo sem batê-los." 
-            },
-            { 
-                nome: "Crossover (Polia Alta)", 
-                img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "15", descanso: "45s",
-                desc: "1. Tronco levemente inclinado à frente.<br>2. Mantenha os cotovelos levemente flexionados (posição de abraço).<br>3. Feche as mãos na frente do quadril, focando em esmagar o peitoral.<br>4. Controle a volta sem deixar os pesos encostarem." 
-            },
-            { 
-                nome: "Tríceps Corda", 
-                img: "https://images.unsplash.com/photo-1534367507873-d2d7e24c797f?auto=format&fit=crop&w=800&q=80", 
-                series: "4 Séries", reps: "12 a 15", descanso: "45s",
-                desc: "1. Pés paralelos, tronco levemente inclinado.<br>2. Cole os cotovelos nas costelas (eles não se movem).<br>3. Estenda o braço para baixo, abrindo a corda no final do movimento.<br>4. Suba devagar até a altura do peito." 
-            },
-            { 
-                nome: "Tríceps Testa (Barra W)", 
-                img: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "12", descanso: "60s",
-                desc: "1. Deitado, segure a barra com braços esticados.<br>2. Flexione os cotovelos levando a barra em direção à testa.<br>3. Mantenha os cotovelos fechados apontando para o teto.<br>4. Estenda os braços retornando à posição inicial." 
-            }
-        ],
-        B: [
-            { 
-                nome: "Supino Reto com Halteres", 
-                img: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=800&q=80", 
-                series: "4 Séries", reps: "10 a 12", descanso: "60s",
-                desc: "1. Permite maior amplitude que a barra.<br>2. Desça os halteres até alongar bem o peitoral.<br>3. Suba convergindo os pesos ao centro.<br>4. Mantenha os pulsos firmes." 
-            },
-            { 
-                nome: "Peck Deck (Voador)", 
-                img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "15", descanso: "45s",
-                desc: "1. Ajuste o banco para que as mãos fiquem na altura dos ombros.<br>2. Mantenha a coluna apoiada.<br>3. Feche os braços e segure a contração por 1 segundo.<br>4. Abra controladamente sem soltar o peso de uma vez." 
-            },
-            { 
-                nome: "Flexão de Braço", 
-                img: "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "Até a falha", descanso: "60s",
-                desc: "1. Mãos na largura dos ombros.<br>2. Corpo reto, contraia o abdômen.<br>3. Desça até o peito quase tocar o chão.<br>4. Se estiver difícil, apoie os joelhos." 
-            },
-            { 
-                nome: "Tríceps Pulley (Barra Reta)", 
-                img: "https://images.unsplash.com/photo-1534367507873-d2d7e24c797f?auto=format&fit=crop&w=800&q=80", 
-                series: "4 Séries", reps: "12 a 15", descanso: "45s",
-                desc: "1. Pegada pronada (palma para baixo).<br>2. Cotovelos fixos ao lado do corpo.<br>3. Empurre a barra até estender totalmente o braço.<br>4. Evite usar o peso do corpo para empurrar." 
-            },
-            { 
-                nome: "Mergulho no Banco", 
-                img: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "12", descanso: "60s",
-                desc: "1. Apoie as mãos na borda do banco.<br>2. Mantenha as costas próximas ao banco durante a descida.<br>3. Desça até os cotovelos formarem 90 graus.<br>4. Suba usando apenas a força dos braços." 
-            }
-        ]
+    // ==========================================
+    // COSTAS & TRAPÉZIO
+    // ==========================================
+    { 
+        id: 'c1', musculo: 'costas', nome: 'Puxada Vertical Aberta', eq: 'Puxador Vertical Articulado', 
+        img: 'https://images.pexels.com/photos/1431282/pexels-photo-1431282.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Pegada aberta. Puxe as hastes articuladas na direção da parte superior do peito fechando as escápulas.' 
     },
-    terca: {
-        titulo: "Terça: Costas e Bíceps",
-        A: [
-            { 
-                nome: "Puxada Alta Frontal", 
-                img: "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=800&q=80", 
-                series: "4 Séries", reps: "10 a 12", descanso: "60s",
-                desc: "1. Pegada aberta na barra.<br>2. Incline levemente o tronco para trás.<br>3. Puxe a barra em direção ao peitoral superior.<br>4. Foque em fechar as escápulas nas costas." 
-            },
-            { 
-                nome: "Remada Baixa (Triângulo)", 
-                img: "https://images.unsplash.com/photo-1517963879466-e9b5ce382d5d?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "12", descanso: "60s",
-                desc: "1. Mantenha a coluna reta e peito estufado.<br>2. Puxe o triângulo em direção ao umbigo.<br>3. Mantenha os cotovelos próximos ao corpo.<br>4. Alongue bem os braços na volta." 
-            },
-            { 
-                nome: "Remada Curvada (Barra)", 
-                img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "10", descanso: "60s",
-                desc: "1. Pés na largura dos ombros, joelhos semi-flexionados.<br>2. Incline o tronco à frente (quase paralelo ao chão).<br>3. Puxe a barra na direção do abdômen.<br>4. Cuidado para não curvar a coluna." 
-            },
-            { 
-                nome: "Rosca Direta (Barra W)", 
-                img: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=800&q=80", 
-                series: "4 Séries", reps: "10 a 12", descanso: "60s",
-                desc: "1. Cotovelos ao lado do corpo.<br>2. Suba a barra até a altura do ombro.<br>3. Desça controladamente.<br>4. Evite balançar o tronco (roubar)." 
-            },
-            { 
-                nome: "Rosca Martelo (Halteres)", 
-                img: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "12 a 15", descanso: "45s",
-                desc: "1. Pegada neutra (palmas voltadas para dentro).<br>2. Alterne os braços ou faça simultâneo.<br>3. Foco no braquial e antebraço.<br>4. Movimento completo." 
-            }
-        ],
-        B: [
-            { 
-                nome: "Barra Fixa (ou Graviton)", 
-                img: "https://images.unsplash.com/photo-1598971639058-211a73287750?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "8 a 12", descanso: "90s",
-                desc: "1. Pegada aberta.<br>2. Puxe o corpo até o queixo passar da barra.<br>3. Desça até estender totalmente os braços.<br>4. Use o Graviton se precisar de assistência." 
-            },
-            { 
-                nome: "Remada Unilateral (Serrote)", 
-                img: "https://images.unsplash.com/photo-1517963879466-e9b5ce382d5d?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "12 cada lado", descanso: "45s",
-                desc: "1. Apoie um joelho e uma mão no banco.<br>2. Costas retas, paralelas ao chão.<br>3. Puxe o halter em direção ao quadril.<br>4. Não gire o tronco durante a puxada." 
-            },
-            { 
-                nome: "Pulldown com Corda", 
-                img: "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "15", descanso: "45s",
-                desc: "1. Braços estendidos ou semi-flexionados.<br>2. Puxe a corda de cima até as coxas.<br>3. Mantenha o peito estufado.<br>4. Foco total na lateral das costas (dorsal)." 
-            },
-            { 
-                nome: "Rosca Scott (Máquina ou Livre)", 
-                img: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "12", descanso: "60s",
-                desc: "1. Apoie bem as axilas no banco.<br>2. Desça a barra até quase estender o braço.<br>3. Suba contraindo o bíceps.<br>4. Não tire o tríceps do apoio." 
-            },
-            { 
-                nome: "Rosca Concentrada", 
-                img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "12 cada lado", descanso: "45s",
-                desc: "1. Sentado, apoie o cotovelo na parte interna da coxa.<br>2. Isole o movimento apenas no antebraço.<br>3. Contraia bem no topo.<br>4. Desça devagar." 
-            }
-        ]
+    { 
+        id: 'c2', musculo: 'costas', nome: 'Puxada Vertical Fechada', eq: 'Puxador Vertical Articulado', 
+        img: 'https://images.pexels.com/photos/3289711/pexels-photo-3289711.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Pegada fechada/neutra. Puxe focando mais no miolo das costas e alongamento do dorsal.' 
     },
-    quarta: {
-        titulo: "Quarta: Pernas (Foco Quadríceps)",
-        A: [
-            { 
-                nome: "Agachamento Livre", 
-                img: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=800&q=80", 
-                series: "4 Séries", reps: "10 a 12", descanso: "90s",
-                desc: "1. Pés na largura dos ombros.<br>2. Mantenha a coluna neutra e olhar para frente.<br>3. Desça até as coxas ficarem paralelas ao chão (90º).<br>4. Suba empurrando o chão com os calcanhares." 
-            },
-            { 
-                nome: "Leg Press 45º", 
-                img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80", 
-                series: "4 Séries", reps: "12", descanso: "60s",
-                desc: "1. Pés no centro da plataforma.<br>2. Destrave o aparelho e desça até 90 graus.<br>3. Não tire a lombar do banco em momento algum.<br>4. Não estenda totalmente os joelhos na subida." 
-            },
-            { 
-                nome: "Cadeira Extensora", 
-                img: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "15 (Drop-set na última)", descanso: "45s",
-                desc: "1. Ajuste o encosto para o joelho alinhar com o eixo.<br>2. Estenda as pernas completamente.<br>3. Segure 1 segundo no topo (pico de contração).<br>4. Desça controlando o peso." 
-            },
-            { 
-                nome: "Passada (Afundo) com Halteres", 
-                img: "https://images.unsplash.com/photo-1434608519344-49d77a699ded?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "12 passadas totais", descanso: "60s",
-                desc: "1. Dê um passo largo à frente.<br>2. Desça até o joelho de trás quase tocar o chão.<br>3. O joelho da frente não deve passar muito da ponta do pé.<br>4. Mantenha o tronco ereto." 
-            },
-            { 
-                nome: "Panturrilha Sentado (Banco)", 
-                img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=800&q=80", 
-                series: "4 Séries", reps: "15 a 20", descanso: "30s",
-                desc: "1. Apoie a almofada sobre as coxas.<br>2. Desça o calcanhar o máximo possível (alongue).<br>3. Suba o máximo possível (fique na ponta dos pés).<br>4. Movimento com amplitude total." 
-            }
-        ],
-        B: [
-            { 
-                nome: "Agachamento Hack Machine", 
-                img: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=800&q=80", 
-                series: "4 Séries", reps: "12", descanso: "60s",
-                desc: "1. Apoie bem as costas e ombros.<br>2. Pés um pouco à frente para focar no quadríceps.<br>3. Desça profundo.<br>4. Empurre com força total na subida." 
-            },
-            { 
-                nome: "Agachamento Búlgaro", 
-                img: "https://images.unsplash.com/photo-1434608519344-49d77a699ded?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "10 cada perna", descanso: "60s",
-                desc: "1. Apoie o peito do pé de trás em um banco.<br>2. Mantenha o tronco levemente inclinado à frente.<br>3. Desça até o joelho de trás aproximar do chão.<br>4. Força na perna da frente." 
-            },
-            { 
-                nome: "Agachamento Sumô (Halter)", 
-                img: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "12", descanso: "60s",
-                desc: "1. Pés bem afastados, pontas para fora.<br>2. Segure o halter com as duas mãos no centro.<br>3. Desça mantendo os joelhos na direção da ponta dos pés.<br>4. Foca na parte interna da coxa." 
-            },
-            { 
-                nome: "Cadeira Adutora", 
-                img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "15", descanso: "45s",
-                desc: "1. Sente-se e apoie as costas.<br>2. Feche as pernas com força.<br>3. Segure 1 segundo no miolo.<br>4. Abra controladamente." 
-            },
-            { 
-                nome: "Panturrilha no Leg Press", 
-                img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=800&q=80", 
-                series: "4 Séries", reps: "15", descanso: "30s",
-                desc: "1. Apoie apenas a ponta dos pés na base.<br>2. Empurre a plataforma usando os tornozelos.<br>3. Mantenha os joelhos levemente flexionados (segurança).<br>4. Amplitude máxima." 
-            }
-        ]
+    { 
+        id: 'c3', musculo: 'costas', nome: 'Remada Cavalinho', eq: 'Remada Cavalinho + Anilhas', 
+        img: 'https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Pés firmes, joelhos semi-flexionados. Puxe o peso em direção ao abdómen mantendo a coluna selada.' 
     },
-    quinta: {
-        titulo: "Quinta: Ombros e Abdômen",
-        A: [
-            { 
-                nome: "Desenvolvimento com Halteres", 
-                img: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=800&q=80", 
-                series: "4 Séries", reps: "10 a 12", descanso: "60s",
-                desc: "1. Sentado com costas apoiadas.<br>2. Inicie com halteres na altura das orelhas.<br>3. Empurre para cima até estender os braços.<br>4. Desça devagar até a posição inicial." 
-            },
-            { 
-                nome: "Elevação Lateral", 
-                img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80", 
-                series: "4 Séries", reps: "12 a 15", descanso: "45s",
-                desc: "1. Em pé, cotovelos levemente flexionados.<br>2. Levante os braços até a altura dos ombros.<br>3. Imagine que está despejando uma jarra de água.<br>4. Não balance o corpo." 
-            },
-            { 
-                nome: "Elevação Frontal (Barra ou Anilha)", 
-                img: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "12", descanso: "45s",
-                desc: "1. Segure a anilha/barra na frente da coxa.<br>2. Suba até a altura dos olhos.<br>3. Mantenha o abdômen contraído para não forçar a lombar.<br>4. Desça controlando o peso." 
-            },
-            { 
-                nome: "Prancha Abdominal (Isometria)", 
-                img: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "30 a 60 segundos", descanso: "60s",
-                desc: "1. Apoie antebraços e ponta dos pés.<br>2. Corpo reto como uma tábua.<br>3. Contraia glúteos e abdômen fortemente.<br>4. Não deixe o quadril cair." 
-            },
-            { 
-                nome: "Abdominal Infra (Elevação de Pernas)", 
-                img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "15", descanso: "45s",
-                desc: "1. Deitado, mãos embaixo do quadril.<br>2. Mantenha as pernas esticadas.<br>3. Eleve as pernas até formar 90 graus.<br>4. Desça sem encostar os pés no chão." 
-            }
-        ],
-        B: [
-            { 
-                nome: "Desenvolvimento Militar (Barra)", 
-                img: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=800&q=80", 
-                series: "4 Séries", reps: "10", descanso: "60s",
-                desc: "1. Pode ser feito em pé ou sentado.<br>2. Barra desce até a altura do queixo/peito alto.<br>3. Empurre a barra para cima da cabeça.<br>4. Cuidado para não arquear as costas." 
-            },
-            { 
-                nome: "Crucifixo Inverso (Posterior de Ombro)", 
-                img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "15", descanso: "45s",
-                desc: "1. Use o Voador Inverso ou halteres.<br>2. Braços na altura dos ombros.<br>3. Abra os braços focando na parte de trás do ombro.<br>4. Movimento curto e concentrado." 
-            },
-            { 
-                nome: "Remada Alta (Barra ou Polia)", 
-                img: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "12", descanso: "45s",
-                desc: "1. Pegada fechada na barra.<br>2. Puxe a barra rente ao corpo até o peito.<br>3. Os cotovelos devem apontar para cima (orelhas).<br>4. Não suba além da linha do ombro." 
-            },
-            { 
-                nome: "Abdominal Supra (Máquina ou Chão)", 
-                img: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=800&q=80", 
-                series: "4 Séries", reps: "20", descanso: "45s",
-                desc: "1. Flexione o tronco para frente.<br>2. Solte todo o ar na contração máxima.<br>3. Volte devagar inspirando.<br>4. Não puxe o pescoço com as mãos." 
-            },
-            { 
-                nome: "Russian Twist (Giro Russo)", 
-                img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "20 giros totais", descanso: "45s",
-                desc: "1. Sentado, tire os pés do chão.<br>2. Segure um peso (anilha/bola).<br>3. Gire o tronco tocando o peso de um lado e do outro.<br>4. Mantenha o equilíbrio." 
-            }
-        ]
+    { 
+        id: 'c4', musculo: 'costas', nome: 'Remada Unilateral (Serrote)', eq: 'Banqueta Regulável + Halter', 
+        img: 'https://images.pexels.com/photos/416809/pexels-photo-416809.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Apoie um joelho e mão na banqueta. Puxe o halter na direção do quadril.' 
     },
-    sexta: {
-        titulo: "Sexta: Posterior e Glúteo",
-        A: [
-            { 
-                nome: "Stiff com Barra", 
-                img: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=800&q=80", 
-                series: "4 Séries", reps: "10 a 12", descanso: "60s",
-                desc: "1. Pés na largura do quadril, joelhos semi-flexionados.<br>2. Desça a barra rente às pernas.<br>3. Mantenha a coluna reta (empine o quadril).<br>4. Desça até sentir alongar o posterior." 
-            },
-            { 
-                nome: "Mesa Flexora", 
-                img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80", 
-                series: "4 Séries", reps: "12", descanso: "45s",
-                desc: "1. Deite-se e alinhe o joelho com o eixo.<br>2. Flexione as pernas até encostar no glúteo se possível.<br>3. Não tire o quadril do banco na subida.<br>4. Controle a descida." 
-            },
-            { 
-                nome: "Elevação Pélvica", 
-                img: "https://images.unsplash.com/photo-1434608519344-49d77a699ded?auto=format&fit=crop&w=800&q=80", 
-                series: "4 Séries", reps: "10 a 12 (com peso)", descanso: "90s",
-                desc: "1. Apoie as escápulas no banco.<br>2. Coloque a barra sobre o quadril.<br>3. Suba o quadril e contraia o glúteo no topo por 2 segundos.<br>4. Mantenha o queixo no peito." 
-            },
-            { 
-                nome: "Cadeira Flexora", 
-                img: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "15", descanso: "45s",
-                desc: "1. Ajuste o encosto para travar bem a coxa.<br>2. Flexione as pernas para baixo.<br>3. Amplitude total de movimento.<br>4. Movimento contínuo." 
-            },
-            { 
-                nome: "Glúteo Caneleira (4 Apoios)", 
-                img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "15 cada lado", descanso: "30s",
-                desc: "1. Apoie joelhos e cotovelos no colchonete.<br>2. Chute a perna para cima (coice).<br>3. Contraia o glúteo no topo.<br>4. Não balance a lombar." 
-            }
-        ],
-        B: [
-            { 
-                nome: "Levantamento Terra", 
-                img: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=800&q=80", 
-                series: "4 Séries", reps: "8 a 10", descanso: "90s",
-                desc: "1. Pés firmes, barra no meio dos pés.<br>2. Agache para pegar a barra com coluna reta.<br>3. Levante estendendo joelhos e quadril juntos.<br>4. Termine com o corpo ereto." 
-            },
-            { 
-                nome: "Afundo Búlgaro (Foco Glúteo)", 
-                img: "https://images.unsplash.com/photo-1434608519344-49d77a699ded?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "10 cada lado", descanso: "60s",
-                desc: "1. Pé de trás no banco.<br>2. Incline o tronco para frente para ativar mais o glúteo.<br>3. Desça profundo.<br>4. Empurre com o calcanhar da frente." 
-            },
-            { 
-                nome: "Cadeira Abdutora", 
-                img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80", 
-                series: "4 Séries", reps: "20", descanso: "45s",
-                desc: "1. Incline o tronco para frente (segure na máquina).<br>2. Abra as pernas o máximo possível.<br>3. Segure 1 segundo aberto.<br>4. Feche devagar." 
-            },
-            { 
-                nome: "Flexora em Pé Unilateral", 
-                img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "12 cada lado", descanso: "30s",
-                desc: "1. Apoie o peito na máquina.<br>2. Flexione uma perna de cada vez.<br>3. Foque em isolar o posterior da coxa.<br>4. Sem trancos." 
-            },
-            { 
-                nome: "Agachamento Sumô (Polia/Step)", 
-                img: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "15", descanso: "60s",
-                desc: "1. Use steps para aumentar a amplitude.<br>2. Segure o peso no centro.<br>3. Desça o máximo que conseguir.<br>4. Foco em glúteos e adutores." 
-            }
-        ]
+    { 
+        id: 'c5', musculo: 'costas', nome: 'Remada Curvada', eq: 'Halteres', 
+        img: 'https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Tronco inclinado para a frente, coluna reta. Puxe os halteres simultaneamente contraindo as costas.' 
     },
-    sabado: {
-        titulo: "Sábado: Full Body / Cardio",
-        A: [
-            { 
-                nome: "Burpees", 
-                img: "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "10 a 15", descanso: "60s",
-                desc: "1. Agache e coloque as mãos no chão.<br>2. Jogue os pés para trás (prancha).<br>3. Faça uma flexão (opcional).<br>4. Puxe os pés e salte esticando o corpo." 
-            },
-            { 
-                nome: "Kettlebell Swing", 
-                img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=800&q=80", 
-                series: "4 Séries", reps: "20", descanso: "45s",
-                desc: "1. Pés afastados, segure o peso no centro.<br>2. Flexione levemente os joelhos e jogue o peso entre as pernas.<br>3. Estenda o quadril com explosão, elevando o peso.<br>4. A força vem do quadril, não do braço." 
-            },
-            { 
-                nome: "Polichinelos", 
-                img: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=800&q=80", 
-                series: "4 Séries", reps: "1 minuto", descanso: "30s",
-                desc: "1. Em pé, pés unidos.<br>2. Salte abrindo as pernas e elevando os braços.<br>3. Salte fechando as pernas e baixando os braços.<br>4. Mantenha um ritmo constante." 
-            },
-            { 
-                nome: "Agachamento com Salto", 
-                img: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "15", descanso: "60s",
-                desc: "1. Faça o agachamento normal.<br>2. Na subida, exploda em um salto.<br>3. Amorteca a queda já flexionando os joelhos.<br>4. Não caia com o joelho duro." 
-            },
-            { 
-                nome: "Corrida na Esteira (HIIT)", 
-                img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80", 
-                series: "10 Tiros", reps: "1min Correndo / 1min Andando", descanso: "-",
-                desc: "1. Intercale alta intensidade com descanso ativo.<br>2. 1 minuto correndo rápido.<br>3. 1 minuto caminhando para recuperar.<br>4. Repita por 20 minutos totais." 
-            }
-        ],
-        B: [
-            { 
-                nome: "Pular Corda", 
-                img: "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?auto=format&fit=crop&w=800&q=80", 
-                series: "4 Séries", reps: "2 minutos", descanso: "1 min",
-                desc: "1. Mantenha os cotovelos próximos ao corpo.<br>2. Gire a corda com os punhos.<br>3. Saltos curtos na ponta dos pés.<br>4. Ritmo constante." 
-            },
-            { 
-                nome: "Box Jumps (Salto na Caixa)", 
-                img: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=800&q=80", 
-                series: "3 Séries", reps: "12", descanso: "60s",
-                desc: "1. Fique de frente para a caixa.<br>2. Agache levemente e salte com os dois pés.<br>3. Aterrisse suavemente em cima da caixa.<br>4. Estenda o corpo totalmente antes de descer." 
-            },
-            { 
-                nome: "Mountain Climbers (Escalador)", 
-                img: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=800&q=80", 
-                series: "4 Séries", reps: "30 segundos", descanso: "30s",
-                desc: "1. Posição de prancha alta (mãos no chão).<br>2. Traga um joelho em direção ao peito.<br>3. Troque as pernas rapidamente como se estivesse correndo.<br>4. Mantenha o quadril baixo." 
-            },
-            { 
-                nome: "Battle Ropes (Corda Naval)", 
-                img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=800&q=80", 
-                series: "4 Séries", reps: "30 segundos", descanso: "30s",
-                desc: "1. Base de agachamento isométrico.<br>2. Movimente os braços alternadamente criando ondas na corda.<br>3. Mantenha o core firme.<br>4. Acelere o movimento." 
-            },
-            { 
-                nome: "Bike ou Elíptico", 
-                img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80", 
-                series: "1 Série", reps: "20 minutos", descanso: "-",
-                desc: "1. Carga moderada a pesada.<br>2. Mantenha uma rotação constante.<br>3. Ótimo para finalizar o treino sem impacto." 
-            }
-        ]
+    { 
+        id: 'c6', musculo: 'costas', nome: 'Remada Baixa na Polia', eq: 'Crossover c/ Estribos', 
+        img: 'https://images.pexels.com/photos/1229356/pexels-photo-1229356.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Sentado no chão ou step, use a polia baixa do crossover para puxar os estribos até ao umbigo.' 
+    },
+    { 
+        id: 'c7', musculo: 'costas', nome: 'Pull-down (Extensão de Ombros)', eq: 'Crossover c/ Estribos', 
+        img: 'https://images.pexels.com/photos/1552249/pexels-photo-1552249.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Em pé frente à polia alta. Com braços esticados, puxe o estribo até à coxa focando no dorsal.' 
+    },
+    { 
+        id: 'tr1', musculo: 'trapezio', nome: 'Encolhimento de Ombros', eq: 'Halteres ou Anilhas', 
+        img: 'https://images.pexels.com/photos/2294361/pexels-photo-2294361.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Segure os pesos ao lado do corpo. Eleve os ombros em direção às orelhas e desça devagar.' 
+    },
+
+    // ==========================================
+    // PERNAS & GLÚTEOS
+    // ==========================================
+    { 
+        id: 'pe1', musculo: 'perna', nome: 'Agachamento Hack', eq: 'Rack 45° Agachamento', 
+        img: 'https://images.pexels.com/photos/791763/pexels-photo-791763.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Apoie costas e ombros no Rack. Desça até formar 90 graus com os joelhos.' 
+    },
+    { 
+        id: 'pe2', musculo: 'perna', nome: 'Agachamento Squat Articulado', eq: 'Agachamento Squat', 
+        img: 'https://images.pexels.com/photos/416754/pexels-photo-416754.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Posicione os ombros no aparelho. Agachamento com segurança e foco extremo no quadríceps e glúteos.' 
+    },
+    { 
+        id: 'pe3', musculo: 'perna', nome: 'Leg Press 45°', eq: 'Leg Press 45° + Anilhas', 
+        img: 'https://images.pexels.com/photos/949126/pexels-photo-949126.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Apoie totalmente as costas. Empurre a plataforma, não estique os joelhos 100% no topo.' 
+    },
+    { 
+        id: 'pe4', musculo: 'perna', nome: 'Leg Press 80° (Vertical)', eq: 'Leg Press 80° + Anilhas', 
+        img: 'https://images.pexels.com/photos/791763/pexels-photo-791763.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Deitado de costas para o chão, empurre o peso verticalmente. Foco intenso em posteriores e glúteos.' 
+    },
+    { 
+        id: 'pe5', musculo: 'perna', nome: 'Agachamento Búlgaro', eq: 'Agachamento Bulgaro + Halteres', 
+        img: 'https://images.pexels.com/photos/3768916/pexels-photo-3768916.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Apoie o pé de trás no rolo/banco búlgaro. Agache concentrando todo o peso na perna da frente.' 
+    },
+    { 
+        id: 'pe6', musculo: 'perna', nome: 'Agachamento Sumô', eq: 'Halter ou Anilha pesada', 
+        img: 'https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Pés bem afastados, pontas para fora. Segure o peso no centro e desça ativando os adutores.' 
+    },
+    { 
+        id: 'pe7', musculo: 'perna', nome: 'Cadeira Extensora', eq: 'Extensor Unilateral Articulado', 
+        img: 'https://images.pexels.com/photos/416754/pexels-photo-416754.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Estenda as pernas focando no quadríceps. Segure 1 segundo no topo para máxima contração.' 
+    },
+    { 
+        id: 'pe8', musculo: 'perna', nome: 'Extensora Unilateral', eq: 'Extensor Unilateral Articulado', 
+        img: 'https://images.pexels.com/photos/949126/pexels-photo-949126.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Faça o movimento com uma perna de cada vez para corrigir assimetrias.' 
+    },
+    { 
+        id: 'pe9', musculo: 'perna', nome: 'Mesa Flexora', eq: 'Mesa Flexora', 
+        img: 'https://images.pexels.com/photos/3768131/pexels-photo-3768131.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Deitado de bruços, flexione as pernas. Mantenha o quadril colado no banco o tempo todo.' 
+    },
+    { 
+        id: 'pe10', musculo: 'perna', nome: 'Stiff', eq: 'Halteres ou Anilha 20kg', 
+        img: 'https://images.pexels.com/photos/791763/pexels-photo-791763.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Pernas semi-esticadas. Desça o peso rente à perna jogando o quadril para trás para alongar o posterior.' 
+    },
+    { 
+        id: 'pe11', musculo: 'perna', nome: 'Elevação Pélvica', eq: 'Colchonete + Anilha/Halter', 
+        img: 'https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Deitado, posicione o peso no quadril. Suba contraindo os glúteos com força.' 
+    },
+    { 
+        id: 'pe12', musculo: 'perna', nome: 'Glúteo 4 Apoios', eq: 'Colchonete', 
+        img: 'https://images.pexels.com/photos/3768916/pexels-photo-3768916.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Apoie joelhos e cotovelos. Eleve a perna flexionada para o alto empurrando com o calcanhar.' 
+    },
+    { 
+        id: 'pe13', musculo: 'perna', nome: 'Panturrilha no Leg Press 45°', eq: 'Leg Press 45°', 
+        img: 'https://images.pexels.com/photos/416754/pexels-photo-416754.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Com joelhos semi-estendidos, posicione a ponta dos pés na borda e faça a flexão plantar.' 
+    },
+    { 
+        id: 'pe14', musculo: 'perna', nome: 'Panturrilha Unilateral em Pé', eq: 'Espaldar (Apoio)', 
+        img: 'https://images.pexels.com/photos/3768131/pexels-photo-3768131.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Apoie a mão no espaldar para equilíbrio. Fique num pé só e eleve o calcanhar ao máximo.' 
+    },
+
+    // ==========================================
+    // OMBROS
+    // ==========================================
+    { 
+        id: 'o1', musculo: 'ombro', nome: 'Desenvolvimento Halteres', eq: 'Banqueta 0 a 90° + Halteres', 
+        img: 'https://images.pexels.com/photos/1431282/pexels-photo-1431282.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Banqueta a 90°. Empurre os halteres para cima da cabeça unindo-os no topo.' 
+    },
+    { 
+        id: 'o2', musculo: 'ombro', nome: 'Elevação Lateral', eq: 'Halteres', 
+        img: 'https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Em pé, suba os halteres lateralmente até à linha dos ombros com cotovelos levemente flexionados.' 
+    },
+    { 
+        id: 'o3', musculo: 'ombro', nome: 'Elevação Lateral Polia', eq: 'Crossover c/ Estribo', 
+        img: 'https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Polia baixa. Puxe o cabo lateralmente criando tensão contínua no ombro.' 
+    },
+    { 
+        id: 'o4', musculo: 'ombro', nome: 'Elevação Frontal', eq: 'Halteres ou Anilha', 
+        img: 'https://images.pexels.com/photos/3289711/pexels-photo-3289711.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Eleve o peso com os braços retos à frente do corpo até à altura do rosto.' 
+    },
+    { 
+        id: 'o5', musculo: 'ombro', nome: 'Crucifixo Inverso', eq: 'Banqueta Inclinada + Halteres', 
+        img: 'https://images.pexels.com/photos/416809/pexels-photo-416809.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Deite de bruços na banqueta inclinada. Abra os braços focando na parte posterior do ombro.' 
+    },
+    { 
+        id: 'o6', musculo: 'ombro', nome: 'Face Pull', eq: 'Crossover polia alta', 
+        img: 'https://images.pexels.com/photos/1229356/pexels-photo-1229356.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Puxe o estribo em direção ao seu rosto, abrindo os cotovelos para trás.' 
+    },
+
+    // ==========================================
+    // BÍCEPS
+    // ==========================================
+    { 
+        id: 'b1', musculo: 'biceps', nome: 'Rosca Direta Polia', eq: 'Crossover Polia Baixa', 
+        img: 'https://images.pexels.com/photos/1431282/pexels-photo-1431282.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Puxe de baixo para cima mantendo o cotovelo travado ao lado do corpo.' 
+    },
+    { 
+        id: 'b2', musculo: 'biceps', nome: 'Rosca Alternada', eq: 'Halteres', 
+        img: 'https://images.pexels.com/photos/3289711/pexels-photo-3289711.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Em pé ou sentado. Suba um halter de cada vez girando o punho para fora na subida.' 
+    },
+    { 
+        id: 'b3', musculo: 'biceps', nome: 'Rosca Martelo', eq: 'Halteres', 
+        img: 'https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Pegada neutra (palmas viradas uma para a outra). Foca no antebraço e músculo braquial.' 
+    },
+    { 
+        id: 'b4', musculo: 'biceps', nome: 'Rosca Concentrada', eq: 'Banqueta + Halter', 
+        img: 'https://images.pexels.com/photos/1229356/pexels-photo-1229356.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Sentado, apoie o cotovelo na parte interna da coxa. Faça o movimento isolando 100% o bíceps.' 
+    },
+
+    // ==========================================
+    // TRÍCEPS
+    // ==========================================
+    { 
+        id: 't1', musculo: 'triceps', nome: 'Tríceps Polia Pronado', eq: 'Crossover Polia Alta', 
+        img: 'https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Palmas para baixo. Empurre o peso estendendo totalmente o braço.' 
+    },
+    { 
+        id: 't2', musculo: 'triceps', nome: 'Tríceps Polia Supinado', eq: 'Crossover Polia Alta', 
+        img: 'https://images.pexels.com/photos/416809/pexels-photo-416809.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Palmas para cima (invertida). Isola perfeitamente a cabeça longa do tríceps.' 
+    },
+    { 
+        id: 't3', musculo: 'triceps', nome: 'Tríceps Testa', eq: 'Banqueta Regulável + Halteres', 
+        img: 'https://images.pexels.com/photos/2294361/pexels-photo-2294361.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Deitado. Segure os halteres, flexione os cotovelos até à testa e empurre para cima.' 
+    },
+    { 
+        id: 't4', musculo: 'triceps', nome: 'Tríceps Francês Unilateral', eq: 'Halter ou Crossover Baixo', 
+        img: 'https://images.pexels.com/photos/1552249/pexels-photo-1552249.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Braço elevado atrás da cabeça. Estenda o braço para cima apontando para o teto.' 
+    },
+    { 
+        id: 't5', musculo: 'triceps', nome: 'Tríceps Coice', eq: 'Halter ou Polia Baixa', 
+        img: 'https://images.pexels.com/photos/1431282/pexels-photo-1431282.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Tronco inclinado. Cotovelo alto e fixo, estenda o antebraço para trás.' 
+    },
+    { 
+        id: 't6', musculo: 'triceps', nome: 'Mergulho (Dips)', eq: 'Banqueta Reta', 
+        img: 'https://images.pexels.com/photos/3289711/pexels-photo-3289711.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Apoie as mãos no banco, pernas à frente. Desça o corpo fletindo os cotovelos a 90 graus.' 
+    },
+
+    // ==========================================
+    // ABDÓMEN / CORE
+    // ==========================================
+    { 
+        id: 'a1', musculo: 'cardio', nome: 'Abdominal Supra Curto', eq: 'Colchonete', 
+        img: 'https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Deitado, joelhos dobrados. Tire as escápulas do chão contraindo o abdómen e soltando o ar.' 
+    },
+    { 
+        id: 'a2', musculo: 'cardio', nome: 'Abdominal Infra', eq: 'Colchonete', 
+        img: 'https://images.pexels.com/photos/3768131/pexels-photo-3768131.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Deitado, mãos debaixo do glúteo. Eleve as pernas esticadas sem deixar a lombar arquear.' 
+    },
+    { 
+        id: 'a3', musculo: 'cardio', nome: 'Abdominal na Polia', eq: 'Crossover', 
+        img: 'https://images.pexels.com/photos/3768916/pexels-photo-3768916.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'De joelhos, de costas ou frente para a polia alta. Flexione a coluna para baixo puxando o peso.' 
+    },
+    { 
+        id: 'a4', musculo: 'cardio', nome: 'Prancha Isométrica', eq: 'Colchonete', 
+        img: 'https://images.pexels.com/photos/176782/pexels-photo-176782.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Apoie antebraços e pontas dos pés. Mantenha o corpo reto e o abdómen extremamente contraído.' 
+    },
+    { 
+        id: 'a5', musculo: 'cardio', nome: 'Elevação de Pernas', eq: 'Espaldar', 
+        img: 'https://images.pexels.com/photos/1552249/pexels-photo-1552249.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'De costas para o espaldar, segure na barra alta e eleve os joelhos ou pernas retas até ao peito.' 
+    },
+
+    // ==========================================
+    // CARDIO & MOBILIDADE
+    // ==========================================
+    { 
+        id: 'ca1', musculo: 'cardio', nome: 'Caminhada Inclinada', eq: 'Esteira Ergométrica', 
+        img: 'https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Incline a esteira. Excelente para queimar gordura poupando os joelhos de impacto.' 
+    },
+    { 
+        id: 'ca2', musculo: 'cardio', nome: 'Corrida (HIIT)', eq: 'Esteira Ergométrica', 
+        img: 'https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Alterne 1 minuto de corrida intensa com 1 minuto de caminhada.' 
+    },
+    { 
+        id: 'ca3', musculo: 'cardio', nome: 'Polichinelos', eq: 'Livre / Colchonete', 
+        img: 'https://images.pexels.com/photos/3768916/pexels-photo-3768916.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Exercício corporal para elevar a frequência cardíaca rapidamente.' 
+    },
+    { 
+        id: 'ca4', musculo: 'cardio', nome: 'Burpees', eq: 'Livre', 
+        img: 'https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Agache, jogue os pés para trás, faça uma flexão e salte explosivamente.' 
+    },
+    { 
+        id: 'ca5', musculo: 'cardio', nome: 'Alongamento de Costas e Peito', eq: 'Espaldar', 
+        img: 'https://images.pexels.com/photos/3768131/pexels-photo-3768131.jpeg?auto=compress&cs=tinysrgb&w=800', 
+        desc: 'Segure nas barras do espaldar para alongar a cadeia posterior e alongar o peitoral abrindo os braços.' 
     }
-};
-
-// --- FUNÇÃO DE RENDERIZAÇÃO ---
-function renderTreino(dia) {
-    const container = document.getElementById('exercises-container');
-    const titleElement = document.getElementById('page-title');
-    const semanaInfo = document.getElementById('week-info');
-    
-    // Define qual lista usar (A ou B)
-    const treinoList = isWeekA ? exercicios[dia].A : exercicios[dia].B;
-    const weekName = isWeekA ? "Semana A (Ímpar)" : "Semana B (Par)";
-
-    // Atualiza Títulos
-    if(titleElement) titleElement.innerText = exercicios[dia].titulo;
-    if(semanaInfo) semanaInfo.innerText = `Ciclo Atual: ${weekName} (Muda automaticamente)`;
-
-    // Limpa container
-    container.innerHTML = "";
-
-    // Gera o HTML
-    treinoList.forEach((exercicio, index) => {
-        const html = `
-        <div class="exercise-card">
-            <div class="ex-img-container">
-                <img src="${exercicio.img}" class="ex-img" alt="${exercicio.nome}" loading="lazy">
-            </div>
-            <div class="ex-content">
-                <div class="ex-name">${index + 1}. ${exercicio.nome}</div>
-                <div class="ex-stats">
-                    <span class="badge">📝 ${exercicio.series}</span>
-                    <span class="badge">🔄 ${exercicio.reps}</span>
-                    <span class="badge">⏱ ${exercicio.descanso}</span>
-                </div>
-                <div class="instruction-box">
-                    <div class="instruction-title">Como fazer:</div>
-                    <div class="instruction-text">
-                        ${exercicio.desc}
-                    </div>
-                </div>
-            </div>
-        </div>
-        `;
-        container.innerHTML += html;
-    });
-}
+];

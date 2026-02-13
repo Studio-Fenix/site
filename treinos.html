@@ -9,6 +9,7 @@
     
     <style>
         :root {
+            /* DARK MODE */
             --bg-gradient: linear-gradient(to bottom, #0a0a0a 0%, #1a1a1a 40%, #800000 100%);
             --text-color: #ffffff;
             --glass-bg: linear-gradient(135deg, rgba(255, 50, 50, 0.15), rgba(100, 0, 0, 0.4));
@@ -16,213 +17,223 @@
             --glass-highlight: rgba(255, 255, 255, 0.3);
             --glass-shadow: 0 8px 32px rgba(0,0,0,0.5);
             --btn-text: #ffffff;
-            --green-highlight: #00ff88;
+            --highlight-green: #00ff88;
+        }
+        
+        body.light-mode {
+            /* LIGHT MODE */
+            --bg-gradient: linear-gradient(to bottom, #f4f4f4 0%, #e0e0e0 50%, #ff9999 100%);
+            --text-color: #333333;
+            --glass-bg: linear-gradient(135deg, rgba(220, 50, 50, 0.6), rgba(180, 0, 0, 0.7));
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --glass-highlight: rgba(255, 255, 255, 0.8);
+            --glass-shadow: 0 8px 32px rgba(150, 0, 0, 0.2);
+            --highlight-green: #00a650;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
         
         body {
-            background: var(--bg-gradient);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: var(--text-color);
-            padding: 20px;
-            padding-bottom: 90px; /* Espaço extra para botão flutuante */
+            background: var(--bg-gradient); min-height: 100vh; display: flex; flex-direction: column;
+            align-items: center; color: var(--text-color); padding: 20px; padding-bottom: 90px;
         }
 
         .container { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 20px; }
         
-        /* LOGO */
-        .header-nav { width: 100%; display: flex; justify-content: center; margin-bottom: 20px; }
-        .logo-link { display: block; transition: transform 0.2s; }
-        .logo-link:active { transform: scale(0.95); }
+        .header-nav { width: 100%; display: flex; justify-content: center; margin-bottom: 10px; }
         .logo { width: 160px; display: block; filter: drop-shadow(0 0 15px rgba(255,0,0,0.4)); }
         
         .glass-card {
             background: var(--glass-bg); backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border); border-top: 1px solid var(--glass-highlight);
-            border-radius: 20px; padding: 25px; box-shadow: var(--glass-shadow);
-            text-align: center; animation: fadeIn 0.5s ease; position: relative;
+            border-radius: 20px; padding: 25px; box-shadow: var(--glass-shadow); text-align: center;
+            animation: fadeIn 0.4s ease; position: relative;
         }
 
-        /* INPUTS */
         .input-group { margin-bottom: 15px; text-align: left; }
         label { display: block; margin-bottom: 5px; font-size: 0.9rem; color: #ccc; }
         input { 
-            width: 100%; padding: 15px; border-radius: 12px; border: none; 
+            width: 100%; padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);
             background: rgba(0,0,0,0.3); color: white; font-size: 1rem; outline: none;
-            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* BOTÕES */
+        /* BOTÕES GERAIS */
         .btn {
-            width: 100%; padding: 15px; border-radius: 12px; border: none;
-            color: white; font-weight: 700; font-size: 1rem; cursor: pointer; text-transform: uppercase;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: transform 0.2s; margin-top: 10px;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%; padding: 15px; border-radius: 12px; border: none; color: white;
+            font-weight: 700; font-size: 1rem; cursor: pointer; text-transform: uppercase;
+            transition: transform 0.2s, box-shadow 0.3s; margin-top: 10px; display: flex;
+            align-items: center; justify-content: center; gap: 10px; text-decoration: none;
         }
         .btn:active { transform: scale(0.95); }
         .btn-outline { background: transparent; border: 2px solid rgba(255,255,255,0.2); color: #ddd; }
+        .btn-red { background: linear-gradient(90deg, #cc0000, #ff4444); box-shadow: 0 4px 15px rgba(255,0,0,0.3); }
 
-        /* CORES BOTÕES */
-        .btn-personalizado { background: linear-gradient(90deg, #FFD700, #FFA500); color: #333; animation: glowGold 2s infinite; }
-        .btn-saude { background: linear-gradient(90deg, #00b09b, #96c93d); animation: glowGreen 3s infinite; }
-        .btn-peso { background: linear-gradient(90deg, #ff416c, #ff4b2b); animation: glowRed 3s infinite; }
-        .btn-massa { background: linear-gradient(90deg, #2193b0, #6dd5ed); animation: glowBlue 3s infinite; }
-        .btn-rapido { background: linear-gradient(90deg, #f2994a, #f2c94c); color: #333; }
-        .btn-fofo { background: linear-gradient(90deg, #ec008c, #fc6767); }
-        .btn-fenix { background: linear-gradient(90deg, #800000, #ff0000); border: 1px solid #ffaaaa; animation: glowPulse 1.5s infinite; }
-
-        @keyframes glowGold { 0%, 100% { box-shadow: 0 0 5px #FFD700; } 50% { box-shadow: 0 0 20px #FFD700; } }
-        @keyframes glowGreen { 0%, 100% { box-shadow: 0 0 5px #96c93d; } 50% { box-shadow: 0 0 20px #96c93d; } }
-        @keyframes glowRed { 0%, 100% { box-shadow: 0 0 5px #ff4b2b; } 50% { box-shadow: 0 0 20px #ff4b2b; } }
-        @keyframes glowBlue { 0%, 100% { box-shadow: 0 0 5px #2193b0; } 50% { box-shadow: 0 0 20px #2193b0; } }
-        @keyframes glowPulse { 0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); } }
-
-        /* LISTA DE SELEÇÃO (NOVO DESIGN) */
-        .selection-list { padding-bottom: 60px; }
-        
-        .select-card {
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 15px; overflow: hidden; margin-bottom: 15px;
-            transition: all 0.2s ease; cursor: pointer; text-align: left;
-            position: relative;
+        /* GRID OBJETIVOS E CRONOGRAMA */
+        .grid-list { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+        .option-btn {
+            padding: 15px; background: rgba(0,0,0,0.4); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);
+            color: #ddd; cursor: pointer; text-align: center; transition: all 0.2s; font-weight: 600; text-transform: uppercase;
         }
+        .option-btn:active { background: #333; }
+
+        .week-schedule { display: flex; flex-direction: column; gap: 5px; margin-bottom: 20px; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 15px; text-align: left; }
+        .day-row { display: flex; justify-content: space-between; font-size: 0.8rem; color: #aaa; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .day-row:last-child { border-bottom: none; }
+        .day-row.active { color: var(--highlight-green); font-weight: 800; font-size: 0.9rem; text-shadow: 0 0 8px rgba(0,255,136,0.4); }
+
+        /* CARROSSEL PREVIEW */
+        .preview-carousel {
+            display: flex; gap: 15px; overflow-x: auto; scroll-snap-type: x mandatory;
+            padding-bottom: 10px; margin-top: 15px; scrollbar-width: none;
+        }
+        .preview-carousel::-webkit-scrollbar { display: none; }
+        .preview-card {
+            min-width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px; overflow: hidden; scroll-snap-align: center;
+        }
+        .preview-card img { width: 100%; height: 180px; object-fit: cover; }
+        .preview-card-info { padding: 15px; text-align: left; }
+        .preview-card-info h4 { font-size: 1.1rem; color: #fff; margin: 0 0 5px 0; text-transform: uppercase; }
+        .preview-card-info p { font-size: 0.85rem; color: #aaa; margin: 0; }
+        .swipe-hint { font-size: 0.75rem; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; text-align: right; }
+
+        /* NOVO DESIGN: TREINO PERSONALIZADO */
+        .filter-nav {
+            display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none;
+            padding-bottom: 10px; margin-bottom: 15px;
+        }
+        .filter-nav::-webkit-scrollbar { display: none; }
+        .filter-chip {
+            padding: 8px 18px; border-radius: 20px; background: rgba(255,255,255,0.1);
+            color: #ccc; font-size: 0.85rem; font-weight: 600; text-transform: uppercase;
+            white-space: nowrap; cursor: pointer; border: 1px solid transparent; transition: 0.3s;
+        }
+        .filter-chip.active {
+            background: linear-gradient(90deg, #cc0000, #ff4444); color: #fff;
+            border-color: #ffaaaa; box-shadow: 0 4px 10px rgba(255,0,0,0.3);
+        }
+
+        .ex-select-list { display: flex; flex-direction: column; gap: 12px; padding-bottom: 20px; }
         
-        .select-card img { width: 100%; height: 140px; object-fit: cover; opacity: 0.7; transition: 0.3s; }
-        .select-card-body { padding: 15px; }
-        .select-card h4 { margin: 0 0 5px 0; font-size: 1rem; color: #fff; }
-        .select-card p { margin: 0; font-size: 0.75rem; color: #aaa; line-height: 1.4; }
+        .ex-select-card {
+            display: flex; align-items: center; gap: 15px; background: rgba(0,0,0,0.4);
+            border-radius: 15px; padding: 12px; border: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer; transition: all 0.2s ease; position: relative; overflow: hidden;
+        }
+        .ex-select-card:active { transform: scale(0.98); }
         
-        /* Checkbox Visual */
+        .ex-select-img { width: 70px; height: 70px; border-radius: 10px; object-fit: cover; background: #222; flex-shrink: 0; }
+        .ex-select-info { flex-grow: 1; text-align: left; }
+        .ex-select-title { font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 3px; line-height: 1.2; }
+        .ex-select-eq { font-size: 0.75rem; color: #aaa; text-transform: uppercase; }
+        
         .check-circle {
-            position: absolute; top: 10px; right: 10px;
-            width: 30px; height: 30px; border-radius: 50%;
-            background: rgba(0,0,0,0.6); border: 2px solid #fff;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem; color: transparent; transition: 0.2s; z-index: 2;
+            width: 26px; height: 26px; border-radius: 50%; border: 2px solid #666;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: 0.3s;
         }
+        .check-circle svg { width: 14px; height: 14px; fill: none; stroke: #000; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; opacity: 0; transition: 0.3s; }
+        
+        .ex-select-card.selected { background: rgba(0, 255, 136, 0.1); border-color: var(--highlight-green); }
+        .ex-select-card.selected .check-circle { background: var(--highlight-green); border-color: var(--highlight-green); }
+        .ex-select-card.selected .check-circle svg { opacity: 1; }
 
-        /* ESTADO SELECIONADO */
-        .select-card.active {
-            border-color: var(--green-highlight);
-            background: rgba(0, 255, 136, 0.1);
-            box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
-        }
-        .select-card.active img { opacity: 1; }
-        .select-card.active .check-circle {
-            background: var(--green-highlight); border-color: var(--green-highlight); color: #000;
-        }
-        .select-card.active .check-circle::after { content: '✓'; font-weight: bold; }
-
-        /* BARRA FLUTUANTE (FAB) */
-        .floating-action {
+        .fab-bar {
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-            width: 90%; max-width: 440px; z-index: 100;
-            display: flex; gap: 10px;
-            animation: slideUp 0.3s ease;
+            width: 90%; max-width: 440px; background: rgba(20,20,20,0.95);
+            backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px; padding: 15px; display: flex; align-items: center;
+            justify-content: space-between; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            z-index: 100; animation: slideUp 0.3s ease;
         }
+        .fab-info { text-align: left; }
+        .fab-count { font-size: 1.2rem; font-weight: 800; color: var(--highlight-green); }
+        .fab-desc { font-size: 0.75rem; color: #aaa; text-transform: uppercase; }
+        .btn-fab { 
+            background: linear-gradient(90deg, #008000, #00cc66); border: none; padding: 12px 25px;
+            border-radius: 10px; color: #fff; font-weight: 800; text-transform: uppercase; cursor: pointer; box-shadow: 0 4px 15px rgba(0,255,136,0.3);
+        }
+
         @keyframes slideUp { from { transform: translate(-50%, 100%); } to { transform: translate(-50%, 0); } }
 
-        /* LISTA DE REVISÃO */
+        /* TELA DE REVISÃO */
+        .review-list { display: flex; flex-direction: column; gap: 8px; max-height: 400px; overflow-y: auto; margin-bottom: 20px; padding-right: 5px; }
         .review-item {
             display: flex; justify-content: space-between; align-items: center;
-            background: rgba(255,255,255,0.1); padding: 12px; margin-bottom: 8px;
-            border-radius: 10px; text-align: left;
+            background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05);
+            padding: 12px 15px; border-radius: 12px; text-align: left;
         }
-        .btn-remove { 
-            background: #ff4444; width: 30px; height: 30px; border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; font-weight: bold; padding: 0;
+        .review-text h4 { font-size: 0.95rem; color: #fff; margin: 0 0 3px 0; }
+        .review-text p { font-size: 0.75rem; color: #aaa; margin: 0; }
+        .btn-remove { background: #ff4444; color: #fff; border: none; width: 32px; height: 32px; border-radius: 8px; font-weight: bold; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+
+        /* PLAYER DE TREINO - SEQUÊNCIA UM A UM */
+        .player-container {
+            width: 100%; border-radius: 25px; overflow: hidden; box-shadow: var(--glass-shadow);
+            animation: slideInRight 0.4s ease; position: relative; background: #000;
+        }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+
+        .player-img-wrapper { width: 100%; height: 35vh; position: relative; }
+        .player-img-wrapper img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; }
+        
+        .player-progress-badge {
+            position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px); padding: 5px 15px; border-radius: 20px;
+            color: var(--highlight-green); font-weight: 800; font-size: 0.8rem; z-index: 2; border: 1px solid rgba(0,255,136,0.3);
         }
 
-        /* TREINO PLAYER */
-        .exercise-card { margin-bottom: 20px; text-align: left; padding: 0; overflow: hidden; }
-        .ex-img { width: 100%; height: 220px; object-fit: cover; background: #000; }
-        .ex-body { padding: 20px; }
-        .ex-title { font-size: 1.3rem; font-weight: 800; color: #fff; margin-bottom: 5px; text-transform: uppercase; }
-        .ex-meta { display: flex; gap: 10px; margin-bottom: 15px; font-size: 0.8rem; color: #ffaaaa; }
-        .ex-desc { font-size: 0.9rem; color: #e0e0e0; line-height: 1.6; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; border-left: 4px solid #ff4444; }
+        .player-content {
+            background: var(--glass-bg); backdrop-filter: blur(25px);
+            border-top: 1px solid var(--glass-highlight); border-radius: 30px 30px 0 0;
+            margin-top: -30px; padding: 25px; position: relative; z-index: 2; text-align: left;
+        }
 
-        /* CONTROLES */
-        .train-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 15px; }
-        .timer-display { grid-column: span 2; font-size: 2.5rem; font-weight: 800; color: white; margin-bottom: 5px; font-variant-numeric: tabular-nums; }
-        .btn-start-timer { background: #00aa00; color: white; grid-column: span 2; animation: pulseGreen 1.5s infinite; }
-        .btn-stop { background: #cc0000; color: white; display: none; }
-        .btn-series { background: #333; color: white; display: none; align-items: center; justify-content: center; }
-        .nav-buttons { display: flex; gap: 10px; margin-top: 20px; }
+        .player-title { font-size: 1.3rem; font-weight: 800; color: #fff; text-transform: uppercase; margin-bottom: 5px; }
+        .player-eq { color: #aaa; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 15px; }
+        
+        .player-reps-box {
+            background: rgba(255,255,255,0.1); padding: 12px; border-radius: 12px;
+            margin-bottom: 15px; font-weight: bold; color: #00aaff; text-align: center; font-size: 0.95rem;
+        }
+        
+        .player-desc { font-size: 0.85rem; color: #ddd; line-height: 1.5; padding-left: 10px; border-left: 3px solid #ff4444; margin-bottom: 20px; }
+        
+        .timer-display { font-size: 2.5rem; font-weight: 800; color: white; margin: 15px 0 25px 0; font-variant-numeric: tabular-nums; text-align: center; letter-spacing: 2px; }
 
-        @keyframes pulseGreen { 0% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(0, 255, 136, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); } }
+        /* CONTROLES DO PLAYER */
+        .controls-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        
+        .btn-start { background: linear-gradient(90deg, #008000, #00cc66); color: #fff; grid-column: span 2; animation: pulseGreen 1.5s infinite; font-weight: 800; }
+        .btn-pause { background: linear-gradient(90deg, #cc5500, #ff8c00); color: #fff; box-shadow: 0 0 15px rgba(255,140,0,0.4); display: none; grid-column: span 2; }
+        .btn-series { background: #666666; color: #fff; box-shadow: 0 0 10px rgba(255,255,255,0.2); display: none; grid-column: span 2; }
+        
+        .btn-nav { background: linear-gradient(90deg, #0055cc, #0088ff); color: #fff; box-shadow: 0 0 15px rgba(0,136,255,0.4); font-size: 0.85rem; }
+        
+        .btn-finish { background: linear-gradient(90deg, #8b0000, #ff0000); color: #fff; box-shadow: 0 0 20px rgba(255,0,0,0.6); grid-column: span 2; margin-top: 10px; }
+
+        @keyframes pulseGreen { 0% { box-shadow: 0 0 0 0 rgba(0, 204, 102, 0.6); } 70% { box-shadow: 0 0 0 15px rgba(0, 204, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 204, 102, 0); } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .done-icon { font-size: 4rem; display: block; animation: bounce 1s infinite; }
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-
-        /* Grid Simples */
-        .grid-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
-        .grid-list { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
-        .option-btn { padding: 15px; background: rgba(0,0,0,0.4); border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); color: #ddd; cursor: pointer; text-align: left; transition: all 0.2s; display: flex; align-items: center; justify-content: space-between; }
-        .btn-today { background: linear-gradient(90deg, #006400, #00ff88); border: 2px solid #fff; animation: pulseToday 2s infinite; color: #003300; font-weight: 800; }
-        @keyframes pulseToday { 0% { transform: scale(1); } 50% { transform: scale(1.02); box-shadow: 0 0 15px rgba(0,255,136,0.6); } 100% { transform: scale(1); } }
-
     </style>
 </head>
 <body>
 
     <div class="container" id="app"></div>
 
-    <script>
-        // --- BANCO DE DADOS DE EXERCÍCIOS (ROBUSTO) ---
-        const dbExercicios = {
-            cardio: [
-                { id: 'c1', nome: "Polichinelos", img: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800", desc: "Mantenha um ritmo constante. Abra bem braços e pernas." },
-                { id: 'c2', nome: "Burpees", img: "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=800", desc: "Movimento completo: agacha, prancha, flexão e salto." },
-                { id: 'c3', nome: "Corrida Estacionária", img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800", desc: "Eleve os joelhos na altura do quadril rapidamente." },
-                { id: 'c4', nome: "Pular Corda", img: "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=800", desc: "Use a ponta dos pés. Gire com os punhos." }
-            ],
-            peito: [
-                { id: 'p1', nome: "Supino Reto", img: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800", desc: "Desça a barra no meio do peito. Cotovelos levemente fechados." },
-                { id: 'p2', nome: "Supino Inclinado", img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800", desc: "Foco na parte superior. Banco a 45 graus." },
-                { id: 'p3', nome: "Crucifixo", img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800", desc: "Abra os braços alongando bem. Feche no centro esmagando." },
-                { id: 'p4', nome: "Flexão de Braço", img: "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=800", desc: "Corpo reto. Desça até quase encostar no chão." }
-            ],
-            costas: [
-                { id: 'co1', nome: "Puxada Alta", img: "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=800", desc: "Traga a barra no peito superior. Feche as escápulas." },
-                { id: 'co2', nome: "Remada Baixa", img: "https://images.unsplash.com/photo-1517963879466-e9b5ce382d5d?w=800", desc: "Coluna reta. Puxe em direção ao umbigo." },
-                { id: 'co3', nome: "Remada Serrote", img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800", desc: "Unilateral. Puxe o halter em direção ao quadril." }
-            ],
-            pernas: [
-                { id: 'pe1', nome: "Agachamento Livre", img: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=800", desc: "Agache profundo. Mantenha os calcanhares no chão." },
-                { id: 'pe2', nome: "Leg Press 45º", img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800", desc: "Não tire a lombar do banco. Empurre com o calcanhar." },
-                { id: 'pe3', nome: "Cadeira Extensora", img: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=800", desc: "Segure 1 segundo no topo contraindo o quadríceps." },
-                { id: 'pe4', nome: "Mesa Flexora", img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800", desc: "Não levante o quadril. Foco total no posterior." }
-            ],
-            ombros: [
-                { id: 'o1', nome: "Desenvolvimento", img: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800", desc: "Empurre para cima da cabeça sem arquear as costas." },
-                { id: 'o2', nome: "Elevação Lateral", img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800", desc: "Suba até a altura do ombro apenas. Sem balanço." },
-                { id: 'o3', nome: "Elevação Frontal", img: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800", desc: "Controle a descida. Mantenha o abdômen firme." }
-            ],
-            bracos: [
-                { id: 'b1', nome: "Rosca Direta", img: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800", desc: "Bíceps isolado. Não balance o tronco." },
-                { id: 'b2', nome: "Tríceps Corda", img: "https://images.unsplash.com/photo-1534367507873-d2d7e24c797f?w=800", desc: "Cotovelos colados no corpo. Abra a corda no final." },
-                { id: 'b3', nome: "Rosca Martelo", img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800", desc: "Pegada neutra. Foca no antebraço e braquial." },
-                { id: 'b4', nome: "Tríceps Banco", img: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800", desc: "Desça até 90 graus. Mantenha as costas perto do banco." }
-            ],
-            abdomen: [
-                { id: 'a1', nome: "Prancha", img: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800", desc: "Corpo reto. Contraia abdômen e glúteo." },
-                { id: 'a2', nome: "Abdominal Supra", img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800", desc: "Tire apenas as escápulas do chão. Solte o ar." }
-            ]
-        };
+    <script src="usuarios.js"></script>
+    <script src="exercicios.js"></script>
 
-        // --- ESTADO ---
+    <script>
+        // ==========================================
+        // ESTADO DA APLICAÇÃO
+        // ==========================================
         const state = {
             screen: 'login',
-            user: { name: '', sex: '', ageGroup: '', goal: '' },
+            currentUser: null,
+            goal: '',
             currentWorkout: [],
-            customSelection: [], 
+            customSelection: [],
+            customFilter: 'Todos',
             currentExerciseIndex: 0,
-            startTime: null,
-            endTime: null,
             timerInterval: null,
             seconds: 0,
             seriesCount: 0
@@ -230,27 +241,50 @@
 
         const app = document.getElementById('app');
 
-        // --- RENDERIZAÇÃO CENTRAL ---
+        // ==========================================
+        // FUNÇÕES AUXILIARES
+        // ==========================================
+        function getGreeting() {
+            const hour = new Date().getHours();
+            if (hour < 12) return 'Bom dia';
+            if (hour < 18) return 'Boa tarde';
+            return 'Boa noite';
+        }
+
+        function formatTime(totalSeconds) {
+            const h = Math.floor(totalSeconds / 3600).toString().padStart(2, '0');
+            const m = Math.floor((totalSeconds % 3600) / 60).toString().padStart(2, '0');
+            const s = (totalSeconds % 60).toString().padStart(2, '0');
+            return `${h}:${m}:${s}`;
+        }
+
+        function getDaySchedule() {
+            const day = new Date().getDay();
+            if (day === 1 || day === 4) return ['peito', 'triceps', 'ombro'];
+            if (day === 2 || day === 5) return ['costas', 'biceps', 'trapezio'];
+            if (day === 3) return ['perna'];
+            return ['cardio']; 
+        }
+
+        // ==========================================
+        // RENDERIZAÇÃO CENTRALIZADA
+        // ==========================================
         function render() {
+            // Limpa TODO o ecrã antes de renderizar a próxima etapa
             app.innerHTML = '';
             
-            // Header (Sempre presente exceto login)
-            const header = document.createElement('div');
-            header.className = 'header-nav';
-            header.innerHTML = `
-                <a href="index.html" class="logo-link"><img src="LogoStudioFenix.png" class="logo"></a>
-            `;
-            app.appendChild(header);
+            if (state.screen !== 'login') {
+                const header = document.createElement('div');
+                header.className = 'header-nav';
+                header.innerHTML = `<img src="LogoStudioFenix.png" class="logo">`;
+                app.appendChild(header);
+            }
 
             if (state.screen === 'login') renderLogin();
-            else if (state.screen === 'sex') renderSexSelector();
-            else if (state.screen === 'age') renderAgeSelector();
-            else if (state.screen === 'goal') renderGoalSelector();
-            else if (state.screen === 'day_select') renderDaySelector();
-            else if (state.screen === 'build_custom') renderBuildCustom();
-            else if (state.screen === 'custom_confirm') renderCustomConfirm();
             else if (state.screen === 'dashboard') renderDashboard();
-            else if (state.screen === 'workout') renderWorkoutScreen();
+            else if (state.screen === 'custom_build') renderCustomBuild();
+            else if (state.screen === 'custom_review') renderCustomReview();
+            else if (state.screen === 'workout') renderWorkout();
             else if (state.screen === 'summary') renderSummary();
         }
 
@@ -259,404 +293,401 @@
             const div = document.createElement('div');
             div.className = 'glass-card';
             div.innerHTML = `
-                <h2 style="color:#fff; margin-bottom:20px;">Área do Aluno</h2>
-                <div class="input-group"><label>Usuário</label><input type="text" id="username"></div>
-                <div class="input-group"><label>Senha</label><input type="password" id="password"></div>
-                <button class="btn" style="background:#cc0000;" onclick="handleLogin()">Entrar</button>
-                <a href="index.html" class="btn btn-outline" style="text-decoration:none;">Voltar para Início</a>
+                <img src="LogoStudioFenix.png" class="logo" style="margin: 0 auto 20px auto;">
+                <h2 style="margin-bottom:20px; text-transform:uppercase;">Acesso ao Treino</h2>
+                <div class="input-group">
+                    <label>Nome do Aluno</label>
+                    <input type="text" id="userInput">
+                </div>
+                <div class="input-group">
+                    <label>Senha</label>
+                    <input type="password" id="passInput">
+                </div>
+                <button class="btn btn-red" onclick="handleLogin()">ENTRAR</button>
+                <a href="index.html" class="btn btn-outline" style="margin-top:15px;">VOLTAR PARA O INÍCIO</a>
             `;
             app.appendChild(div);
         }
 
-        // TELA 2: SEXO
-        function renderSexSelector() {
+        // TELA 2: DASHBOARD (SELEÇÃO DE OBJETIVO E PREVIEW)
+        function renderDashboard() {
+            const d = new Date().getDay();
             const div = document.createElement('div');
-            div.className = 'glass-card';
-            div.innerHTML = `
-                <h2>Olá, Aluno!</h2><p style="color:#ccc;">Selecione seu sexo:</p>
-                <div class="grid-options">
-                    <div class="option-btn" onclick="nextStep('sex', 'Masculino')" style="justify-content:center;">🧔 Masculino</div>
-                    <div class="option-btn" onclick="nextStep('sex', 'Feminino')" style="justify-content:center;">👩 Feminino</div>
-                </div>
-                <button class="btn btn-outline" onclick="goToScreen('login')">Voltar</button>
-            `;
-            app.appendChild(div);
-        }
-
-        // TELA 3: IDADE
-        function renderAgeSelector() {
-            const div = document.createElement('div');
-            div.className = 'glass-card';
-            div.innerHTML = `
-                <h2>Faixa Etária</h2>
-                <div class="grid-list">
-                    <div class="option-btn" onclick="nextStep('ageGroup', 'Criança')">👶 Criança (até 12 anos)</div>
-                    <div class="option-btn" onclick="nextStep('ageGroup', 'Jovem')">👦 Jovem (13 a 18 anos)</div>
-                    <div class="option-btn" onclick="nextStep('ageGroup', 'Adulto')">👨 Adulto (19 a 59 anos)</div>
-                    <div class="option-btn" onclick="nextStep('ageGroup', 'Idoso')">👴 Idoso (60+ anos)</div>
-                </div>
-                <button class="btn btn-outline" onclick="goToScreen('sex')">Voltar</button>
-            `;
-            app.appendChild(div);
-        }
-
-        // TELA 4: OBJETIVO (CORES E GLOW)
-        function renderGoalSelector() {
-            const div = document.createElement('div');
-            div.className = 'glass-card';
-            div.innerHTML = `
-                <h2>Seu Objetivo</h2>
-                <div class="grid-list">
-                    <div class="btn btn-personalizado" onclick="goToDaySelect()">📅 TREINO PERSONALIZADO</div>
-                    <div class="btn btn-saude" onclick="setGoalAndGenerate('Saúde')">❤️ Treino Saúde</div>
-                    <div class="btn btn-peso" onclick="setGoalAndGenerate('Perda de Peso')">🔥 Perda de Peso</div>
-                    <div class="btn btn-massa" onclick="setGoalAndGenerate('Massa Muscular')">💪 Massa Muscular</div>
-                    <div class="btn btn-rapido" onclick="setGoalAndGenerate('Rápido')">⚡ Treino Rápido</div>
-                    <div class="btn btn-fofo" onclick="setGoalAndGenerate('Fofo')">🧸 Treino Fofo</div>
-                    <div class="btn btn-fenix" onclick="setGoalAndGenerate('Modo Fênix')">🦅 MODO FÊNIX</div>
-                </div>
-                <button class="btn btn-outline" onclick="goToScreen('age')">Voltar</button>
-            `;
-            app.appendChild(div);
-        }
-
-        // TELA 5: SELEÇÃO DE DIA OU MONTAR
-        function renderDaySelector() {
-            const dayOfWeek = new Date().getDay(); 
-            const div = document.createElement('div');
-            div.className = 'glass-card';
-            div.innerHTML = `
-                <h2>Personalizado</h2>
-                <p style="font-size:0.8rem; color:#aaa;">Escolha o dia ou monte o seu.</p>
-                <div class="btn btn-personalizado" style="margin-bottom:20px;" onclick="goToBuildCustom()">
-                    🛠️ <strong>MONTAR MEU TREINO</strong>
-                </div>
-                <div class="grid-list">
-                    <div class="option-btn ${dayOfWeek === 1 ? 'btn-today' : ''}" onclick="setSpecificWorkout(['peito','bracos'], 'Segunda')">
-                        <div>Segunda <small>Peito e Braços</small></div> ${dayOfWeek === 1 ? '📍' : ''}
-                    </div>
-                    <div class="option-btn ${dayOfWeek === 2 ? 'btn-today' : ''}" onclick="setSpecificWorkout(['costas','abdomen'], 'Terça')">
-                        <div>Terça <small>Costas e Abdômen</small></div> ${dayOfWeek === 2 ? '📍' : ''}
-                    </div>
-                    <div class="option-btn ${dayOfWeek === 3 ? 'btn-today' : ''}" onclick="setSpecificWorkout(['pernas'], 'Quarta')">
-                        <div>Quarta <small>Pernas Completas</small></div> ${dayOfWeek === 3 ? '📍' : ''}
-                    </div>
-                    <div class="option-btn ${dayOfWeek === 4 ? 'btn-today' : ''}" onclick="setSpecificWorkout(['ombros','cardio'], 'Quinta')">
-                        <div>Quinta <small>Ombros e Cardio</small></div> ${dayOfWeek === 4 ? '📍' : ''}
-                    </div>
-                    <div class="option-btn ${dayOfWeek === 5 ? 'btn-today' : ''}" onclick="setSpecificWorkout(['peito','costas'], 'Sexta')">
-                        <div>Sexta <small>Superior Geral</small></div> ${dayOfWeek === 5 ? '📍' : ''}
-                    </div>
-                    <div class="option-btn ${dayOfWeek === 6 ? 'btn-today' : ''}" onclick="setSpecificWorkout(['pernas','abdomen'], 'Sábado')">
-                        <div>Sábado <small>Inferior e Abdômen</small></div> ${dayOfWeek === 6 ? '📍' : ''}
-                    </div>
-                </div>
-                <button class="btn btn-outline" onclick="goToScreen('goal')">Voltar</button>
-            `;
-            app.appendChild(div);
-        }
-
-        // TELA 6: MONTAR TREINO (LISTA COM CARDS E CHECKBOX)
-        function renderBuildCustom() {
-            const div = document.createElement('div');
-            // Remove glass-card padrao para usar largura total melhor
-            div.innerHTML = `
-                <div class="glass-card" style="margin-bottom:10px;">
-                    <h2>Selecionar Exercícios</h2>
-                    <p style="font-size:0.8rem; color:#aaa;">Toque nos cards para marcar.</p>
-                </div>
-                <div class="selection-list" id="selectionList"></div>
-            `;
             
-            // Botão Flutuante
-            const fab = document.createElement('div');
-            fab.className = 'floating-action';
-            fab.innerHTML = `
-                <button class="btn btn-outline" style="flex:1; background:rgba(0,0,0,0.8);" onclick="goToScreen('day_select')">Voltar</button>
-                <button class="btn btn-start-timer" style="flex:2; margin-top:0;" onclick="goToCustomConfirm()">
-                    REVISAR (${state.customSelection.length})
-                </button>
-            `;
-            
-            app.appendChild(div);
-            app.appendChild(fab);
-
-            // Popula a lista
-            const listContainer = document.getElementById('selectionList');
-            
-            for (const [key, exercises] of Object.entries(dbExercicios)) {
-                // Titulo Categoria
-                const catTitle = document.createElement('h3');
-                catTitle.style.cssText = "color:#ffaaaa; font-size:0.9rem; margin:15px 0 5px 10px; text-transform:uppercase;";
-                catTitle.innerText = key.toUpperCase();
-                listContainer.appendChild(catTitle);
-
-                exercises.forEach(ex => {
-                    const isSelected = state.customSelection.some(item => item.id === ex.id);
-                    
-                    const card = document.createElement('div');
-                    card.className = `select-card ${isSelected ? 'active' : ''}`;
-                    card.onclick = () => toggleExerciseSelection(key, ex.id);
-                    card.innerHTML = `
-                        <div class="check-circle"></div>
-                        <img src="${ex.img}">
-                        <div class="select-card-body">
-                            <h4>${ex.nome}</h4>
-                            <p><strong>Modo:</strong> ${ex.desc}</p>
-                        </div>
-                    `;
-                    listContainer.appendChild(card);
-                });
-            }
-        }
-
-        // TELA 7: CONFIRMAÇÃO DA SELEÇÃO
-        function renderCustomConfirm() {
-            const div = document.createElement('div');
-            div.className = 'glass-card';
-            
-            let listHtml = '';
-            if(state.customSelection.length === 0) {
-                listHtml = '<p style="color:#aaa; padding:20px;">Nenhum exercício selecionado.</p>';
-            } else {
-                state.customSelection.forEach((ex, i) => {
-                    listHtml += `
-                        <div class="review-item">
-                            <div>
-                                <strong style="color:#fff; display:block;">${i+1}. ${ex.nome}</strong>
-                                <span style="font-size:0.7rem; color:#aaa;">${ex.desc.substring(0,30)}...</span>
+            let carouselHtml = '';
+            if(state.currentWorkout.length > 0) {
+                state.currentWorkout.forEach((ex, idx) => {
+                    carouselHtml += `
+                        <div class="preview-card">
+                            <img src="${ex.img}">
+                            <div class="preview-card-info">
+                                <h4>${idx+1}. ${ex.nome}</h4>
+                                <p>${ex.musculo.toUpperCase()}</p>
                             </div>
-                            <button class="btn-remove" onclick="removeExercise('${ex.id}')">X</button>
                         </div>
                     `;
                 });
+                
+                carouselHtml = `
+                    <div class="glass-card" style="margin-top:20px; padding:20px;">
+                        <h3 style="font-size:1.1rem; color:#fff; text-transform:uppercase;">${state.goal}</h3>
+                        <p style="font-size:0.8rem; color:#aaa;">Prévia gerada para hoje</p>
+                        <div class="preview-carousel">
+                            ${carouselHtml}
+                        </div>
+                        <div class="swipe-hint">Deslize lateralmente para ver a série</div>
+                        <button class="btn btn-start" style="margin-top:15px;" onclick="startWorkout()">COMEÇAR TREINO</button>
+                    </div>
+                `;
             }
 
             div.innerHTML = `
-                <h2>Seu Treino</h2>
-                <p style="color:#aaa; font-size:0.8rem; margin-bottom:15px;">Confira a ordem dos exercícios.</p>
+                <div class="glass-card" style="margin-bottom:20px; padding:20px;">
+                    <h2 style="color:var(--highlight-green); font-weight:600; font-size:1.3rem;">${getGreeting()}, ${state.currentUser.name}!</h2>
+                    <p style="color:#ccc; font-size:0.9rem; margin-top:5px;">Qual o objetivo do treino hoje?</p>
+                </div>
+
+                <div class="week-schedule">
+                    <h3 style="color:#fff; font-size:0.9rem; margin-bottom:10px; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,0.2); padding-bottom:5px;">Cronograma Oficial</h3>
+                    <div class="day-row ${d === 1 ? 'active' : ''}"><span>Segunda</span> <span>Peito, Tríceps, Ombros</span></div>
+                    <div class="day-row ${d === 2 ? 'active' : ''}"><span>Terça</span> <span>Costas, Bíceps, Trapézio</span></div>
+                    <div class="day-row ${d === 3 ? 'active' : ''}"><span>Quarta</span> <span>Pernas Completas</span></div>
+                    <div class="day-row ${d === 4 ? 'active' : ''}"><span>Quinta</span> <span>Peito, Tríceps, Ombros</span></div>
+                    <div class="day-row ${d === 5 ? 'active' : ''}"><span>Sexta</span> <span>Costas, Bíceps, Trapézio</span></div>
+                    <div class="day-row ${d === 6 ? 'active' : ''}"><span>Sábado</span> <span>Recuperação / Cardio</span></div>
+                </div>
+
+                <div class="grid-list">
+                    <div class="option-btn" onclick="generateWorkout('TREINO SAÚDE')">TREINO SAÚDE</div>
+                    <div class="option-btn" onclick="generateWorkout('PERDA DE PESO')">PERDA DE PESO</div>
+                    <div class="option-btn" onclick="generateWorkout('MASSA MUSCULAR')">MASSA MUSCULAR</div>
+                    <div class="option-btn" onclick="generateWorkout('TREINO RÁPIDO')">TREINO RÁPIDO</div>
+                    <div class="option-btn" onclick="generateWorkout('TREINO FOFO')">TREINO FOFO</div>
+                    <div class="option-btn" style="border:1px solid #ff4444; color:#ffaaaa;" onclick="generateWorkout('MODO FÊNIX')">MODO FÊNIX</div>
+                    <div class="option-btn" style="background:rgba(255,255,255,0.1); border-color:#fff;" onclick="goToCustomBuild()">TREINO PERSONALIZADO</div>
+                </div>
                 
-                <div style="max-height:350px; overflow-y:auto; margin-bottom:20px;">
+                ${carouselHtml}
+            `;
+            app.appendChild(div);
+            
+            if(state.currentWorkout.length > 0) {
+                setTimeout(() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }), 100);
+            }
+        }
+
+        // TELA 3: MONTAR TREINO
+        function renderCustomBuild() {
+            const div = document.createElement('div');
+            
+            const allCategories = ['Todos', ...new Set(exerciseDB.map(ex => ex.musculo))];
+            
+            let filtersHtml = '<div class="filter-nav">';
+            allCategories.forEach(cat => {
+                const isActive = state.customFilter.toLowerCase() === cat.toLowerCase() ? 'active' : '';
+                filtersHtml += `<div class="filter-chip ${isActive}" onclick="setCustomFilter('${cat}')">${cat}</div>`;
+            });
+            filtersHtml += '</div>';
+
+            const filteredEx = state.customFilter.toLowerCase() === 'todos' 
+                ? exerciseDB 
+                : exerciseDB.filter(ex => ex.musculo.toLowerCase() === state.customFilter.toLowerCase());
+
+            let listHtml = '<div class="ex-select-list">';
+            filteredEx.forEach(ex => {
+                const isSelected = state.customSelection.some(item => item.id === ex.id);
+                listHtml += `
+                    <div class="ex-select-card ${isSelected ? 'selected' : ''}" onclick="toggleCustom('${ex.id}')">
+                        <img src="${ex.img}" class="ex-select-img">
+                        <div class="ex-select-info">
+                            <div class="ex-select-title">${ex.nome}</div>
+                            <div class="ex-select-eq">${ex.eq}</div>
+                        </div>
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+                        </div>
+                    </div>
+                `;
+            });
+            listHtml += '</div>';
+
+            div.innerHTML = `
+                <div class="glass-card" style="margin-bottom:15px; padding:20px;">
+                    <h2 style="font-size:1.3rem; text-transform:uppercase;">Montar Treino</h2>
+                    <p style="font-size:0.85rem; color:#aaa; margin-top:5px;">Selecione os exercícios desejados</p>
+                </div>
+                
+                ${filtersHtml}
+                
+                <div style="padding-bottom:20px;">
                     ${listHtml}
                 </div>
-
-                <button class="btn btn-start-timer" onclick="startCustomWorkout()">INICIAR TREINO AGORA</button>
-                <button class="btn btn-outline" onclick="goToScreen('build_custom')">Adicionar Mais</button>
             `;
+            
+            const fab = document.createElement('div');
+            fab.className = 'fab-bar';
+            fab.innerHTML = `
+                <div class="fab-info">
+                    <div class="fab-count">${state.customSelection.length}</div>
+                    <div class="fab-desc">Selecionados</div>
+                </div>
+                <button class="btn-fab" onclick="goToCustomReview()">Revisar</button>
+            `;
+
             app.appendChild(div);
+            if(state.customSelection.length > 0) app.appendChild(fab);
         }
 
-        // TELA 8: DASHBOARD (PREVIEW GERAL)
-        function renderDashboard() {
+        // TELA 3.5: REVISÃO DO TREINO PERSONALIZADO
+        function renderCustomReview() {
             const div = document.createElement('div');
             div.className = 'glass-card';
-            div.innerHTML = `
-                <h3 style="color:#aaa; font-size:0.9rem;">Prévia Automática</h3>
-                <h1 style="color:#fff; text-transform:uppercase; margin:10px 0;">${state.user.goal}</h1>
-                
-                <div style="text-align:left; background:rgba(0,0,0,0.3); padding:15px; border-radius:15px; margin-bottom:20px; max-height:300px; overflow-y:auto;">
-                    <p style="color:#fff; font-weight:bold;">Exercícios gerados:</p>
-                    <ul style="padding-left:20px; color:#ccc; font-size:0.9rem; margin-top:5px;">
-                        ${state.currentWorkout.map(ex => `<li>${ex.nome}</li>`).join('')}
-                    </ul>
-                </div>
+            
+            let reviewHtml = '<div class="review-list">';
+            if(state.customSelection.length === 0) {
+                reviewHtml += '<p style="color:#aaa; text-align:center;">Nenhum exercício selecionado.</p>';
+            } else {
+                state.customSelection.forEach((ex, index) => {
+                    reviewHtml += `
+                        <div class="review-item">
+                            <div class="review-text">
+                                <h4>${index + 1}. ${ex.nome}</h4>
+                                <p>${ex.eq}</p>
+                            </div>
+                            <button class="btn-remove" onclick="removeCustomEx('${ex.id}')">X</button>
+                        </div>
+                    `;
+                });
+            }
+            reviewHtml += '</div>';
 
-                <button class="btn btn-start-timer" onclick="startWorkout()">COMEÇAR TREINO</button>
-                <button class="btn btn-outline" onclick="goToScreen('goal')">Trocar Objetivo</button>
+            div.innerHTML = `
+                <h2 style="text-transform:uppercase; margin-bottom:5px;">Sua Seleção</h2>
+                <p style="font-size:0.85rem; color:#aaa; margin-bottom:20px;">Revise a ordem antes de iniciar</p>
+                
+                ${reviewHtml}
+
+                <button class="btn btn-start" onclick="startCustomWorkout()">INICIAR TREINO</button>
+                <button class="btn btn-outline" onclick="state.screen = 'custom_build'; render();">ADICIONAR MAIS</button>
             `;
             app.appendChild(div);
         }
 
-        // TELA 9: EXERCÍCIO ATIVO (PLAYER)
-        function renderWorkoutScreen() {
+        // TELA 4: PLAYER DO TREINO (UM A UM SEQUENCIAL)
+        function renderWorkout() {
             const ex = state.currentWorkout[state.currentExerciseIndex];
             
-            let series = "3 Séries";
-            let reps = "12 Reps";
-            
-            if(state.user.goal === "Modo Fênix") { series = "4 Séries"; reps = "Até a falha"; }
-            else if(state.user.goal === "Fofo") { series = "2 Séries"; reps = "10 Leves"; }
+            let repsInfo = "3 Séries | 12 a 15 Reps";
+            if(state.goal === "TREINO SAÚDE") repsInfo = "3 Séries | 15 Reps (Carga Leve)";
+            if(state.goal === "PERDA DE PESO") repsInfo = "4 Séries | 15 a 20 Reps (Intenso)";
+            if(state.goal === "MASSA MUSCULAR") repsInfo = "4 Séries | 8 a 12 Reps (Pesado)";
+            if(state.goal === "TREINO RÁPIDO") repsInfo = "2 Séries | 15 Reps (Sem Descanso)";
+            if(state.goal === "TREINO FOFO") repsInfo = "2 Séries | 10 Reps (Muito Leve)";
+            if(state.goal === "MODO FÊNIX") repsInfo = "4 Séries | Até a falha";
+            if(state.goal === "TREINO PERSONALIZADO") repsInfo = "Séries e Repetições Livres";
 
             const div = document.createElement('div');
-            div.className = 'glass-card exercise-card';
+            div.className = 'player-container';
+            
             div.innerHTML = `
-                <img src="${ex.img}" class="ex-img">
-                <div class="ex-body">
-                    <div class="ex-meta">Exercício ${state.currentExerciseIndex + 1} de ${state.currentWorkout.length}</div>
-                    <div class="ex-title">${ex.nome}</div>
-                    <div class="ex-meta">
-                        <span>📝 ${series}</span>
-                        <span>🔄 ${reps}</span>
-                    </div>
-                    <div class="ex-desc">
-                        <strong>Execução:</strong><br>${ex.desc}
+                <div class="player-img-wrapper">
+                    <div class="player-progress-badge">EXERCÍCIO ${state.currentExerciseIndex + 1} / ${state.currentWorkout.length}</div>
+                    <img src="${ex.img}" alt="${ex.nome}">
+                </div>
+                <div class="player-content">
+                    <div class="player-title">${ex.nome}</div>
+                    <div class="player-eq">${ex.eq}</div>
+                    
+                    <div class="player-reps-box">
+                        ${repsInfo}
                     </div>
 
-                    <div class="train-controls">
-                        <div class="timer-display" id="timerDisplay">00:00</div>
+                    <div class="player-desc">
+                        ${ex.desc}
+                    </div>
+
+                    <div class="timer-display" id="timerDisplay">00:00:00</div>
+                    
+                    <div class="controls-grid">
+                        <button class="btn btn-start" id="btnStart" onclick="toggleTimer(true)">COMEÇAR</button>
+                        <button class="btn btn-pause" id="btnPause" onclick="toggleTimer(false)">PAUSA</button>
+                        <button class="btn btn-series" id="btnSeries" onclick="addSeries()">SÉRIE CONCLUÍDA (<span id="seriesVal">0</span>)</button>
                         
-                        <button class="btn btn-start-timer" id="btnStart" onclick="toggleTimer(true)">COMEÇAR SÉRIE</button>
-                        <button class="btn btn-stop" id="btnStop" onclick="toggleTimer(false)">PAUSAR</button>
-                        <button class="btn btn-series" id="btnSeries" onclick="addSeries()">
-                            ✅ Feita: <span id="seriesVal">0</span>
-                        </button>
-                    </div>
-
-                    <div class="nav-buttons">
-                        ${state.currentExerciseIndex > 0 ? `<button class="btn btn-outline" style="flex:1; margin-top:0;" onclick="prevExercise()">⬅ Anterior</button>` : ''}
-                        <button class="btn" style="flex:1; margin-top:0;" onclick="nextExercise()">
-                            ${state.currentExerciseIndex < state.currentWorkout.length - 1 ? 'Próximo ➡' : 'Finalizar 🔥'}
-                        </button>
+                        <button class="btn btn-nav" onclick="prevExercise()">VOLTAR</button>
+                        <button class="btn btn-nav" onclick="nextExercise()">PRÓXIMO</button>
+                        
+                        <button class="btn btn-finish" onclick="finishWorkout()">FINALIZAR TREINO</button>
                     </div>
                 </div>
             `;
             app.appendChild(div);
+            
+            document.getElementById('timerDisplay').innerText = formatTime(state.seconds);
+            
+            // Re-aplica visual do timer caso esteja a correr ao mudar de ecrã
+            if (state.timerInterval) {
+                document.getElementById('btnStart').style.display = 'none';
+                document.getElementById('btnPause').style.display = 'block';
+                document.getElementById('btnSeries').style.display = 'block';
+            }
         }
 
-        // TELA 10: RESUMO FINAL
+        // TELA 5: RESUMO FINAL
         function renderSummary() {
-            const duration = Math.floor((state.endTime - state.startTime) / 1000 / 60);
+            const messages = ["TREINO CONCLUÍDO!", "TREINO PAGO!", "TREINO FEITO COM SUCESSO!"];
+            const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+            const timeFormat = formatTime(state.seconds);
+
             const div = document.createElement('div');
             div.className = 'glass-card';
             div.innerHTML = `
-                <span class="done-icon">🎉</span>
-                <h1 style="color:#00ff88; margin-bottom:10px;">TREINO CONCLUÍDO!</h1>
-                <p style="color:#fff; margin-bottom:20px;">Você finalizou o treino ${state.user.goal}.</p>
-                <div style="background:rgba(255,255,255,0.1); padding:20px; border-radius:15px; margin-bottom:20px;">
-                    <h2 style="color:#fff;">${duration < 1 ? 'Menos de 1' : duration} Minutos</h2>
-                    <p style="font-size:0.8rem; color:#aaa;">Tempo Total</p>
+                <h1 style="color:var(--highlight-green); margin-bottom:10px; font-size:1.6rem; line-height:1.2;">${randomMsg}</h1>
+                <p style="color:#fff; margin-bottom:20px;">Você finalizou o <strong>${state.goal}</strong>.</p>
+                
+                <div style="background:rgba(255,255,255,0.1); padding:25px 20px; border-radius:15px; margin-bottom:20px;">
+                    <h2 style="color:#fff; font-size:2.8rem; margin-bottom:5px;">${timeFormat}</h2>
+                    <p style="font-size:0.8rem; color:#aaa; text-transform:uppercase; letter-spacing:1px;">Tempo Total Gasto</p>
                 </div>
-                <a href="foto.html" class="btn" style="text-decoration:none;">📷 Compartilhar</a>
-                <button class="btn btn-outline" onclick="location.reload()">Sair</button>
+
+                <a href="foto.html" class="btn btn-nav" style="margin-bottom:10px;">COMPARTILHAR</a>
+                <button class="btn btn-outline" onclick="resetApp()">ESCOLHER OUTRO TREINO</button>
             `;
             app.appendChild(div);
         }
 
-        // --- LÓGICA DO APP ---
+        // ==========================================
+        // LÓGICA DE NAVEGAÇÃO E AÇÕES
+        // ==========================================
 
         function handleLogin() {
-            const u = document.getElementById('username').value;
-            const p = document.getElementById('password').value;
-            if(u.toLowerCase() === 'aluno' && p === 'fenix26') {
-                state.screen = 'sex';
-                render();
-            } else {
-                alert('Login incorreto.');
-            }
-        }
-
-        function goToScreen(screenName) {
-            state.screen = screenName;
-            render();
-        }
-
-        function nextStep(field, value) {
-            state.user[field] = value;
-            if(field === 'sex') state.screen = 'age';
-            if(field === 'ageGroup') state.screen = 'goal';
-            render();
-        }
-
-        function goToDaySelect() {
-            state.screen = 'day_select';
-            render();
-        }
-
-        function goToBuildCustom() {
-            state.screen = 'build_custom';
-            render();
-        }
-
-        function goToCustomConfirm() {
-            if (state.customSelection.length === 0) {
-                alert("Selecione ao menos um exercício.");
+            if(typeof usersDB === 'undefined') {
+                alert("Erro: O arquivo 'usuarios.js' não foi encontrado.");
                 return;
             }
-            state.screen = 'custom_confirm';
+
+            const u = document.getElementById('userInput').value.toLowerCase().trim();
+            const p = document.getElementById('passInput').value;
+            
+            const userMatch = usersDB.find(user => user.user === u && user.pass === p);
+            
+            if (userMatch) {
+                state.currentUser = userMatch;
+                state.screen = 'dashboard';
+                render();
+            } else {
+                alert('Nome de usuário ou senha incorretos.');
+            }
+        }
+
+        function generateWorkout(goalType) {
+            if(typeof exerciseDB === 'undefined') {
+                alert("Erro: O arquivo 'exercicios.js' não foi encontrado.");
+                return;
+            }
+
+            state.goal = goalType;
+            state.seconds = 0;
+            state.seriesCount = 0;
+            clearInterval(state.timerInterval);
+            state.timerInterval = null;
+
+            const targetMuscles = getDaySchedule();
+            let availableExercises = exerciseDB.filter(ex => targetMuscles.includes(ex.musculo));
+            
+            if(availableExercises.length === 0) {
+                availableExercises = exerciseDB.filter(ex => ex.musculo === 'cardio');
+            }
+
+            availableExercises.sort(() => 0.5 - Math.random());
+            state.currentWorkout = availableExercises.slice(0, 5);
+            
+            render(); 
+        }
+
+        function goToCustomBuild() {
+            if(typeof exerciseDB === 'undefined') {
+                alert("Erro: O arquivo 'exercicios.js' não foi encontrado.");
+                return;
+            }
+            state.customSelection = [];
+            state.customFilter = 'Todos';
+            state.screen = 'custom_build';
             render();
         }
 
-        // SELEÇÃO MANUAL
-        function toggleExerciseSelection(category, id) {
-            const exerciseObj = dbExercicios[category].find(e => e.id === id);
+        function setCustomFilter(filter) {
+            state.customFilter = filter;
+            render();
+        }
+
+        function toggleCustom(id) {
+            const exObj = exerciseDB.find(e => e.id === id);
             const exists = state.customSelection.some(e => e.id === id);
 
             if (exists) {
                 state.customSelection = state.customSelection.filter(e => e.id !== id);
             } else {
-                state.customSelection.push(exerciseObj);
+                state.customSelection.push(exObj);
             }
-            renderBuildCustom(); // Re-renderiza para mostrar verde
+            render(); 
         }
 
-        function removeExercise(id) {
+        function goToCustomReview() {
+            state.screen = 'custom_review';
+            render();
+        }
+
+        function removeCustomEx(id) {
             state.customSelection = state.customSelection.filter(e => e.id !== id);
-            renderCustomConfirm();
+            if(state.customSelection.length === 0) {
+                state.screen = 'custom_build';
+            }
+            render();
         }
 
         function startCustomWorkout() {
-            state.user.goal = "Personalizado";
+            if (state.customSelection.length === 0) return;
+            state.goal = "TREINO PERSONALIZADO";
             state.currentWorkout = state.customSelection;
-            startWorkout();
-        }
-
-        // TREINOS PRONTOS
-        function setSpecificWorkout(categories, dayName) {
-            state.user.goal = `Treino de ${dayName}`;
-            let pool = [];
-            categories.forEach(cat => {
-                if(dbExercicios[cat]) pool = [...pool, ...dbExercicios[cat]];
-            });
-            state.currentWorkout = pool.slice(0, 6); // Limita a 6
-            state.screen = 'dashboard';
-            render();
-        }
-
-        function setGoalAndGenerate(goal) {
-            state.user.goal = goal;
-            let pool = [];
-            
-            if (goal === 'Modo Fênix' || goal === 'Massa Muscular') {
-                pool = [...dbExercicios.peito, ...dbExercicios.costas, ...dbExercicios.pernas, ...dbExercicios.ombros];
-            } else if (goal === 'Saúde' || goal === 'Fofo') {
-                pool = [...dbExercicios.cardio, ...dbExercicios.abdomen, ...dbExercicios.mobilidade];
-            } else { 
-                pool = [...dbExercicios.cardio, ...dbExercicios.pernas, ...dbExercicios.peito];
-            }
-
-            state.currentWorkout = pool.sort(() => 0.5 - Math.random()).slice(0, 5);
-            state.screen = 'dashboard';
-            render();
-        }
-
-        function startWorkout() {
-            state.startTime = Date.now();
             state.currentExerciseIndex = 0;
+            state.seconds = 0;
+            state.seriesCount = 0;
+            clearInterval(state.timerInterval);
+            state.timerInterval = null;
             state.screen = 'workout';
             render();
         }
 
-        // TIMER & CONTROLES
+        function startWorkout() {
+            state.currentExerciseIndex = 0;
+            state.seconds = 0;
+            state.seriesCount = 0;
+            clearInterval(state.timerInterval);
+            state.timerInterval = null;
+            state.screen = 'workout';
+            render();
+        }
+
         function toggleTimer(start) {
             const btnStart = document.getElementById('btnStart');
-            const btnStop = document.getElementById('btnStop');
+            const btnPause = document.getElementById('btnPause');
             const btnSeries = document.getElementById('btnSeries');
 
-            if(start) {
+            if (start) {
                 btnStart.style.display = 'none';
-                btnStop.style.display = 'inline-block';
-                btnSeries.style.display = 'flex';
+                btnPause.style.display = 'block';
+                btnSeries.style.display = 'block';
+                
                 state.timerInterval = setInterval(() => {
                     state.seconds++;
-                    const m = Math.floor(state.seconds / 60).toString().padStart(2, '0');
-                    const s = (state.seconds % 60).toString().padStart(2, '0');
-                    document.getElementById('timerDisplay').innerText = `${m}:${s}`;
+                    document.getElementById('timerDisplay').innerText = formatTime(state.seconds);
                 }, 1000);
             } else {
                 clearInterval(state.timerInterval);
+                state.timerInterval = null;
                 btnStart.innerText = "CONTINUAR";
-                btnStart.style.display = 'inline-block';
-                btnStop.style.display = 'none';
+                btnStart.style.display = 'block';
+                btnPause.style.display = 'none';
             }
         }
 
@@ -666,30 +697,43 @@
         }
 
         function nextExercise() {
-            clearInterval(state.timerInterval);
-            state.seconds = 0;
-            state.seriesCount = 0;
-            if(state.currentExerciseIndex < state.currentWorkout.length - 1) {
+            if (state.currentExerciseIndex < state.currentWorkout.length - 1) {
                 state.currentExerciseIndex++;
-                render();
+                state.seriesCount = 0;
+                render(); // Limpa e mostra apenas o novo exercício na tela
             } else {
-                state.endTime = Date.now();
-                state.screen = 'summary';
-                render();
+                finishWorkout();
             }
         }
 
         function prevExercise() {
-            clearInterval(state.timerInterval);
-            state.seconds = 0;
-            if(state.currentExerciseIndex > 0) {
+            if (state.currentExerciseIndex > 0) {
                 state.currentExerciseIndex--;
-                render();
+                state.seriesCount = 0;
+                render(); // Limpa e volta à tela do exercício anterior
             }
         }
 
-        // Start
+        function finishWorkout() {
+            clearInterval(state.timerInterval);
+            state.timerInterval = null;
+            state.screen = 'summary';
+            render();
+        }
+
+        function resetApp() {
+            state.goal = '';
+            state.currentWorkout = [];
+            state.seconds = 0;
+            clearInterval(state.timerInterval);
+            state.timerInterval = null;
+            state.screen = 'dashboard';
+            render();
+        }
+
+        // Inicializa o app
         render();
+
     </script>
 </body>
 </html>
