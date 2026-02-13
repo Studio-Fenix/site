@@ -36,7 +36,7 @@
             --toggle-bg: rgba(0, 0, 0, 0.1);
             --toggle-icon: #333333;
         }
-        body.light-mode .glass-card, body.light-mode .glass-card p, body.light-mode .glass-card h2, body.light-mode .cal-day { color: #ffffff; }
+        body.light-mode .glass-card, body.light-mode .glass-card p, body.light-mode .glass-card h2 { color: #ffffff; }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
         
@@ -70,23 +70,43 @@
         .glass-card {
             background: var(--glass-bg); backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border); border-top: 1px solid var(--glass-highlight);
-            border-radius: 20px; padding: 30px 20px; box-shadow: var(--glass-shadow);
+            border-radius: 20px; padding: 25px 20px; box-shadow: var(--glass-shadow);
             display: flex; flex-direction: column; align-items: center; text-align: center;
-            position: relative; overflow: hidden;
         }
 
         h2 { font-size: 1.5rem; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; color: #ffcccc; }
-        .status-badge { background: rgba(255, 200, 200, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; color: #ffaaaa; margin-bottom: 25px; text-transform: uppercase; font-weight: bold; }
+        .subtitle { font-size: 0.9rem; color: #e0e0e0; margin-bottom: 20px; }
 
-        .calendar-mockup { width: 100%; max-width: 320px; display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-bottom: 20px; opacity: 0.9; }
-        .cal-header { font-size: 0.8rem; font-weight: bold; color: #ff5555; margin-bottom: 5px; }
-        .cal-day { aspect-ratio: 1; background: rgba(0, 0, 0, 0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; color: rgba(255, 255, 255, 0.5); position: relative; border: 1px solid rgba(255, 255, 255, 0.05); }
-        .cal-day.active { background: rgba(200, 0, 0, 0.4); border-color: rgba(255, 100, 100, 0.4); color: #fff; }
-        .cal-day.active::after { content: attr(data-emoji); position: absolute; font-size: 1.2rem; animation: bounce 2s infinite; }
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+        /* Estilos do Calendário Incorporado */
+        .calendar-container {
+            width: 100%;
+            height: 500px; 
+            border-radius: 12px;
+            overflow: hidden;
+            background: #ffffff; 
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            margin-bottom: 15px;
+        }
+        
+        .calendar-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
 
-        .info-text { font-size: 1rem; line-height: 1.5; max-width: 90%; color: #e0e0e0; }
-        .coming-soon-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 100%); pointer-events: none; z-index: 0; }
+        /* Botão para ver em Tela Cheia */
+        .btn-expand {
+            width: 100%; padding: 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1); color: white;
+            font-weight: 700; font-size: 0.95rem; cursor: pointer; text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); transition: transform 0.2s, background 0.2s;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            text-decoration: none;
+        }
+        .btn-expand:hover { background: rgba(255,255,255,0.2); }
+        .btn-expand:active { transform: scale(0.95); }
+        .btn-expand svg { width: 22px; height: 22px; fill: currentColor; }
 
         /* RODAPÉ E TEMA PADRONIZADO */
         .theme-container {
@@ -117,15 +137,17 @@
         </a>
 
         <div class="glass-card">
-            <h2>Agendamento Online</h2>
-            <div class="status-badge">Em Breve</div>
-            <div class="calendar-mockup">
-                <div class="cal-header">D</div><div class="cal-header">S</div><div class="cal-header">T</div><div class="cal-header">Q</div><div class="cal-header">Q</div><div class="cal-header">S</div><div class="cal-header">S</div>
-                <div class="cal-day">29</div><div class="cal-day">30</div><div class="cal-day">1</div><div class="cal-day active" data-emoji="💪"></div><div class="cal-day">3</div><div class="cal-day active" data-emoji="🏃‍♂️"></div><div class="cal-day">5</div>
-                <div class="cal-day">6</div><div class="cal-day active" data-emoji="🏋️"></div><div class="cal-day">8</div><div class="cal-day active" data-emoji="🔥"></div><div class="cal-day">10</div><div class="cal-day active" data-emoji="🥊"></div><div class="cal-day">12</div>
+            <h2>Nossa Agenda</h2>
+            <p class="subtitle">Consulte os dias e horários disponíveis na nossa agenda abaixo.</p>
+            
+            <div class="calendar-container">
+                <iframe src="https://calendar.google.com/calendar/embed?showTitle=0&showPrint=0&showTabs=1&showCalendars=0&mode=MONTH&src=7f21b794e78453c74c4dd5f4bf9f841862f4a7afb0b88f1fe22f8c5f867bdae5%40group.calendar.google.com&ctz=America%2FSao_Paulo" frameborder="0" scrolling="no"></iframe>
             </div>
-            <p class="info-text">Estamos desenvolvendo um sistema completo para você marcar seus treinos e acompanhar sua frequência diretamente pelo app.</p>
-            <div class="coming-soon-overlay"></div>
+
+            <a href="https://calendar.google.com/calendar/embed?src=7f21b794e78453c74c4dd5f4bf9f841862f4a7afb0b88f1fe22f8c5f867bdae5%40group.calendar.google.com&ctz=America%2FSao_Paulo" target="_blank" class="btn-expand">
+                <svg viewBox="0 0 24 24"><path d="M5,5H10V7H7V10H5V5M14,5H19V10H17V7H14V5M17,14H19V19H14V17H17V14M10,17V19H5V14H7V17H10Z" /></svg>
+                Ver em Tela Cheia
+            </a>
         </div>
 
         <div class="theme-container">
