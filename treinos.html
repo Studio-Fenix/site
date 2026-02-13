@@ -220,7 +220,7 @@
     <div class="container" id="app"></div>
 
     <script src="usuarios.js"></script>
-    <script src="exercicios.js"></script>
+    <script src="treinos-db.js"></script>
 
     <script>
         // ==========================================
@@ -581,7 +581,7 @@
 
         function generateWorkout(goalType) {
             if(typeof exerciseDB === 'undefined') {
-                alert("Erro: O arquivo 'exercicios.js' não foi encontrado.");
+                alert("Erro: O arquivo 'treinos-db.js' não foi encontrado.");
                 return;
             }
 
@@ -606,7 +606,7 @@
 
         function goToCustomBuild() {
             if(typeof exerciseDB === 'undefined') {
-                alert("Erro: O arquivo 'exercicios.js' não foi encontrado.");
+                alert("Erro: O arquivo 'treinos-db.js' não foi encontrado.");
                 return;
             }
             state.customSelection = [];
