@@ -7,8 +7,18 @@
     
     <meta property="og:title" content="Loja - Studio Fênix">
     <meta property="og:description" content="Suplementação e Acessórios Oficiais.">
-    <meta property="og:image" content="https://raw.githubusercontent.com/Studio-Fenix/site/refs/heads/main/banner-lojasf.webp">
     <meta property="og:type" content="website">
+    
+    <meta property="og:image" itemprop="image" content="https://raw.githubusercontent.com/Studio-Fenix/site/main/banner-lojasf.webp">
+    <meta property="og:image:secure_url" content="https://raw.githubusercontent.com/Studio-Fenix/site/main/banner-lojasf.webp">
+    <meta property="og:image:type" content="image/webp">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Loja - Studio Fênix">
+    <meta name="twitter:description" content="Suplementação e Acessórios Oficiais.">
+    <meta name="twitter:image" content="https://raw.githubusercontent.com/Studio-Fenix/site/main/banner-lojasf.webp">
     
     <link rel="icon" type="image/webp" href="icon.webp">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -116,7 +126,7 @@
             text-shadow: 0 0 8px rgba(255, 50, 50, 0.6);
         }
 
-        /* OPÇÕES DE PAGAMENTO DO PRODUTO (Ícones maiores e alinhados) */
+        /* OPÇÕES DE PAGAMENTO DO PRODUTO */
         .product-payments {
             display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-bottom: 12px; margin-top: 8px;
             padding-top: 12px; border-top: 1px dashed rgba(255,255,255,0.15);
@@ -250,7 +260,6 @@
                 const displayPrice = (prod.preco && prod.preco.trim() !== '') ? `R$ ${prod.preco}` : 'Consultar valor';
                 const displayFenix = (prod.precoFenix && prod.precoFenix.trim() !== '') ? `Preço Aluno Fênix: R$ ${prod.precoFenix}` : 'Desconto especial Cliente Fênix';
 
-                // SVGs oficiais e limpos
                 const svgPix = `<svg viewBox="0 0 512 512"><path d="M410.7 206.1l-60-60a60.7 60.7 0 0 0 -85.4 0l-60 60a20.4 20.4 0 0 0 0 28.8 20.4 20.4 0 0 0 28.8 0l60-60a20.1 20.1 0 0 1 28.4 0l60 60a20.4 20.4 0 0 0 28.8 0 20.4 20.4 0 0 0 -.6-28.8zM410.7 305.9l-60 60a60.7 60.7 0 0 1 -85.4 0l-60-60a20.4 20.4 0 0 1 0-28.8 20.4 20.4 0 0 1 28.8 0l60 60a20.1 20.1 0 0 0 28.4 0l60-60a20.4 20.4 0 0 1 28.8 0 20.4 20.4 0 0 1 -.6 28.8zM268 256a52 52 0 1 1 -52-52 52 52 0 0 1 52 52zm-32 0a20 20 0 1 0 -20 20 20 20 0 0 0 20-20z"/></svg>`;
                 const svgCard = `<svg viewBox="0 0 576 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM96 144H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H96c-17.7 0-32-14.3-32-32s14.3-32 32-32zM80 320c0-8.8 7.2-16 16-16H160c8.8 0 16 7.2 16 16s-7.2 16-16 16H96c-8.8 0-16-7.2-16-16zm128 0c0-8.8 7.2-16 16-16H288c8.8 0 16 7.2 16 16s-7.2 16-16 16H224c-8.8 0-16-7.2-16-16zM80 384c0-8.8 7.2-16 16-16H160c8.8 0 16 7.2 16 16s-7.2 16-16 16H96c-8.8 0-16-7.2-16-16z"/></svg>`;
                 const svgCash = `<svg viewBox="0 0 640 512"><path d="M96 96V320c0 35.3 28.7 64 64 64H576c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H160c-35.3 0-64 28.7-64 64zm64 160c0-35.3 28.7-64 64-64H416c35.3 0 64 28.7 64 64s-28.7 64-64 64H224c-35.3 0-64-28.7-64-64zM0 176c0-17.7 14.3-32 32-32H64v64H48c-8.8 0-16 7.2-16 16v96c0 8.8 7.2 16 16 16H64v64H32c-17.7 0-32-14.3-32-32V176z"/></svg>`;
