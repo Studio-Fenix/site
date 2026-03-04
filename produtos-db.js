@@ -18,7 +18,7 @@ const productsDB = [
         name: 'Adaptogen Gold Whey (Chocomaltine)', 
         desc: 'Whey protein concentrado com 20g de proteína, 4,7g de BCAA.', 
         img: 'https://m.media-amazon.com/images/I/715gLNqEfGL.jpg',
-        preco: '', 
+        preco: '179,90', 
         precoFenix: '' 
     },
     { 
